@@ -1,20 +1,35 @@
-import type { ReactElement } from "react";
+import { useAtom } from "jotai";
+import { type ReactElement } from "react";
+import { todaysAtom } from "../contexts/calendar";
+import { addMonths, format, subMonths } from "date-fns";
 
 export function Header(): ReactElement {
+  const [today, setToday] = useAtom(todaysAtom);
+  const formattedDate = format(today, "MMMM yyyy");
+  const handleToday = () => setToday(new Date());
+  const handleNextMonth = () => setToday((prev) => addMonths(prev, 1));
+  const handlePrevMonth = () => setToday((prev) => subMonths(prev, 1));
+
   return (
     <div className="header">
-      <button type="button" className="btn">
+      <button onClick={handleToday} type="button" className="btn">
         Today
       </button>
       <div>
-        <button type="button" className="month-change-btn">
+        <button
+          onClick={handlePrevMonth}
+          type="button"
+          className="month-change-btn">
           &lt;
         </button>
-        <button type="button" className="month-change-btn">
+        <button
+          onClick={handleNextMonth}
+          type="button"
+          className="month-change-btn">
           &gt;
         </button>
       </div>
-      <span className="month-title">June 2023</span>
+      <span className="month-title">{formattedDate}</span>
     </div>
   );
 }
