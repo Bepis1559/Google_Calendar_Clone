@@ -1,10 +1,12 @@
 import { useAtom } from "jotai";
-import { type ReactElement, useId } from "react";
+import { type ReactElement, useId, useRef } from "react";
 import { todaysAtom } from "../contexts/calendar";
-import { format, isBefore, isSameMonth, isToday, startOfDay } from "date-fns";
+import { format, isToday } from "date-fns";
 import { handleVisibleDates } from "../helpers/handleVisibleDates";
+import { handleDayClasses } from "../helpers/handleDayClasses";
 
 export function Days(): ReactElement {
+  const unMutableToday = useRef(new Date());
   const [today] = useAtom(todaysAtom);
   const visibleDates = handleVisibleDates(today);
   const id = useId();
@@ -16,13 +18,11 @@ export function Days(): ReactElement {
           // the whole day card
           <div
             key={`${id}--${format(visibleDate, "yyyy-MM-dd")}`}
-            className={`${
-              isSameMonth(visibleDate, today) ? "" : "non-month-day"
-            } ${
-              isBefore(startOfDay(visibleDate), startOfDay(today))
-                ? "old-month-day"
-                : ""
-            } day`}>
+            className={handleDayClasses(
+              today,
+              visibleDate,
+              unMutableToday.current,
+            )}>
             <div className="day-header">
               {/* day name as a day of the week  */}
               <div className="week-name">{format(visibleDate, "EEE")}</div>

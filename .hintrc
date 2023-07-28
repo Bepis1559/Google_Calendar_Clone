@@ -10,7 +10,7 @@
           "scale"
         ]
       }
-    ],
-    "typescript-config/is-valid": "off"
+    ]
+    
   }
 }
