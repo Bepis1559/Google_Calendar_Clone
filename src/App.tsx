@@ -1,6 +1,7 @@
 import "./App.css";
+import type { ReactElement } from "react";
 
-function App() {
+function App(): ReactElement {
   return <></>;
 }
 
