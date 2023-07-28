@@ -1,4 +1,4 @@
-import { isBefore, isSameMonth, startOfDay } from "date-fns";
+import { isBefore, isSameMonth, isToday, startOfDay } from "date-fns";
 
 export function handleDayClasses(
   today: Date,
@@ -13,4 +13,8 @@ export function handleDayClasses(
     ? "old-month-day"
     : "";
   return `${sameMonthClass} ${oldDayClass} day`;
+}
+
+export function handleNumberInDayClasses(visibleDate: Date) {
+  return `${isToday(visibleDate) ? "today" : ""} day-number`;
 }

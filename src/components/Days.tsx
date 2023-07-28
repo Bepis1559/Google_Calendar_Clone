@@ -1,9 +1,12 @@
 import { useAtom } from "jotai";
 import { type ReactElement, useId, useRef } from "react";
 import { todaysAtom } from "../contexts/calendar";
-import { format, isToday } from "date-fns";
+import { format } from "date-fns";
 import { handleVisibleDates } from "../helpers/handleVisibleDates";
-import { handleDayClasses } from "../helpers/handleDayClasses";
+import {
+  handleDayClasses,
+  handleNumberInDayClasses,
+} from "../helpers/handleClasses";
 
 export function Days(): ReactElement {
   const unMutableToday = useRef(new Date());
@@ -27,8 +30,7 @@ export function Days(): ReactElement {
               {/* day name as a day of the week  */}
               <div className="week-name">{format(visibleDate, "EEE")}</div>
               {/* the current day as a number */}
-              <div
-                className={`${isToday(visibleDate) ? "today" : ""} day-number`}>
+              <div className={handleNumberInDayClasses(visibleDate)}>
                 {visibleDate.getDate()}
               </div>
               <button type="button" className="add-event-btn">
