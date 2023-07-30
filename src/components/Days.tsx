@@ -11,22 +11,31 @@ import { AddEventModal } from "./Modal/AddEventModal";
 
 export function Days(): ReactElement {
   const [today] = useAtom(todaysAtom);
-  const [isEventModalOpened, setIsEventModalOpened] = useState(false);
   const unMutableToday = useRef(new Date());
   const visibleDates = handleVisibleDates(today);
+  const [isEventModalOpened, setIsEventModalOpened] = useState(
+    visibleDates.map(() => false),
+  );
   const id = useId();
 
-  const handleOpenEventModal = () => setIsEventModalOpened(true);
-  const handleCloseEventModal = () => setIsEventModalOpened(false);
+  const handleEventModal = (index: number, modalAction: "open" | "close") => {
+    setIsEventModalOpened((prev) => {
+      const newState = [...prev];
+      newState[index] = modalAction == "open" ? true : false;
+      return newState;
+    });
+  };
 
   return (
     <div className="days">
-      {visibleDates.map((visibleDate) => {
+      {visibleDates.map((visibleDate, index) => {
         return (
           // the whole day card
           <Fragment key={`${id}--${format(visibleDate, "yyyy-MM-dd")}`}>
-            {isEventModalOpened ? (
-              <AddEventModal handleCloseEventModal={handleCloseEventModal} />
+            {isEventModalOpened[index] ? (
+              <AddEventModal
+                handleCloseEventModal={() => handleEventModal(index, "close")}
+              />
             ) : null}
             <div
               className={handleDayClasses(
@@ -42,7 +51,7 @@ export function Days(): ReactElement {
                   {visibleDate.getDate()}
                 </div>
                 <button
-                  onClick={handleOpenEventModal}
+                  onClick={() => handleEventModal(index, "open")}
                   type="button"
                   className="add-event-btn">
                   +

@@ -1,4 +1,4 @@
-import { type ReactElement } from "react";
+import { useRef, type ReactElement } from "react";
 import { FormGroup } from "./FormGroup";
 import { FormGroup_CheckBox } from "./FormGroup_CheckBox";
 import { Button } from "../Button";
@@ -9,16 +9,32 @@ type props = {
 };
 
 export function AddEventModal({ handleCloseEventModal }: props): ReactElement {
+  const modalRef = useRef<HTMLDivElement>(null);
+  const root = useRef(document.documentElement);
+  const animationDuration = getComputedStyle(root.current)
+    .getPropertyValue("--modalAnimationDuration")
+    .trim();
+  function handleCloseBtn() {
+    if (modalRef) {
+      modalRef.current?.classList.remove("opening");
+      modalRef.current?.classList.add("closing");
+    }
+
+    setTimeout(() => {
+      handleCloseEventModal();
+    }, parseInt(animationDuration));
+  }
+
   return (
     <>
-      <div className="modal">
+      <div ref={modalRef} className="modal opening">
         <div className="overlay"></div>
         <div className="modal-body">
           <div className="modal-title">
             <div>Add Event</div>
             <small>6/8/23</small>
             <Button
-              handleClick={handleCloseEventModal}
+              handleClick={handleCloseBtn}
               classes="close-btn"
               content="&times;"
             />
