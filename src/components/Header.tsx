@@ -2,6 +2,7 @@ import { useAtom } from "jotai";
 import { type ReactElement } from "react";
 import { todaysAtom } from "../contexts/calendar";
 import { addMonths, format, subMonths } from "date-fns";
+import { HeaderButton } from "./HeaderButton";
 
 export function Header(): ReactElement {
   const [today, setToday] = useAtom(todaysAtom);
@@ -12,22 +13,10 @@ export function Header(): ReactElement {
 
   return (
     <div className="header">
-      <button onClick={handleToday} type="button" className="btn">
-        Today
-      </button>
+      <HeaderButton handleClick={handleToday} classes="btn" content="Today" />
       <div>
-        <button
-          onClick={handlePrevMonth}
-          type="button"
-          className="month-change-btn">
-          &lt;
-        </button>
-        <button
-          onClick={handleNextMonth}
-          type="button"
-          className="month-change-btn">
-          &gt;
-        </button>
+        <HeaderButton handleClick={handlePrevMonth} content="&lt;" />
+        <HeaderButton handleClick={handleNextMonth} content="&gt;" />
       </div>
       <span className="month-title">{formattedDate}</span>
     </div>

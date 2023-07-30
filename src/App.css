@@ -300,7 +300,7 @@ body {
 }
 
 .modal .overlay {
-  background-color: transparent;
+  background-color: transparent !important;
   width: 100%;
   height: 100%;
   position: fixed;
@@ -318,6 +318,8 @@ body {
 }
 
 .modal .modal-body {
+  box-shadow: 0 0 0.5em 0.1em rgb(240, 239, 239) inset,
+    0 0 0.05em 0.05em rgb(236, 236, 236);
   background-color: white;
   border-radius: 0.5rem;
   padding: 1rem;
@@ -330,6 +332,7 @@ body {
 
 .modal.closing .modal-body {
   animation: pop-in 250ms forwards reverse;
+  /* animation: pop-in 250ms forwards; */
 }
 
 @keyframes pop-in {
