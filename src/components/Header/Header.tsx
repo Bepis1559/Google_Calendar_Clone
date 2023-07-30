@@ -1,6 +1,6 @@
 import { useAtom } from "jotai";
 import { type ReactElement } from "react";
-import { todaysAtom } from "../contexts/calendar";
+import { todaysAtom } from "../../contexts/calendar";
 import { addMonths, format, subMonths } from "date-fns";
 import { HeaderButton } from "./HeaderButton";
 

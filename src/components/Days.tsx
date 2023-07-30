@@ -7,7 +7,7 @@ import {
   handleDayClasses,
   handleNumberInDayClasses,
 } from "../helpers/handleClasses";
-import { AddEventModal } from "./AddEventModal";
+import { AddEventModal } from "./Modal/AddEventModal";
 
 export function Days(): ReactElement {
   const [today] = useAtom(todaysAtom);
