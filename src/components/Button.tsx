@@ -1,6 +1,6 @@
 import { type ReactElement } from "react";
 
-export function HeaderButton({
+export function Button({
   handleClick,
   classes = "month-change-btn",
   content,
