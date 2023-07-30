@@ -1,4 +1,6 @@
 import { type ReactElement } from "react";
+import { FormGroup } from "./FormGroup";
+import { FormGroup_CheckBox } from "./FormGroup_CheckBox";
 
 type props = {
   handleCloseEventModal: () => void;
@@ -21,25 +23,12 @@ export function AddEventModal({ handleCloseEventModal }: props): ReactElement {
             </button>
           </div>
           <form>
-            {/*  */}
-            <div className="form-group">
-              <label htmlFor="name">Name</label>
-              <input type="text" name="name" id="name" />
-            </div>
-            <div className="form-group checkbox">
-              <input type="checkbox" name="all-day" id="all-day" />
-              <label htmlFor="all-day">All Day?</label>
-            </div>
+            <FormGroup inputName="name" labelContent="Name" inputType="text" />
+
+            <FormGroup_CheckBox inputName="all-day" labelContent="All Day?" />
             <div className="row">
-              <div className="form-group">
-                <label htmlFor="start-time">Start Time</label>
-                <input type="time" name="start-time" id="start-time" />
-              </div>
-              <div className="form-group">
-                <label htmlFor="end-time">End Time</label>
-                <input type="time" name="end-time" id="end-time" />
-              </div>
-              {/*  */}
+              <FormGroup inputName="start-time" labelContent="Start Time" />
+              <FormGroup inputName="end-time" labelContent="End Time" />
             </div>
             <div className="form-group">
               <label>Color</label>
