@@ -21,6 +21,7 @@ export function AddEventModal({ handleCloseEventModal }: props): ReactElement {
             </button>
           </div>
           <form>
+            {/*  */}
             <div className="form-group">
               <label htmlFor="name">Name</label>
               <input type="text" name="name" id="name" />
@@ -38,6 +39,7 @@ export function AddEventModal({ handleCloseEventModal }: props): ReactElement {
                 <label htmlFor="end-time">End Time</label>
                 <input type="time" name="end-time" id="end-time" />
               </div>
+              {/*  */}
             </div>
             <div className="form-group">
               <label>Color</label>
