@@ -5,10 +5,14 @@ import { Button } from "../Button";
 import { RowInput } from "./RowInput";
 
 type props = {
+  date: string;
   handleCloseEventModal: () => void;
 };
 
-export function AddEventModal({ handleCloseEventModal }: props): ReactElement {
+export function AddEventModal({
+  handleCloseEventModal,
+  date,
+}: props): ReactElement {
   const modalRef = useRef<HTMLDivElement>(null);
   const root = useRef(document.documentElement);
   const animationDuration = getComputedStyle(root.current)
@@ -32,7 +36,7 @@ export function AddEventModal({ handleCloseEventModal }: props): ReactElement {
         <div className="modal-body">
           <div className="modal-title">
             <div>Add Event</div>
-            <small>6/8/23</small>
+            <small>{date}</small>
             <Button
               handleClick={handleCloseBtn}
               classes="close-btn"

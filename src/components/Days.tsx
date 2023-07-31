@@ -34,6 +34,7 @@ export function Days(): ReactElement {
           <Fragment key={`${id}--${format(visibleDate, "yyyy-MM-dd")}`}>
             {isEventModalOpened[index] ? (
               <AddEventModal
+                date={format(visibleDate, "d/M/yy")}
                 handleCloseEventModal={() => handleEventModal(index, "close")}
               />
             ) : null}
