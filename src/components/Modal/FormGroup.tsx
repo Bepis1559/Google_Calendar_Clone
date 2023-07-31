@@ -3,6 +3,7 @@ import { FormGroupProps } from "../../types/Modal_FormGroupProps";
 
 export function FormGroup({
   labelContent,
+  handleOnChange,
   ...props
 }: FormGroupProps): ReactElement {
 
@@ -11,7 +12,7 @@ export function FormGroup({
   return (
     <div className="form-group">
       <label htmlFor={name}>{labelContent}</label>
-      <input {...props}    required   id={name} />
-    </div>
+      <input onChange={(e) => handleOnChange(e.target.value)} {...props} required id={name} />
+    </div> 
   );
 }

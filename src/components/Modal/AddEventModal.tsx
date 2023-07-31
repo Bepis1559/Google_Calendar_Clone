@@ -10,12 +10,15 @@ export function AddEventModal({
   date,
 }: AddEventModalProps): ReactElement {
   const [isAllDayChecked, setIsAllDayChecked] = useState(false);
-  // const [eventName,setEventName] = useState("")
+  const [eventName,setEventName] = useState("")
+  const [startTime,setStartTime] = useState("")
+  const [endTime,setEndTime] = useState("")
 
 
   const modalRef = useRef<HTMLDivElement>(null);
 
   
+
 
   return (
     <>
@@ -34,11 +37,11 @@ export function AddEventModal({
             />
           </div>
           <form>
-            <FormGroup name="name" labelContent="Name" type="text" />
+            <FormGroup value={eventName} handleOnChange={setEventName} name="name" labelContent="Name" type="text" />
             <FormGroup_CheckBox type="checkbox" handleOnChange={setIsAllDayChecked} checked = {isAllDayChecked} name="all-day" labelContent="All Day?" />
             <div className="row">
-              <FormGroup type = "time" disabled = {isAllDayChecked} name="start-time" labelContent="Start Time" />
-              <FormGroup type = "time" disabled = {isAllDayChecked} name="end-time" labelContent="End Time" />
+              <FormGroup value={startTime} handleOnChange={setStartTime}  type = "time" disabled = {isAllDayChecked} name="start-time" labelContent="Start Time" />
+              <FormGroup value={endTime} handleOnChange={setEndTime} type = "time" disabled = {isAllDayChecked} name="end-time" labelContent="End Time" />
             </div>
             <div className="form-group">
               <label>Color</label>
