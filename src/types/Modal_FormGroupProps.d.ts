@@ -1,11 +1,11 @@
-import { type HTMLInputTypeAttribute,type Dispatch,type SetStateAction } from "react";
+import { type HTMLInputTypeAttribute,type Dispatch,type SetStateAction , type InsHTMLAttributes} from "react";
 
-type FormGroupProps = {
+type FormGroupProps = InsHTMLAttributes<HTMLInputElement> & {
   name: string;
   labelContent: string;
-  inputType?: HTMLInputTypeAttribute;
-  handleOnChange  : Dispatch<SetStateAction<boolean>>;
-  
+  type?: HTMLInputTypeAttribute;
+  disabled?: boolean;
+  handleOnChange: Dispatch<SetStateAction<boolean>>;
 };
 
 

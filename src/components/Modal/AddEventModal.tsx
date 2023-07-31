@@ -34,11 +34,11 @@ export function AddEventModal({
             />
           </div>
           <form>
-            <FormGroup name="name" labelContent="Name" inputType="text" />
-            <FormGroup_CheckBox handleOnChange={setIsAllDayChecked} checked = {isAllDayChecked} name="all-day" labelContent="All Day?" />
+            <FormGroup name="name" labelContent="Name" type="text" />
+            <FormGroup_CheckBox type="checkbox" handleOnChange={setIsAllDayChecked} checked = {isAllDayChecked} name="all-day" labelContent="All Day?" />
             <div className="row">
-              <FormGroup name="start-time" labelContent="Start Time" />
-              <FormGroup name="end-time" labelContent="End Time" />
+              <FormGroup type = "time" disabled = {isAllDayChecked} name="start-time" labelContent="Start Time" />
+              <FormGroup type = "time" disabled = {isAllDayChecked} name="end-time" labelContent="End Time" />
             </div>
             <div className="form-group">
               <label>Color</label>
