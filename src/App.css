@@ -339,7 +339,7 @@ body {
   }
 }
 .modal.closing .modal-body {
-  scale: 1;
+  /* scale: 1; */
   animation: pop-out var(--modalAnimationDuration) forwards;
 }
 @keyframes pop-out {
