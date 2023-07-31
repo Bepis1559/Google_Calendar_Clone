@@ -1,4 +1,4 @@
-import { useRef, type ReactElement } from "react";
+import { useRef, type ReactElement, useState } from "react";
 import { FormGroup } from "./FormGroup";
 import { FormGroup_CheckBox } from "./FormGroup_CheckBox";
 import { Button } from "../Button";
@@ -9,7 +9,13 @@ export function AddEventModal({
   handleCloseEventModal,
   date,
 }: AddEventModalProps): ReactElement {
+  const [isAllDayChecked, setIsAllDayChecked] = useState(false);
+  // const [eventName,setEventName] = useState("")
+
+
   const modalRef = useRef<HTMLDivElement>(null);
+
+  
 
   return (
     <>
@@ -28,11 +34,11 @@ export function AddEventModal({
             />
           </div>
           <form>
-            <FormGroup inputName="name" labelContent="Name" inputType="text" />
-            <FormGroup_CheckBox inputName="all-day" labelContent="All Day?" />
+            <FormGroup name="name" labelContent="Name" inputType="text" />
+            <FormGroup_CheckBox handleOnChange={setIsAllDayChecked} checked = {isAllDayChecked} name="all-day" labelContent="All Day?" />
             <div className="row">
-              <FormGroup inputName="start-time" labelContent="Start Time" />
-              <FormGroup inputName="end-time" labelContent="End Time" />
+              <FormGroup name="start-time" labelContent="Start Time" />
+              <FormGroup name="end-time" labelContent="End Time" />
             </div>
             <div className="form-group">
               <label>Color</label>
