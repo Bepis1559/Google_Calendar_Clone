@@ -5,15 +5,10 @@ import { Button } from "../Button";
 import { RowInput } from "./RowInput";
 import { handleCloseBtn } from "../../helpers/handleModalCloseButton";
 
-type props = {
-  date: string;
-  handleCloseEventModal: () => void;
-};
-
 export function AddEventModal({
   handleCloseEventModal,
   date,
-}: props): ReactElement {
+}: AddEventModalProps): ReactElement {
   const modalRef = useRef<HTMLDivElement>(null);
 
   return (
