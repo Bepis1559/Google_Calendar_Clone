@@ -1,7 +1,14 @@
-import { type HTMLInputTypeAttribute } from "react";
+import { type HTMLInputTypeAttribute,type Dispatch,type SetStateAction } from "react";
 
 type FormGroupProps = {
-  inputName: string;
+  name: string;
   labelContent: string;
   inputType?: HTMLInputTypeAttribute;
+  handleOnChange  : Dispatch<SetStateAction<boolean>>;
+  
+};
+
+
+type FormGroup_CheckBoxProps = FormGroupProps & {
+  checked: boolean;
 };
