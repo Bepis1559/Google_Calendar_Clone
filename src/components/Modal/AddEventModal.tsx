@@ -3,6 +3,7 @@ import { FormGroup } from "./FormGroup";
 import { FormGroup_CheckBox } from "./FormGroup_CheckBox";
 import { Button } from "../Button";
 import { RowInput } from "./RowInput";
+import { handleCloseBtn } from "../../helpers/handleModalCloseButton";
 
 type props = {
   date: string;
@@ -14,20 +15,6 @@ export function AddEventModal({
   date,
 }: props): ReactElement {
   const modalRef = useRef<HTMLDivElement>(null);
-  const root = useRef(document.documentElement);
-  const animationDuration = getComputedStyle(root.current)
-    .getPropertyValue("--modalAnimationDuration")
-    .trim();
-  function handleCloseBtn() {
-    if (modalRef) {
-      modalRef.current?.classList.remove("opening");
-      modalRef.current?.classList.add("closing");
-    }
-
-    setTimeout(() => {
-      handleCloseEventModal();
-    }, parseInt(animationDuration));
-  }
 
   return (
     <>
@@ -38,7 +25,9 @@ export function AddEventModal({
             <div>Add Event</div>
             <small>{date}</small>
             <Button
-              handleClick={handleCloseBtn}
+              handleClick={() =>
+                handleCloseBtn(handleCloseEventModal, modalRef)
+              }
               classes="close-btn"
               content="&times;"
             />

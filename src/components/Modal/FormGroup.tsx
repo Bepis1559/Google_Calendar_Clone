@@ -9,7 +9,7 @@ export function FormGroup({
   return (
     <div className="form-group">
       <label htmlFor={inputName}>{labelContent}</label>
-      <input type={inputType} name={inputName} id={inputName} />
+      <input required type={inputType} name={inputName} id={inputName} />
     </div>
   );
 }
