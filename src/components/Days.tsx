@@ -8,6 +8,7 @@ import {
   handleNumberInDayClasses,
 } from "../helpers/handleClasses";
 import { AddEventModal } from "./Modal/AddEventModal";
+import { handleEventModal } from "../helpers/handleEventModal";
 
 export function Days(): ReactElement {
   const [today] = useAtom(todaysAtom);
@@ -18,13 +19,13 @@ export function Days(): ReactElement {
   );
   const id = useId();
 
-  const handleEventModal = (index: number, modalAction: "open" | "close") => {
-    setIsEventModalOpened((prev) => {
-      const newState = [...prev];
-      newState[index] = modalAction == "open" ? true : false;
-      return newState;
-    });
-  };
+  // const handleEventModal = (index: number, modalAction: "open" | "close") => {
+  //   setIsEventModalOpened((prev) => {
+  //     const newState = [...prev];
+  //     newState[index] = modalAction == "open" ? true : false;
+  //     return newState;
+  //   });
+  // };
 
   return (
     <div className="days">
@@ -35,7 +36,9 @@ export function Days(): ReactElement {
             {isEventModalOpened[index] ? (
               <AddEventModal
                 date={format(visibleDate, "M/d/yy")}
-                handleCloseEventModal={() => handleEventModal(index, "close")}
+                handleCloseEventModal={() =>
+                  handleEventModal(index, "close", setIsEventModalOpened)
+                }
               />
             ) : null}
             <div
@@ -52,7 +55,9 @@ export function Days(): ReactElement {
                   {visibleDate.getDate()}
                 </div>
                 <button
-                  onClick={() => handleEventModal(index, "open")}
+                  onClick={() =>
+                    handleEventModal(index, "open", setIsEventModalOpened)
+                  }
                   type="button"
                   className="add-event-btn">
                   +
