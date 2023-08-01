@@ -2,18 +2,22 @@ import { type ReactElement } from "react";
 import { FormGroup_CheckBoxProps } from "../../types/Modal_FormGroupProps";
 
 export function FormGroup_CheckBox({
-  
   labelContent,
-  handleOnChange,
+  dispatchType,
+  dispatch,
   ...props
 }: FormGroup_CheckBoxProps): ReactElement {
-
-  const {name} = props
+  const { name } = props;
 
   return (
     <div className="form-group checkbox">
       <input
-        onChange={() => handleOnChange((prev) => !prev)}
+        onChange={(e) =>
+          dispatch({
+            type: dispatchType,
+            payload: { value: e.target.checked },
+          })
+        }
         {...props}
         id={name}
       />
