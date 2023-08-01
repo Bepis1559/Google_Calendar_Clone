@@ -33,6 +33,8 @@ type baseForm = InsHTMLAttributes<HTMLInputElement> & {
 type FormGroupProps = baseForm & {
   disabled?: boolean;
   value?: string;
+  min?: string;
+  max?: string;
 };
 
 type FormGroup_CheckBoxProps = baseForm & {

@@ -58,6 +58,7 @@ export function AddEventModal({
                 value={state.startTime}
                 dispatch={dispatch}
                 dispatchType="setStartTime"
+                max={state.endTime}
                 type="time"
                 disabled={state.isAllDayChecked}
                 name="start-time"
@@ -65,6 +66,7 @@ export function AddEventModal({
               />
               <FormGroup
                 value={state.endTime}
+                min={state.startTime}
                 dispatch={dispatch}
                 dispatchType="setEndTime"
                 type="time"
