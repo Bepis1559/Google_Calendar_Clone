@@ -19,14 +19,6 @@ export function Days(): ReactElement {
   );
   const id = useId();
 
-  // const handleEventModal = (index: number, modalAction: "open" | "close") => {
-  //   setIsEventModalOpened((prev) => {
-  //     const newState = [...prev];
-  //     newState[index] = modalAction == "open" ? true : false;
-  //     return newState;
-  //   });
-  // };
-
   return (
     <div className="days">
       {visibleDates.map((visibleDate, index) => {
