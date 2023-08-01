@@ -4,19 +4,8 @@ import { FormGroup_CheckBox } from "./FormGroup_CheckBox";
 import { Button } from "../Button";
 import { RowInput } from "./RowInput";
 import { handleCloseBtn } from "../../helpers/handleModalCloseButton";
-
-export type reducerAction = {
-  type: "setIsAllDayChecked" | "setName" | "setStartTime" | "setEndTime";
-  payload?: {
-    value: string | boolean;
-  };
-};
-type formState = {
-  isAllDayChecked: boolean;
-  eventName: string;
-  startTime: string;
-  endTime: string;
-};
+import type { formState } from "../../types/Modal_FormGroupProps";
+import { AddEventModalReducer } from "../../reducers/AddEventModalReducer";
 
 export function AddEventModal({
   handleCloseEventModal,
@@ -24,31 +13,12 @@ export function AddEventModal({
 }: AddEventModalProps): ReactElement {
   const modalRef = useRef<HTMLDivElement>(null);
 
-  function reducer(state: formState, { type, payload }: reducerAction) {
-    const { value } = payload ?? {};
-    switch (type) {
-      case "setIsAllDayChecked":
-        return { ...state, isAllDayChecked: value as boolean };
-      case "setName":
-        return { ...state, eventName: value as string };
-      case "setStartTime":
-        return { ...state, startTime: value as string };
-      case "setEndTime":
-        return { ...state, endTime: value as string };
-      default:
-        throw new Error(
-          "Something went wrong with the reducer in the modal form",
-        );
-    }
-  }
-  const initialState: formState = {
+  const [state, dispatch] = useReducer(AddEventModalReducer, {
     isAllDayChecked: false,
     eventName: "",
     startTime: "",
     endTime: "",
-  };
-
-  const [state, dispatch] = useReducer(reducer, initialState);
+  } as formState);
 
   return (
     <>

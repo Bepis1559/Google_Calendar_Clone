@@ -5,6 +5,19 @@ import type {
 } from "react";
 import { type reducerAction } from "../components/Modal/AddEventModal";
 
+type reducerAction = {
+  type: "setIsAllDayChecked" | "setName" | "setStartTime" | "setEndTime";
+  payload?: {
+    value: string | boolean;
+  };
+};
+type formState = {
+  isAllDayChecked: boolean;
+  eventName: string;
+  startTime: string;
+  endTime: string;
+};
+
 type baseForm = InsHTMLAttributes<HTMLInputElement> & {
   name: string;
   labelContent: string;
