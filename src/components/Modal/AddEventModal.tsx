@@ -1,4 +1,4 @@
-import { useRef, type ReactElement, useReducer } from "react";
+import { useRef, type ReactElement, useReducer, type FormEvent } from "react";
 import { FormGroup } from "./FormGroup";
 import { FormGroup_CheckBox } from "./FormGroup_CheckBox";
 import { Button } from "../Button";
@@ -20,6 +20,11 @@ export function AddEventModal({
     endTime: "",
   } as formState);
 
+  const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // console.log("form submitted");
+  };
+
   return (
     <>
       <div ref={modalRef} className="modal opening">
@@ -36,7 +41,7 @@ export function AddEventModal({
               content="&times;"
             />
           </div>
-          <form>
+          <form onSubmit={handleFormSubmit}>
             <FormGroup
               value={state.eventName}
               dispatch={dispatch}

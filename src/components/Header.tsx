@@ -1,8 +1,8 @@
 import { useAtom } from "jotai";
 import { type ReactElement } from "react";
-import { todaysAtom } from "../../contexts/calendar";
+import { todaysAtom } from "../contexts/calendar";
 import { addMonths, format, subMonths } from "date-fns";
-import { Button } from "../Button";
+import { Button } from "./Button";
 
 export function Header(): ReactElement {
   const [today, setToday] = useAtom(todaysAtom);
