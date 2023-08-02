@@ -9,11 +9,17 @@ import {
 } from "../helpers/Days/handleClasses";
 import { AddEventModal } from "./Modal/AddEventModal";
 import { handleEventModal } from "../helpers/handleEventModal";
-// import { AllDayEvent } from "./Events/AllDayEvent";
-// import { NotAllDayEvent } from "./Events/NotAllDayEvent";
+import {
+  allDayEventsArrayAtom,
+  notAllDayEventsArrayAtom,
+} from "../contexts/events";
+import { AllDayEvent } from "./Events/AllDayEvent";
+import { NotAllDayEvent } from "./Events/NotAllDayEvent";
 
 export function Days(): ReactElement {
   const [today] = useAtom(todaysAtom);
+  const [notAllDayEventsArray] = useAtom(notAllDayEventsArrayAtom);
+  const [allDayEventsArray] = useAtom(allDayEventsArrayAtom);
   const unMutableToday = useRef(new Date());
   const visibleDates = handleVisibleDates(today);
   const [isEventModalOpened, setIsEventModalOpened] = useState(
@@ -42,9 +48,7 @@ export function Days(): ReactElement {
                 unMutableToday.current,
               )}>
               <div className="day-header">
-                {/* day name as a day of the week  */}
                 <div className="week-name">{format(visibleDate, "EEE")}</div>
-                {/* the current day as a number */}
                 <div className={handleNumberInDayClasses(visibleDate)}>
                   {visibleDate.getDate()}
                 </div>
@@ -57,13 +61,27 @@ export function Days(): ReactElement {
                   +
                 </button>
               </div>
-              {/* add events here */}
-              {/* <NotAllDayEvent
-                eventColor={"blue"}
-                eventName={"some event name"}
-                startTime={"2:15 PM"}
-              /> */}
-              {/* <AllDayEvent eventColor={"blue"} eventName={"Some name"} /> */}
+              {notAllDayEventsArray.map((notAllDayEvent) => {
+                const dateToCompareAgainst = format(visibleDate, "M/d/yy");
+                return notAllDayEvent.eventDate == dateToCompareAgainst ? (
+                  <NotAllDayEvent
+                    key={`${id}--${dateToCompareAgainst}--notAllDayEvent`}
+                    eventColor={notAllDayEvent.eventColor}
+                    eventName={notAllDayEvent.eventName}
+                    startTime={notAllDayEvent.startTime}
+                  />
+                ) : null;
+              })}
+              {allDayEventsArray.map((allDayEvent) => {
+                const dateToCompareAgainst = format(visibleDate, "M/d/yy");
+                return allDayEvent.eventDate == dateToCompareAgainst ? (
+                  <AllDayEvent
+                    key={`${id}--${dateToCompareAgainst}--allDayEvent`}
+                    eventColor={allDayEvent.eventColor}
+                    eventName={allDayEvent.eventName}
+                  />
+                ) : null;
+              })}
             </div>
           </Fragment>
         );
