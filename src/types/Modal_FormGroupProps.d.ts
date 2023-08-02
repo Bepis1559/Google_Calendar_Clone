@@ -5,8 +5,14 @@ import type {
 } from "react";
 import { type reducerAction } from "../components/Modal/AddEventModal";
 
+type reducerActionType =
+  | "setIsAllDayChecked"
+  | "setName"
+  | "setStartTime"
+  | "setEndTime";
+
 type reducerAction = {
-  type: "setIsAllDayChecked" | "setName" | "setStartTime" | "setEndTime";
+  type: reducerActionType;
   payload?: {
     value: string | boolean;
   };
@@ -22,11 +28,7 @@ type baseForm = InsHTMLAttributes<HTMLInputElement> & {
   name: string;
   labelContent: string;
   type: HTMLInputTypeAttribute;
-  dispatchType:
-    | "setIsAllDayChecked"
-    | "setName"
-    | "setStartTime"
-    | "setEndTime";
+  dispatchType: reducerActionType;
   dispatch: Dispatch<reducerAction>;
 };
 
