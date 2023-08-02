@@ -11,6 +11,7 @@ import {
   allDayEventsArrayAtom,
   notAllDayEventsArrayAtom,
 } from "../../contexts/events";
+import { handleFormSubmit } from "../../helpers/Modal/formSubmit";
 
 export function AddEventModal({
   handleCloseEventModal,
@@ -28,29 +29,9 @@ export function AddEventModal({
   const [, setAllDayEventsArray] = useAtom(allDayEventsArrayAtom);
   const [, setNotAllDayEventsArray] = useAtom(notAllDayEventsArrayAtom);
 
-  const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (state.isAllDayChecked) {
-      const newAllDayEvent: allDayEvent = {
-        eventColor: state.eventColor,
-        eventName: state.eventName,
-      };
-      setAllDayEventsArray((prev) => [...prev, newAllDayEvent]);
-    } else {
-      const newNotAllDayEvent: notAllDayEvent = {
-        eventColor: state.eventColor,
-        eventName: state.eventName,
-        startTime: state.startTime,
-      };
-
-      setNotAllDayEventsArray((prev) => [...prev, newNotAllDayEvent]);
-    }
-    // console.log("isAllDayChecked : " + state.isAllDayChecked);
-    // console.log("eventName : " + state.eventName);
-    // console.log("startTime : " + state.startTime);
-    // console.log("eventColor :" + state.eventColor);
+  const onFormSubmit = (e: FormEvent<HTMLFormElement>) => {
+    handleFormSubmit(e, state, setAllDayEventsArray, setNotAllDayEventsArray);
     handleCloseBtn(handleCloseEventModal, modalRef);
-    // console.log("form submitted");
   };
 
   return (
@@ -69,7 +50,7 @@ export function AddEventModal({
               content="&times;"
             />
           </div>
-          <form onSubmit={handleFormSubmit}>
+          <form onSubmit={onFormSubmit}>
             <FormGroup
               value={state.eventName}
               dispatch={dispatch}
