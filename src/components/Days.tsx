@@ -9,6 +9,8 @@ import {
 } from "../helpers/handleClasses";
 import { AddEventModal } from "./Modal/AddEventModal";
 import { handleEventModal } from "../helpers/handleEventModal";
+// import { AllDayEvent } from "./Events/AllDayEvent";
+// import { NotAllDayEvent } from "./Events/NotAllDayEvent";
 
 export function Days(): ReactElement {
   const [today] = useAtom(todaysAtom);
@@ -55,6 +57,13 @@ export function Days(): ReactElement {
                   +
                 </button>
               </div>
+              {/* add events here */}
+              {/* <NotAllDayEvent
+                eventColor={"blue"}
+                eventName={"some event name"}
+                startTime={"2:15 PM"}
+              /> */}
+              {/* <AllDayEvent eventColor={"blue"} eventName={"Some name"} /> */}
             </div>
           </Fragment>
         );

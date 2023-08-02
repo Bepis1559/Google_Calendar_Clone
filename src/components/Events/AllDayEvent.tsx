@@ -1,6 +1,6 @@
 import { type ReactElement } from "react";
 
-export function AllDayEvent(props: EventProps): ReactElement {
+export function AllDayEvent(props: allDayEvent): ReactElement {
   const { eventColor, eventName } = props;
 
   return (

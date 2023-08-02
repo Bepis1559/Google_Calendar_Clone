@@ -1,6 +1,6 @@
 import type { ReactElement } from "react";
 
-export function NotAllDayEvent(props: NotAllDayEventProps): ReactElement {
+export function NotAllDayEvent(props: notAllDayEvent): ReactElement {
   const { eventColor, startTime, eventName } = props;
   return (
     <button type="button" className="event">
