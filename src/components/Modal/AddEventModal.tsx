@@ -3,9 +3,14 @@ import { FormGroup } from "./FormGroup";
 import { FormGroup_CheckBox } from "./FormGroup_CheckBox";
 import { Button } from "../Button";
 import { RowInput } from "./RowInput";
-import { handleCloseBtn } from "../../helpers/handleModalCloseButton";
+import { handleCloseBtn } from "../../helpers/Modal/handleCloseButton";
 import type { formState } from "../../types/Modal_FormGroupProps";
 import { AddEventModalReducer } from "../../reducers/AddEventModalReducer";
+import { useAtom } from "jotai";
+import {
+  allDayEventsArrayAtom,
+  notAllDayEventsArrayAtom,
+} from "../../contexts/events";
 
 export function AddEventModal({
   handleCloseEventModal,
@@ -20,13 +25,30 @@ export function AddEventModal({
     endTime: "",
     eventColor: "blue",
   } as formState);
+  const [, setAllDayEventsArray] = useAtom(allDayEventsArrayAtom);
+  const [, setNotAllDayEventsArray] = useAtom(notAllDayEventsArrayAtom);
 
   const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("isAllDayChecked : " + state.isAllDayChecked);
-    console.log("eventName : " + state.eventName);
-    console.log("startTime : " + state.startTime);
-    console.log("eventColor :" + state.eventColor);
+    if (state.isAllDayChecked) {
+      const newAllDayEvent: allDayEvent = {
+        eventColor: state.eventColor,
+        eventName: state.eventName,
+      };
+      setAllDayEventsArray((prev) => [...prev, newAllDayEvent]);
+    } else {
+      const newNotAllDayEvent: notAllDayEvent = {
+        eventColor: state.eventColor,
+        eventName: state.eventName,
+        startTime: state.startTime,
+      };
+
+      setNotAllDayEventsArray((prev) => [...prev, newNotAllDayEvent]);
+    }
+    // console.log("isAllDayChecked : " + state.isAllDayChecked);
+    // console.log("eventName : " + state.eventName);
+    // console.log("startTime : " + state.startTime);
+    // console.log("eventColor :" + state.eventColor);
     handleCloseBtn(handleCloseEventModal, modalRef);
     // console.log("form submitted");
   };

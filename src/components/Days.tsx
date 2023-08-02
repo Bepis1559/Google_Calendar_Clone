@@ -2,11 +2,11 @@ import { useAtom } from "jotai";
 import { type ReactElement, useId, useRef, Fragment, useState } from "react";
 import { todaysAtom } from "../contexts/calendar";
 import { format } from "date-fns";
-import { handleVisibleDates } from "../helpers/handleVisibleDates";
+import { handleVisibleDates } from "../helpers/Days/handleVisibleDates";
 import {
   handleDayClasses,
   handleNumberInDayClasses,
-} from "../helpers/handleClasses";
+} from "../helpers/Days/handleClasses";
 import { AddEventModal } from "./Modal/AddEventModal";
 import { handleEventModal } from "../helpers/handleEventModal";
 // import { AllDayEvent } from "./Events/AllDayEvent";
