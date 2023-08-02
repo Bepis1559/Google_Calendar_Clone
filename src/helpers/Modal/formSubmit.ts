@@ -7,12 +7,14 @@ export function handleFormSubmit(
   state: formState,
   setAllDayEventsArray: Dispatch<SetStateAction<allDayEvent[]>>,
   setNotAllDayEventsArray: Dispatch<SetStateAction<notAllDayEvent[]>>,
+  eventDate_formatted: string,
 ) {
   e.preventDefault();
   if (state.isAllDayChecked) {
     const newAllDayEvent: allDayEvent = {
       eventColor: state.eventColor,
       eventName: state.eventName,
+      eventDate: eventDate_formatted,
     };
     setAllDayEventsArray((prev) => [...prev, newAllDayEvent]);
   } else {
@@ -20,13 +22,16 @@ export function handleFormSubmit(
       eventColor: state.eventColor,
       eventName: state.eventName,
       startTime: state.startTime,
+      eventDate: eventDate_formatted,
     };
 
     setNotAllDayEventsArray((prev) => [...prev, newNotAllDayEvent]);
   }
+  // console.log("form submitted");
   // console.log("isAllDayChecked : " + state.isAllDayChecked);
   // console.log("eventName : " + state.eventName);
   // console.log("startTime : " + state.startTime);
+  // console.log("endTime : " + state.endTime);
   // console.log("eventColor :" + state.eventColor);
-  // console.log("form submitted");
+  // console.log("event date : " + eventDate_formatted);
 }

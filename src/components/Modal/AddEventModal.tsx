@@ -30,7 +30,13 @@ export function AddEventModal({
   const [, setNotAllDayEventsArray] = useAtom(notAllDayEventsArrayAtom);
 
   const onFormSubmit = (e: FormEvent<HTMLFormElement>) => {
-    handleFormSubmit(e, state, setAllDayEventsArray, setNotAllDayEventsArray);
+    handleFormSubmit(
+      e,
+      state,
+      setAllDayEventsArray,
+      setNotAllDayEventsArray,
+      date,
+    );
     handleCloseBtn(handleCloseEventModal, modalRef);
   };
 
