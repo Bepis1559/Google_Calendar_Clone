@@ -9,17 +9,12 @@ import {
 } from "../../helpers/Days/handleClasses";
 import { AddEventModal } from "../Modal/AddEventModal";
 import { handleEventModal } from "../../helpers/handleEventModal";
-import {
-  allDayEventsArrayAtom,
-  notAllDayEventsArrayAtom,
-} from "../../contexts/events";
-import { AllDayEvent } from "../Events/AllDayEvent";
-import { NotAllDayEvent } from "../Events/NotAllDayEvent";
+import { NotAllDayEvents } from "./NotAllDayEvents";
+import { AllDayEvents } from "./AllDayEvents";
 
 export function Days(): ReactElement {
   const [today] = useAtom(todaysAtom);
-  const [notAllDayEventsArray] = useAtom(notAllDayEventsArrayAtom);
-  const [allDayEventsArray] = useAtom(allDayEventsArrayAtom);
+
   const unMutableToday = useRef(new Date());
   const visibleDates = handleVisibleDates(today);
   const [isEventModalOpened, setIsEventModalOpened] = useState(
@@ -61,27 +56,8 @@ export function Days(): ReactElement {
                   +
                 </button>
               </div>
-              {notAllDayEventsArray.map((notAllDayEvent) => {
-                const dateToCompareAgainst = format(visibleDate, "M/d/yy");
-                return notAllDayEvent.eventDate == dateToCompareAgainst ? (
-                  <NotAllDayEvent
-                    key={`${id}--${dateToCompareAgainst}--notAllDayEvent`}
-                    eventColor={notAllDayEvent.eventColor}
-                    eventName={notAllDayEvent.eventName}
-                    startTime={notAllDayEvent.startTime}
-                  />
-                ) : null;
-              })}
-              {allDayEventsArray.map((allDayEvent) => {
-                const dateToCompareAgainst = format(visibleDate, "M/d/yy");
-                return allDayEvent.eventDate == dateToCompareAgainst ? (
-                  <AllDayEvent
-                    key={`${id}--${dateToCompareAgainst}--allDayEvent`}
-                    eventColor={allDayEvent.eventColor}
-                    eventName={allDayEvent.eventName}
-                  />
-                ) : null;
-              })}
+              <NotAllDayEvents visibleDate={visibleDate} id={id} />
+              <AllDayEvents visibleDate={visibleDate} id={id} />
             </div>
           </Fragment>
         );
