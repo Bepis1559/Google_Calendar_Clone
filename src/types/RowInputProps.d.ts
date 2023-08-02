@@ -1,4 +1,5 @@
 type RowInputProps = {
-  inputId: string;
+  inputId: eventColor;
   defaultChecked?: boolean;
+  dispatch: Dispatch<reducerAction>;
 };

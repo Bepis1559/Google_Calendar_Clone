@@ -14,6 +14,8 @@ export function AddEventModalReducer(
       return { ...state, startTime: value as string };
     case "setEndTime":
       return { ...state, endTime: value as string };
+    case "setEventColor":
+      return { ...state, eventColor: value as eventColor };
     default:
       throw new Error(
         "Something went wrong with the reducer in the modal form",

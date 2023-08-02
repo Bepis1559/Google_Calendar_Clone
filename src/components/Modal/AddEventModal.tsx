@@ -18,10 +18,16 @@ export function AddEventModal({
     eventName: "",
     startTime: "",
     endTime: "",
+    eventColor: "blue",
   } as formState);
 
   const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log("isAllDayChecked : " + state.isAllDayChecked);
+    console.log("eventName : " + state.eventName);
+    console.log("startTime : " + state.startTime);
+    console.log("eventColor :" + state.eventColor);
+    handleCloseBtn(handleCloseEventModal, modalRef);
     // console.log("form submitted");
   };
 
@@ -83,9 +89,13 @@ export function AddEventModal({
             <div className="form-group">
               <label>Color</label>
               <div className="row left">
-                <RowInput inputId="blue" defaultChecked={true} />
-                <RowInput inputId="red" />
-                <RowInput inputId="green" />
+                <RowInput
+                  dispatch={dispatch}
+                  inputId="blue"
+                  defaultChecked={true}
+                />
+                <RowInput dispatch={dispatch} inputId="red" />
+                <RowInput dispatch={dispatch} inputId="green" />
               </div>
             </div>
             <div className="row">

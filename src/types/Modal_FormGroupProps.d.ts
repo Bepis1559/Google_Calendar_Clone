@@ -9,7 +9,8 @@ type reducerActionType =
   | "setIsAllDayChecked"
   | "setName"
   | "setStartTime"
-  | "setEndTime";
+  | "setEndTime"
+  | "setEventColor";
 
 type reducerAction = {
   type: reducerActionType;
@@ -22,6 +23,7 @@ type formState = {
   eventName: string;
   startTime: string;
   endTime: string;
+  eventColor: eventColor;
 };
 
 type baseForm = InsHTMLAttributes<HTMLInputElement> & {

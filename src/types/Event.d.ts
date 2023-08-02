@@ -1,5 +1,6 @@
+type eventColor = "blue" | "red" | "green";
 type EventProps = {
-  eventColor: "blue" | "red" | "green";
+  eventColor: eventColor;
   eventName: string;
 };
 
