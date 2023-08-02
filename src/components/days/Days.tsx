@@ -1,20 +1,20 @@
 import { useAtom } from "jotai";
 import { type ReactElement, useId, useRef, Fragment, useState } from "react";
-import { todaysAtom } from "../contexts/calendar";
+import { todaysAtom } from "../../contexts/calendar";
 import { format } from "date-fns";
-import { handleVisibleDates } from "../helpers/Days/handleVisibleDates";
+import { handleVisibleDates } from "../../helpers/Days/handleVisibleDates";
 import {
   handleDayClasses,
   handleNumberInDayClasses,
-} from "../helpers/Days/handleClasses";
-import { AddEventModal } from "./Modal/AddEventModal";
-import { handleEventModal } from "../helpers/handleEventModal";
+} from "../../helpers/Days/handleClasses";
+import { AddEventModal } from "../Modal/AddEventModal";
+import { handleEventModal } from "../../helpers/handleEventModal";
 import {
   allDayEventsArrayAtom,
   notAllDayEventsArrayAtom,
-} from "../contexts/events";
-import { AllDayEvent } from "./Events/AllDayEvent";
-import { NotAllDayEvent } from "./Events/NotAllDayEvent";
+} from "../../contexts/events";
+import { AllDayEvent } from "../Events/AllDayEvent";
+import { NotAllDayEvent } from "../Events/NotAllDayEvent";
 
 export function Days(): ReactElement {
   const [today] = useAtom(todaysAtom);

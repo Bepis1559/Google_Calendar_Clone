@@ -1,6 +1,6 @@
 import type { ReactElement } from "react";
 import { Header } from "./Header";
-import { Days } from "./Days";
+import { Days } from "./days/Days";
 
 export function Calendar(): ReactElement {
   return (
