@@ -3,14 +3,12 @@ import { type ReactElement, useId, useRef, Fragment, useState } from "react";
 import { todaysAtom } from "../../contexts/calendar";
 import { format } from "date-fns";
 import { handleVisibleDates } from "../../helpers/Days/handleVisibleDates";
-import {
-  handleDayClasses,
-  handleNumberInDayClasses,
-} from "../../helpers/Days/handleClasses";
+import { handleDayClasses } from "../../helpers/Days/handleClasses";
 import { AddEventModal } from "../Modal/AddEventModal";
 import { handleEventModal } from "../../helpers/handleEventModal";
 import { NotAllDayEvents } from "./NotAllDayEvents";
 import { AllDayEvents } from "./AllDayEvents";
+import { DayHeader } from "./DayHeader";
 
 export function Days(): ReactElement {
   const [today] = useAtom(todaysAtom);
@@ -42,20 +40,12 @@ export function Days(): ReactElement {
                 visibleDate,
                 unMutableToday.current,
               )}>
-              <div className="day-header">
-                <div className="week-name">{format(visibleDate, "EEE")}</div>
-                <div className={handleNumberInDayClasses(visibleDate)}>
-                  {visibleDate.getDate()}
-                </div>
-                <button
-                  onClick={() =>
-                    handleEventModal(index, "open", setIsEventModalOpened)
-                  }
-                  type="button"
-                  className="add-event-btn">
-                  +
-                </button>
-              </div>
+              <DayHeader
+                visibleDate={visibleDate}
+                index={index}
+                setIsEventModalOpened={setIsEventModalOpened}
+              />
+
               <NotAllDayEvents visibleDate={visibleDate} id={id} />
               <AllDayEvents visibleDate={visibleDate} id={id} />
             </div>
