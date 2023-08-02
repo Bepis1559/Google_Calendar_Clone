@@ -1,9 +1,9 @@
 type eventColor = "blue" | "red" | "green";
-type EventProps = {
+type allDayEvent = {
   eventColor: eventColor;
   eventName: string;
 };
 
-type NotAllDayEventProps = EventProps & {
+type notAllDayEvent = allDayEvent & {
   startTime: string;
 };
