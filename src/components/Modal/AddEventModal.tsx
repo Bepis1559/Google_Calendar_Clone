@@ -111,9 +111,9 @@ export function AddEventModal({
               <button className="btn btn-success" type="submit">
                 Add
               </button>
-              <button className="btn btn-delete" type="button">
+              {/* <button className="btn btn-delete" type="button">
                 Delete
-              </button>
+              </button> */}
             </div>
           </form>
         </div>
