@@ -12,7 +12,7 @@ import { handleFormSubmit } from "../../helpers/Modal/formSubmit";
 import { Form } from "./Form";
 
 export function AddEventModal({
-  handleCloseEventModal,
+  handleEventModal,
   date,
 }: AddEventModalProps): ReactElement {
   const modalRef = useRef<HTMLDivElement>(null);
@@ -35,7 +35,7 @@ export function AddEventModal({
       setNotAllDayEventsArray,
       date,
     );
-    handleCloseBtn(handleCloseEventModal, modalRef);
+    handleCloseBtn(handleEventModal, modalRef);
   };
 
   return (
@@ -47,9 +47,7 @@ export function AddEventModal({
             <div>Add Event</div>
             <small>{date}</small>
             <Button
-              handleClick={() =>
-                handleCloseBtn(handleCloseEventModal, modalRef)
-              }
+              handleClick={() => handleCloseBtn(handleEventModal, modalRef)}
               classes="close-btn"
               content="&times;"
             />

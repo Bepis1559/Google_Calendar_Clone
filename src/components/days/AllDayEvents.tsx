@@ -18,7 +18,6 @@ export function AllDayEvents(props: eventArrayProps): ReactElement {
             eventName={eventName}
             index={index}
             setIsEventModalOpened={setIsEventModalOpened}
-            eventDate={format(visibleDate, "M/d/yy")}
           />
         ) : null;
       })}

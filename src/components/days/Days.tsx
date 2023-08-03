@@ -29,7 +29,7 @@ export function Days(): ReactElement {
             {isEventModalOpened[index] ? (
               <AddEventModal
                 date={format(visibleDate, "M/d/yy")}
-                handleCloseEventModal={() =>
+                handleEventModal={() =>
                   handleEventModal(index, "close", setIsEventModalOpened)
                 }
               />

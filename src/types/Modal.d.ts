@@ -1,4 +1,4 @@
 type AddEventModalProps = {
   date: string;
-  handleCloseEventModal: () => void;
+  handleEventModal: () => void;
 };
