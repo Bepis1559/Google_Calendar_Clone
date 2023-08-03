@@ -6,7 +6,7 @@ import { AllDayEvent } from "../Events/AllDayEvent";
 
 export function AllDayEvents(props: eventArrayProps): ReactElement {
   const [allDayEventsArray] = useAtom(allDayEventsArrayAtom);
-  const { id, visibleDate } = props;
+  const { id, visibleDate, index, setIsEventModalOpened } = props;
   return (
     <>
       {allDayEventsArray.map(({ eventDate, eventColor, eventName }) => {
@@ -16,6 +16,9 @@ export function AllDayEvents(props: eventArrayProps): ReactElement {
             key={`${id}--${dateToCompareAgainst}--allDayEvent`}
             eventColor={eventColor}
             eventName={eventName}
+            index={index}
+            setIsEventModalOpened={setIsEventModalOpened}
+            eventDate={format(visibleDate, "M/d/yy")}
           />
         ) : null;
       })}

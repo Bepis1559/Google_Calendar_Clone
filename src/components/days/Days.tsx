@@ -46,8 +46,18 @@ export function Days(): ReactElement {
                 setIsEventModalOpened={setIsEventModalOpened}
               />
 
-              <NotAllDayEvents visibleDate={visibleDate} id={id} />
-              <AllDayEvents visibleDate={visibleDate} id={id} />
+              <NotAllDayEvents
+                setIsEventModalOpened={setIsEventModalOpened}
+                index={index}
+                visibleDate={visibleDate}
+                id={id}
+              />
+              <AllDayEvents
+                setIsEventModalOpened={setIsEventModalOpened}
+                index={index}
+                visibleDate={visibleDate}
+                id={id}
+              />
             </div>
           </Fragment>
         );
