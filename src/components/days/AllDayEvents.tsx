@@ -9,13 +9,13 @@ export function AllDayEvents(props: eventArrayProps): ReactElement {
   const { id, visibleDate } = props;
   return (
     <>
-      {allDayEventsArray.map((allDayEvent) => {
+      {allDayEventsArray.map(({ eventDate, eventColor, eventName }) => {
         const dateToCompareAgainst = format(visibleDate, "M/d/yy");
-        return allDayEvent.eventDate == dateToCompareAgainst ? (
+        return eventDate == dateToCompareAgainst ? (
           <AllDayEvent
             key={`${id}--${dateToCompareAgainst}--allDayEvent`}
-            eventColor={allDayEvent.eventColor}
-            eventName={allDayEvent.eventName}
+            eventColor={eventColor}
+            eventName={eventName}
           />
         ) : null;
       })}
