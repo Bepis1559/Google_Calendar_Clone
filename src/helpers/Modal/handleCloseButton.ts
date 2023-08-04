@@ -4,7 +4,7 @@ const animationDuration = getComputedStyle(root)
   .getPropertyValue("--modalAnimationDuration")
   .trim();
 export function handleCloseBtn(
-  handleCloseEventModal: () => void,
+  handleEventModal: () => void,
   modalRef: RefObject<HTMLDivElement>,
 ) {
   if (modalRef) {
@@ -13,6 +13,6 @@ export function handleCloseBtn(
   }
 
   setTimeout(() => {
-    handleCloseEventModal();
+    handleEventModal();
   }, parseInt(animationDuration));
 }

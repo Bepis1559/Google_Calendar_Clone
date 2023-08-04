@@ -1,5 +1,4 @@
 import { forwardRef, Ref, type ReactElement } from "react";
-import { Button } from "../Button";
 import { Form } from "./Form";
 import { handleCloseBtn } from "../../helpers/Modal/handleCloseButton";
 import { ModalProps } from "../../types/Modals";
@@ -22,11 +21,12 @@ function Inner(props: ModalProps, ref: Ref<HTMLDivElement>): ReactElement {
           <div className="modal-title">
             <div>{title}</div>
             <small>{date}</small>
-            <Button
-              handleClick={() => handleCloseBtn(handleEventModal, modalRef)}
-              classes="close-btn"
-              content="&times;"
-            />
+            <button
+              onClick={() => handleCloseBtn(handleEventModal, modalRef)}
+              type="button"
+              className="close-btn">
+              &times;
+            </button>
           </div>
           <Form onFormSubmit={onFormSubmit} dispatch={dispatch} state={state} />
         </div>
