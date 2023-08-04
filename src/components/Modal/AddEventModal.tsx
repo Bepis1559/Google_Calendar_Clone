@@ -9,8 +9,8 @@ import {
 } from "../../contexts/events";
 import { handleFormSubmit } from "../../helpers/Modal/formSubmit";
 import { type AddEventModalProps } from "../../types/Modals";
-import { Modal } from "./Modal";
 import { formErrorAtom } from "../../contexts/Modal";
+import { Form } from "./Form";
 
 export function AddEventModal({
   handleEventModal,
@@ -55,16 +55,22 @@ export function AddEventModal({
 
   return (
     <>
-      <Modal
-        title="Add Event"
-        date={date}
-        modalRef={modalRef}
-        handleEventModal={handleEventModal}
-        onFormSubmit={onFormSubmit}
-        dispatch={dispatch}
-        state={state}
-        ref={modalRef}
-      />
+      <div ref={modalRef} className="modal opening">
+        <div className="overlay"></div>
+        <div className="modal-body">
+          <div className="modal-title">
+            <div>Add Event</div>
+            <small>{date}</small>
+            <button
+              onClick={() => handleCloseBtn(handleEventModal, modalRef)}
+              type="button"
+              className="close-btn">
+              &times;
+            </button>
+          </div>
+          <Form onFormSubmit={onFormSubmit} dispatch={dispatch} state={state} />
+        </div>
+      </div>
     </>
   );
 }
