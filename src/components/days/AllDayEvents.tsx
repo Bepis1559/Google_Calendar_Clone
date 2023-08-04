@@ -13,7 +13,7 @@ export function AllDayEvents(props: eventArrayProps): ReactElement {
         const dateToCompareAgainst = format(visibleDate, "M/d/yy");
         return eventDate == dateToCompareAgainst ? (
           <AllDayEvent
-            key={`${id}--${dateToCompareAgainst}--allDayEvent`}
+            key={`${id}--${dateToCompareAgainst}--allDayEvent--${eventDate}--${eventColor}--${eventName}`}
             eventColor={eventColor}
             eventName={eventName}
           />

@@ -25,7 +25,11 @@ export function Days(): ReactElement {
       {visibleDates.map((visibleDate, index) => {
         return (
           // the whole day card
-          <Fragment key={`${id}--${format(visibleDate, "yyyy-MM-dd")}`}>
+          <Fragment
+            key={`${id}--${format(
+              visibleDate,
+              "yyyy-MM-dd",
+            )}--${visibleDate.getSeconds()}`}>
             {isEventModalOpened[index] ? (
               <AddEventModal
                 date={format(visibleDate, "M/d/yy")}

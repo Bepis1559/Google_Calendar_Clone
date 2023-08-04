@@ -3,20 +3,28 @@ import { type formState } from "../../types/Modal_FormGroupProps";
 import { SetStateAction } from "jotai";
 
 export function handleFormSubmit(
+  allDayEvents: allDayEvent[],
+  notAllDayEvents: notAllDayEvent[],
   e: FormEvent<HTMLFormElement>,
   state: formState,
   setAllDayEventsArray: Dispatch<SetStateAction<allDayEvent[]>>,
   setNotAllDayEventsArray: Dispatch<SetStateAction<notAllDayEvent[]>>,
   eventDate_formatted: string,
 ) {
-  e.preventDefault();
   if (state.isAllDayChecked) {
+    // it is an all day event
+    const { eventColor, eventName } = state;
     const newAllDayEvent: allDayEvent = {
-      eventColor: state.eventColor,
-      eventName: state.eventName,
+      eventColor: eventColor,
+      eventName: eventName,
       eventDate: eventDate_formatted,
     };
-    setAllDayEventsArray((prev) => [...prev, newAllDayEvent]);
+    if (allDayEventExists(allDayEvents, newAllDayEvent)) {
+      // if there already is the exact same event
+      throw new Error("The exact same event already exists");
+    } else {
+      setAllDayEventsArray((prev) => [...prev, newAllDayEvent]);
+    }
   } else {
     const newNotAllDayEvent: notAllDayEvent = {
       eventColor: state.eventColor,
@@ -27,11 +35,22 @@ export function handleFormSubmit(
 
     setNotAllDayEventsArray((prev) => [...prev, newNotAllDayEvent]);
   }
-  // console.log("form submitted");
-  // console.log("isAllDayChecked : " + state.isAllDayChecked);
-  // console.log("eventName : " + state.eventName);
-  // console.log("startTime : " + state.startTime);
-  // console.log("endTime : " + state.endTime);
-  // console.log("eventColor :" + state.eventColor);
-  // console.log("event date : " + eventDate_formatted);
+}
+
+function allDayEventExists(
+  allDayEvents: allDayEvent[],
+  { eventColor, eventName, eventDate }: allDayEvent,
+) {
+  let result = false;
+  allDayEvents.forEach((event) => {
+    if (
+      event.eventColor == eventColor &&
+      event.eventName == eventName &&
+      event.eventDate == eventDate
+    ) {
+      result = true;
+    }
+  });
+
+  return result;
 }
