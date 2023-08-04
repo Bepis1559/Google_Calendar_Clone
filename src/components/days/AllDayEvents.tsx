@@ -16,6 +16,7 @@ export function AllDayEvents(props: eventArrayProps): ReactElement {
             key={`${id}--${dateToCompareAgainst}--allDayEvent--${eventDate}--${eventColor}--${eventName}`}
             eventColor={eventColor}
             eventName={eventName}
+            eventDate={eventDate}
           />
         ) : null;
       })}

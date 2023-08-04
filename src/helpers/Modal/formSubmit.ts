@@ -15,8 +15,8 @@ export function handleFormSubmit(
     const { eventColor, eventName } = state;
     const newAllDayEvent: allDayEvent = {
       eventColor: eventColor,
-      eventName: eventName,
-      eventDate: eventDate_formatted,
+      eventName: eventName.trim(),
+      eventDate: eventDate_formatted.trim(),
     };
     if (allDayEventExists(allDayEvents, newAllDayEvent)) {
       // if there already is the exact same event
@@ -30,10 +30,10 @@ export function handleFormSubmit(
 
     const newNotAllDayEvent: notAllDayEvent = {
       eventColor: eventColor,
-      eventName: eventName,
-      startTime: startTime,
-      endTime: endTime,
-      eventDate: eventDate_formatted,
+      eventName: eventName.trim(),
+      startTime: startTime.trim(),
+      endTime: endTime.trim(),
+      eventDate: eventDate_formatted.trim(),
     };
 
     if (notAllDayEventExists(notAllDayEvents, newNotAllDayEvent)) {

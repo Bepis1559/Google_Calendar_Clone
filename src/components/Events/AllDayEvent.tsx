@@ -3,10 +3,18 @@ import { allDayEventsArrayAtom } from "../../contexts/events";
 import { useAtom } from "jotai";
 
 export function AllDayEvent(props: allDayEvent): ReactElement {
-  const { eventColor, eventName } = props;
+  const { eventColor, eventName, eventDate } = props;
   const [allDayEventsArray] = useAtom(allDayEventsArrayAtom);
   function handleClick() {
-    allDayEventsArray.forEach((allDayEvent) => console.log(allDayEvent));
+    allDayEventsArray.forEach((allDayEvent) => {
+      if (
+        eventColor == allDayEvent.eventColor &&
+        eventName == allDayEvent.eventName &&
+        eventDate == allDayEvent.eventDate
+      ) {
+        console.log(allDayEvent);
+      }
+    });
   }
 
   return (
