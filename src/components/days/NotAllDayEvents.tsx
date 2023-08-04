@@ -10,17 +10,20 @@ export function NotAllDayEvents(props: eventArrayProps): ReactElement {
 
   return (
     <>
-      {notAllDayEventsArray.map((notAllDayEvent) => {
-        const dateToCompareAgainst = format(visibleDate, "M/d/yy");
-        return notAllDayEvent.eventDate == dateToCompareAgainst ? (
-          <NotAllDayEvent
-            key={`${id}--${dateToCompareAgainst}--notAllDayEvent`}
-            eventColor={notAllDayEvent.eventColor}
-            eventName={notAllDayEvent.eventName}
-            startTime={notAllDayEvent.startTime}
-          />
-        ) : null;
-      })}
+      {notAllDayEventsArray.map(
+        ({ eventColor, eventName, startTime, endTime, eventDate }) => {
+          const dateToCompareAgainst = format(visibleDate, "M/d/yy");
+          return eventDate == dateToCompareAgainst ? (
+            <NotAllDayEvent
+              key={`${id}--${dateToCompareAgainst}--notAllDayEvent--${eventColor}--${eventName}--${startTime}--${endTime}--${eventDate}`}
+              eventColor={eventColor}
+              eventName={eventName}
+              startTime={startTime}
+              endTime={endTime}
+            />
+          ) : null;
+        },
+      )}
     </>
   );
 }

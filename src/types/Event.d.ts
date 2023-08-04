@@ -8,4 +8,5 @@ type allDayEvent = event;
 
 type notAllDayEvent = event & {
   startTime: string;
+  endTime: string;
 };
