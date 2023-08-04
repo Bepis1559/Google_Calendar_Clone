@@ -10,6 +10,7 @@ import {
 } from "../../contexts/events";
 import { handleFormSubmit } from "../../helpers/Modal/formSubmit";
 import { Form } from "./Form";
+import { type AddEventModalProps } from "../../types/Modals";
 
 export function AddEventModal({
   handleEventModal,

@@ -1,10 +1,11 @@
 type eventColor = "blue" | "red" | "green";
-type allDayEvent = {
+type event = {
   eventColor: eventColor;
   eventName: string;
   eventDate?: string;
 };
+type allDayEvent = event;
 
-type notAllDayEvent = allDayEvent & {
+type notAllDayEvent = event & {
   startTime: string;
 };
