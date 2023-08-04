@@ -1,11 +1,10 @@
-import { Dispatch, type FormEvent } from "react";
+import { Dispatch } from "react";
 import { type formState } from "../../types/Modal_FormGroupProps";
 import { SetStateAction } from "jotai";
 
 export function handleFormSubmit(
   allDayEvents: allDayEvent[],
   notAllDayEvents: notAllDayEvent[],
-  e: FormEvent<HTMLFormElement>,
   state: formState,
   setAllDayEventsArray: Dispatch<SetStateAction<allDayEvent[]>>,
   setNotAllDayEventsArray: Dispatch<SetStateAction<notAllDayEvent[]>>,

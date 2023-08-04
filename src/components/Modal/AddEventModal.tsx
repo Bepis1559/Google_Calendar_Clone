@@ -38,7 +38,6 @@ export function AddEventModal({
       handleFormSubmit(
         allDayEventsArray,
         notAllDayEventsArray,
-        e,
         state,
         setAllDayEventsArray,
         setNotAllDayEventsArray,
