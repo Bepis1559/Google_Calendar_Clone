@@ -8,9 +8,8 @@ import {
   notAllDayEventsArrayAtom,
 } from "../../contexts/events";
 import { handleFormSubmit } from "../../helpers/Modal/formSubmit";
-import { type AddEventModalProps } from "../../types/Modals";
 import { formErrorAtom } from "../../contexts/Modal";
-import { Form } from "./Form";
+import { Form } from "./Form/Form";
 
 export function AddEventModal({
   handleEventModal,
@@ -68,7 +67,12 @@ export function AddEventModal({
               &times;
             </button>
           </div>
-          <Form onFormSubmit={onFormSubmit} dispatch={dispatch} state={state} />
+          <Form
+            formPurpose="Add"
+            onFormSubmit={onFormSubmit}
+            dispatch={dispatch}
+            state={state}
+          />
         </div>
       </div>
     </>

@@ -1,5 +1,5 @@
 import { type ReactElement } from "react";
-import { FormGroupProps } from "../../types/Modal_FormGroupProps";
+import { FormGroupProps } from "../../../types/Modal_FormGroupProps";
 
 export function FormGroup({
   labelContent,

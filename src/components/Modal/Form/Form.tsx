@@ -1,17 +1,18 @@
 import { Dispatch, FormEvent, type ReactElement } from "react";
 import { FormGroup } from "./FormGroup";
 import { FormGroup_CheckBox } from "./FormGroup_CheckBox";
-import { RowInput } from "./RowInput";
+import { RowInput } from "../RowInput";
 import type {
   formState,
   reducerAction,
-} from "../../types/Modal_FormGroupProps";
+} from "../../../types/Modal_FormGroupProps";
 import { useAtom } from "jotai";
-import { formErrorAtom } from "../../contexts/Modal";
+import { formErrorAtom } from "../../../contexts/Modal";
 type propsType = {
   onFormSubmit: (e: FormEvent<HTMLFormElement>) => void;
   dispatch: Dispatch<reducerAction>;
   state: formState;
+  formPurpose: "Add" | "Edit";
 };
 
 export function Form(props: propsType): ReactElement {
@@ -19,8 +20,10 @@ export function Form(props: propsType): ReactElement {
   const {
     onFormSubmit,
     dispatch,
-    state: { eventName, isAllDayChecked, startTime, endTime },
+    state: { eventName, isAllDayChecked, startTime, endTime, eventColor },
+    formPurpose,
   } = props;
+
   return (
     <>
       <form onSubmit={onFormSubmit}>
@@ -68,22 +71,31 @@ export function Form(props: propsType): ReactElement {
             <RowInput
               dispatch={dispatch}
               inputId="blue"
-              defaultChecked={true}
+              defaultChecked={eventColor == "blue"}
             />
-            <RowInput dispatch={dispatch} inputId="red" />
-            <RowInput dispatch={dispatch} inputId="green" />
+            <RowInput
+              defaultChecked={eventColor == "red"}
+              dispatch={dispatch}
+              inputId="red"
+            />
+            <RowInput
+              defaultChecked={eventColor == "green"}
+              dispatch={dispatch}
+              inputId="green"
+            />
           </div>
         </div>
         <div className="row">
           <button
             className={`btn btn-${formError ? "delete" : "success"}`}
             type="submit">
-            {formError ?? "Add"}
+            {formError ? formError : formPurpose == "Edit" ? "Save" : "Add"}
           </button>
-
-          {/* <button className="btn btn-delete" type="button">
-                Delete
-              </button> */}
+          {formPurpose == "Edit" ? (
+            <button className="btn btn-delete" type="button">
+              Delete
+            </button>
+          ) : null}
         </div>
       </form>
     </>

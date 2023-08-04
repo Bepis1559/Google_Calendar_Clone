@@ -1,36 +1,34 @@
-import { type ReactElement } from "react";
+import { useState, type ReactElement } from "react";
 import { allDayEventsArrayAtom } from "../../contexts/events";
 import { useAtom } from "jotai";
+import { EditEventModal } from "../Modal/EditEventModal";
 
 export function AllDayEvent(props: allDayEvent): ReactElement {
   const { eventColor, eventName, eventDate } = props;
   const [allDayEventsArray] = useAtom(allDayEventsArrayAtom);
-  // const [isModalOpened, setIsModalOpened] = useState(false);
-  // const modalRef = useRef<HTMLDivElement>(null);
-
+  const [isModalOpened, setIsModalOpened] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState<allDayEvent | null>(null);
   function handleClick() {
-    let selectedEvent: allDayEvent | undefined = undefined;
     allDayEventsArray.forEach((allDayEvent) => {
       if (
         eventColor == allDayEvent.eventColor &&
         eventName == allDayEvent.eventName &&
         eventDate == allDayEvent.eventDate
       ) {
-        selectedEvent = allDayEvent;
+        setSelectedEvent(allDayEvent);
       }
     });
-
-    console.log(selectedEvent);
-    // if (selectedEvent) {
-    //   setIsModalOpened(true);
-    // } else {
-    //   setIsModalOpened(false);
-    // }
+    setIsModalOpened(true);
   }
 
   return (
     <>
-      {/* {isModalOpened ? <EditEventModal /> : null} */}
+      {isModalOpened && selectedEvent ? (
+        <EditEventModal
+          setIsModalOpened={setIsModalOpened}
+          event={selectedEvent}
+        />
+      ) : null}
       <button
         onClick={handleClick}
         type="button"

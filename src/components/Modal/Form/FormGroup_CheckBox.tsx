@@ -1,5 +1,5 @@
 import { type ReactElement } from "react";
-import { FormGroup_CheckBoxProps } from "../../types/Modal_FormGroupProps";
+import { FormGroup_CheckBoxProps } from "../../../types/Modal_FormGroupProps";
 
 export function FormGroup_CheckBox({
   labelContent,
