@@ -1,7 +1,7 @@
 import { useRef, type ReactElement, useReducer, type FormEvent } from "react";
 import { handleCloseBtn } from "../../helpers/Modal/handleCloseButton";
 import type { formState } from "../../types/Modal_FormGroupProps";
-import { AddEventModalReducer } from "../../reducers/AddEventModalReducer";
+import { EventModalReducer } from "../../reducers/EventModalReducer";
 import { useAtom } from "jotai";
 import {
   allDayEventsArrayAtom,
@@ -17,7 +17,7 @@ export function AddEventModal({
 }: AddEventModalProps): ReactElement {
   const modalRef = useRef<HTMLDivElement>(null);
 
-  const [state, dispatch] = useReducer(AddEventModalReducer, {
+  const [state, dispatch] = useReducer(EventModalReducer, {
     isAllDayChecked: false,
     eventName: "",
     startTime: "",

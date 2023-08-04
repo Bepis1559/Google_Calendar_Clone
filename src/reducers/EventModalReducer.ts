@@ -1,6 +1,6 @@
 import type { formState, reducerAction } from "../types/Modal_FormGroupProps";
 
-export function AddEventModalReducer(
+export function EventModalReducer(
   state: formState,
   { type, payload }: reducerAction,
 ) {
