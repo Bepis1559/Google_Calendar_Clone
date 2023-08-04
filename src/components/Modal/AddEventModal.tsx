@@ -1,5 +1,4 @@
 import { useRef, type ReactElement, useReducer, type FormEvent } from "react";
-// import { Button } from "../Button";
 import { handleCloseBtn } from "../../helpers/Modal/handleCloseButton";
 import type { formState } from "../../types/Modal_FormGroupProps";
 import { AddEventModalReducer } from "../../reducers/AddEventModalReducer";
@@ -9,7 +8,6 @@ import {
   notAllDayEventsArrayAtom,
 } from "../../contexts/events";
 import { handleFormSubmit } from "../../helpers/Modal/formSubmit";
-// import { Form } from "./Form";
 import { type AddEventModalProps } from "../../types/Modals";
 import { Modal } from "./Modal";
 
