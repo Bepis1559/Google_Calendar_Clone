@@ -15,11 +15,12 @@ export function handleFormSubmit(
     // it is an all day event
     const { eventColor, eventName } = state;
     const newAllDayEvent: allDayEvent = {
+      id: `${eventColor.trim()}--${eventName.trim()}--${eventDate_formatted.trim()}--wholeDay`,
       eventColor: eventColor,
       eventName: eventName.trim(),
       eventDate: eventDate_formatted.trim(),
     };
-    if (allDayEventExists(allDayEvents, newAllDayEvent)) {
+    if (doesEventExist(allDayEvents, newAllDayEvent)) {
       // if there already is the exact same event
       throw new Error(errorMessage);
     } else {
@@ -30,6 +31,7 @@ export function handleFormSubmit(
     const { eventColor, eventName, startTime, endTime } = state;
 
     const newNotAllDayEvent: notAllDayEvent = {
+      id: `${eventColor.trim()}--${eventName.trim()}--${startTime.trim()}--${endTime.trim()}--${eventDate_formatted.trim()}--notWholeDay`,
       eventColor: eventColor,
       eventName: eventName.trim(),
       startTime: startTime.trim(),
@@ -37,7 +39,7 @@ export function handleFormSubmit(
       eventDate: eventDate_formatted.trim(),
     };
 
-    if (notAllDayEventExists(notAllDayEvents, newNotAllDayEvent)) {
+    if (doesEventExist(notAllDayEvents, newNotAllDayEvent)) {
       throw new Error(errorMessage);
     } else {
       setNotAllDayEventsArray((prev) => [...prev, newNotAllDayEvent]);
@@ -45,36 +47,13 @@ export function handleFormSubmit(
   }
 }
 
-function allDayEventExists(
-  allDayEvents: allDayEvent[],
-  { eventColor, eventName, eventDate }: allDayEvent,
+function doesEventExist(
+  events: allDayEvent[] | notAllDayEvent[],
+  { id }: allDayEvent,
 ) {
   let result = false;
-  allDayEvents.forEach((event) => {
-    if (
-      event.eventColor == eventColor &&
-      event.eventName == eventName &&
-      event.eventDate == eventDate
-    ) {
-      result = true;
-    }
-  });
-
-  return result;
-}
-function notAllDayEventExists(
-  notAllDayEvents: notAllDayEvent[],
-  { eventColor, eventName, eventDate, startTime, endTime }: notAllDayEvent,
-) {
-  let result = false;
-  notAllDayEvents.forEach((event) => {
-    if (
-      event.eventColor == eventColor &&
-      event.eventName == eventName &&
-      event.eventDate == eventDate &&
-      event.startTime == startTime &&
-      event.endTime == endTime
-    ) {
+  events.forEach(({ id: eventId }) => {
+    if (id == eventId) {
       result = true;
     }
   });

@@ -9,17 +9,21 @@ export function AllDayEvents(props: eventArrayProps): ReactElement {
   const { id, visibleDate } = props;
   return (
     <>
-      {allDayEventsArray.map(({ eventDate, eventColor, eventName }) => {
-        const dateToCompareAgainst = format(visibleDate, "M/d/yy");
-        return eventDate == dateToCompareAgainst ? (
-          <AllDayEvent
-            key={`${id}--${dateToCompareAgainst}--allDayEvent--${eventDate}--${eventColor}--${eventName}`}
-            eventColor={eventColor}
-            eventName={eventName}
-            eventDate={eventDate}
-          />
-        ) : null;
-      })}
+      {allDayEventsArray.map(
+        ({ eventDate, eventColor, eventName, id: eventId }) => {
+          const dateToCompareAgainst = format(visibleDate, "M/d/yy");
+          const eventKey = `${id}--${dateToCompareAgainst}--allDayEvent--${eventDate}--${eventColor}--${eventName}`;
+          return eventDate == dateToCompareAgainst ? (
+            <AllDayEvent
+              id={eventId}
+              key={eventKey}
+              eventColor={eventColor}
+              eventName={eventName}
+              eventDate={eventDate}
+            />
+          ) : null;
+        },
+      )}
     </>
   );
 }
