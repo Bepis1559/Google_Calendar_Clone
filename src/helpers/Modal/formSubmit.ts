@@ -10,6 +10,7 @@ export function handleFormSubmit(
   setNotAllDayEventsArray: Dispatch<SetStateAction<notAllDayEvent[]>>,
   eventDate_formatted: string,
 ) {
+  const errorMessage = "The event already exists";
   if (state.isAllDayChecked) {
     // it is an all day event
     const { eventColor, eventName } = state;
@@ -20,7 +21,7 @@ export function handleFormSubmit(
     };
     if (allDayEventExists(allDayEvents, newAllDayEvent)) {
       // if there already is the exact same event
-      throw new Error("The exact same (all day) event already exists");
+      throw new Error(errorMessage);
     } else {
       setAllDayEventsArray((prev) => [...prev, newAllDayEvent]);
     }
@@ -37,7 +38,7 @@ export function handleFormSubmit(
     };
 
     if (notAllDayEventExists(notAllDayEvents, newNotAllDayEvent)) {
-      throw new Error("The exact same (not all day) event already exists");
+      throw new Error(errorMessage);
     } else {
       setNotAllDayEventsArray((prev) => [...prev, newNotAllDayEvent]);
     }
