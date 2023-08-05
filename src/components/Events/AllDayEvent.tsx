@@ -3,11 +3,11 @@ import { allDayEventsArrayAtom } from "../../contexts/events";
 import { useAtom } from "jotai";
 import { EditEventModal } from "../Modal/EditEventModal";
 
-export function AllDayEvent(props: allDayEvent): ReactElement {
+export function AllDayEvent(props: event): ReactElement {
   const { eventColor, eventName, id } = props;
   const [allDayEventsArray] = useAtom(allDayEventsArrayAtom);
   const [isModalOpened, setIsModalOpened] = useState(false);
-  const [selectedEvent, setSelectedEvent] = useState<allDayEvent | null>(null);
+  const [selectedEvent, setSelectedEvent] = useState<event | null>(null);
   function handleClick() {
     allDayEventsArray.forEach((allDayEvent) => {
       if (allDayEvent.id == id) {

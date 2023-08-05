@@ -4,34 +4,46 @@ import { Form } from "./Form/Form";
 import { formState } from "../../types/Modal_FormGroupProps";
 import { EventModalReducer } from "../../reducers/EventModalReducer";
 import { useAtom } from "jotai";
-import { allDayEventsArrayAtom } from "../../contexts/events";
+import {
+  allDayEventsArrayAtom,
+  notAllDayEventsArrayAtom,
+} from "../../contexts/events";
+import { editEventFormSubmit } from "../../helpers/Modal/editEventFormSubmit";
 
 export function EditEventModal({
-  event: { eventColor, eventName, eventDate, id },
+  event: { eventColor, eventName, eventDate, isAllDayChecked, id },
   setIsModalOpened,
 }: EditEventModalProps): ReactElement {
   const modalRef = useRef(null);
   const handleEventModal = () => setIsModalOpened(false);
-  const [allDayEventsArray] = useAtom(allDayEventsArrayAtom);
-
-  function onFormSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    handleCloseBtn(handleEventModal, modalRef);
-
-    allDayEventsArray.forEach((event) => {
-      if (event.id == id) {
-        console.log(event);
-      }
-    });
-  }
+  const [allDayEventsArray, setAllDayEventsArray] = useAtom(
+    allDayEventsArrayAtom,
+  );
+  const [notAllDayEventsArray, setNotAllDayEventsArray] = useAtom(
+    notAllDayEventsArrayAtom,
+  );
 
   const [state, dispatch] = useReducer(EventModalReducer, {
     eventName: eventName,
-    isAllDayChecked: true,
+    isAllDayChecked: isAllDayChecked,
     eventColor: eventColor,
     startTime: "",
     endTime: "",
   } as formState);
+
+  function onFormSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    handleCloseBtn(handleEventModal, modalRef);
+    editEventFormSubmit(
+      allDayEventsArray,
+      notAllDayEventsArray,
+      id,
+      state,
+      eventDate,
+      setNotAllDayEventsArray,
+      setAllDayEventsArray,
+    );
+  }
 
   return (
     <>

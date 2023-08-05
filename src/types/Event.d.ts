@@ -2,12 +2,9 @@ type eventColor = "blue" | "red" | "green";
 type event = {
   id: string;
   eventColor: eventColor;
+  isAllDayChecked: boolean;
   eventName: string;
   eventDate?: string;
-};
-type allDayEvent = event;
-
-type notAllDayEvent = event & {
-  startTime: string;
-  endTime: string;
+  startTime?: string;
+  endTime?: string;
 };

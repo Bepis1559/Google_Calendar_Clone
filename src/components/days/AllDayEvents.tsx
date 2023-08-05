@@ -10,11 +10,18 @@ export function AllDayEvents(props: eventArrayProps): ReactElement {
   return (
     <>
       {allDayEventsArray.map(
-        ({ eventDate, eventColor, eventName, id: eventId }) => {
+        ({
+          eventDate,
+          eventColor,
+          eventName,
+          isAllDayChecked,
+          id: eventId,
+        }) => {
           const dateToCompareAgainst = format(visibleDate, "M/d/yy");
           const eventKey = `${id}--${dateToCompareAgainst}--allDayEvent--${eventDate}--${eventColor}--${eventName}`;
           return eventDate == dateToCompareAgainst ? (
             <AllDayEvent
+              isAllDayChecked={isAllDayChecked}
               id={eventId}
               key={eventKey}
               eventColor={eventColor}

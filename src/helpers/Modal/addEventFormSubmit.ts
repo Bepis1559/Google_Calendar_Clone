@@ -2,20 +2,23 @@ import { Dispatch } from "react";
 import { type formState } from "../../types/Modal_FormGroupProps";
 import { SetStateAction } from "jotai";
 
-export function handleFormSubmit(
-  allDayEvents: allDayEvent[],
-  notAllDayEvents: notAllDayEvent[],
+export function addEventFormSubmit(
+  allDayEvents: event[],
+  notAllDayEvents: event[],
   state: formState,
-  setAllDayEventsArray: Dispatch<SetStateAction<allDayEvent[]>>,
-  setNotAllDayEventsArray: Dispatch<SetStateAction<notAllDayEvent[]>>,
+  setAllDayEventsArray: Dispatch<SetStateAction<event[]>>,
+  setNotAllDayEventsArray: Dispatch<SetStateAction<event[]>>,
   eventDate_formatted: string,
 ) {
   const errorMessage = "The event already exists";
   if (state.isAllDayChecked) {
     // it is an all day event
-    const { eventColor, eventName } = state;
-    const newAllDayEvent: allDayEvent = {
-      id: `${eventColor.trim()}--${eventName.trim()}--${eventDate_formatted.trim()}--wholeDay`,
+    const { eventColor, eventName, isAllDayChecked } = state;
+    const newAllDayEvent: event = {
+      id: crypto.randomUUID(),
+      isAllDayChecked: isAllDayChecked,
+      startTime: "",
+      endTime: "",
       eventColor: eventColor,
       eventName: eventName.trim(),
       eventDate: eventDate_formatted.trim(),
@@ -28,10 +31,12 @@ export function handleFormSubmit(
     }
   } else {
     // it is not an all day event
-    const { eventColor, eventName, startTime, endTime } = state;
+    const { eventColor, eventName, startTime, endTime, isAllDayChecked } =
+      state;
 
-    const newNotAllDayEvent: notAllDayEvent = {
-      id: `${eventColor.trim()}--${eventName.trim()}--${startTime.trim()}--${endTime.trim()}--${eventDate_formatted.trim()}--notWholeDay`,
+    const newNotAllDayEvent: event = {
+      id: crypto.randomUUID(),
+      isAllDayChecked: isAllDayChecked,
       eventColor: eventColor,
       eventName: eventName.trim(),
       startTime: startTime.trim(),
@@ -48,15 +53,30 @@ export function handleFormSubmit(
 }
 
 function doesEventExist(
-  events: allDayEvent[] | notAllDayEvent[],
-  { id }: allDayEvent,
+  events: event[],
+  {
+    eventColor,
+    eventName,
+    eventDate,
+    startTime,
+    endTime,
+    isAllDayChecked,
+  }: event,
 ) {
   let result = false;
-  events.forEach(({ id: eventId }) => {
-    if (id == eventId) {
+  events.forEach((event) => {
+    if (
+      event.eventColor == eventColor &&
+      event.eventName == eventName &&
+      event.eventDate == eventDate &&
+      event.startTime == startTime &&
+      event.endTime == endTime &&
+      event.isAllDayChecked == isAllDayChecked
+    ) {
       result = true;
+    } else {
+      result = false;
     }
   });
-
   return result;
 }

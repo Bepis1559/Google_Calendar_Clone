@@ -17,6 +17,7 @@ export function NotAllDayEvents(props: eventArrayProps): ReactElement {
           startTime,
           endTime,
           eventDate,
+          isAllDayChecked,
           id: eventId,
         }) => {
           const dateToCompareAgainst = format(visibleDate, "M/d/yy");
@@ -24,6 +25,7 @@ export function NotAllDayEvents(props: eventArrayProps): ReactElement {
           return eventDate == dateToCompareAgainst ? (
             <NotAllDayEvent
               id={eventId}
+              isAllDayChecked={isAllDayChecked}
               key={key}
               eventColor={eventColor}
               eventName={eventName}

@@ -7,7 +7,7 @@ import {
   allDayEventsArrayAtom,
   notAllDayEventsArrayAtom,
 } from "../../contexts/events";
-import { handleFormSubmit } from "../../helpers/Modal/formSubmit";
+import { addEventFormSubmit } from "../../helpers/Modal/addEventFormSubmit";
 import { formErrorAtom } from "../../contexts/Modal";
 import { Form } from "./Form/Form";
 
@@ -34,7 +34,7 @@ export function AddEventModal({
   const onFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      handleFormSubmit(
+      addEventFormSubmit(
         allDayEventsArray,
         notAllDayEventsArray,
         state,
