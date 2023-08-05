@@ -8,6 +8,9 @@ import type {
 } from "../../../types/Modal_FormGroupProps";
 import { useAtom } from "jotai";
 import { formErrorAtom } from "../../../contexts/Modal";
+import { DeleteButton } from "./DeleteButton";
+import { SaveButton } from "./SaveButton";
+import { AddButton } from "./AddButton";
 type propsType = {
   onFormSubmit: (e: FormEvent<HTMLFormElement>) => void;
   dispatch: Dispatch<reducerAction>;
@@ -86,16 +89,17 @@ export function Form(props: propsType): ReactElement {
           </div>
         </div>
         <div className="row">
-          <button
-            className={`btn btn-${formError ? "delete" : "success"}`}
-            type="submit">
-            {formError ? formError : formPurpose == "Edit" ? "Save" : "Add"}
-          </button>
-          {formPurpose == "Edit" ? (
+          {formError ? (
             <button className="btn btn-delete" type="button">
-              Delete
+              {formError}
             </button>
-          ) : null}
+          ) : formPurpose == "Edit" ? (
+            <SaveButton />
+          ) : (
+            <AddButton />
+          )}
+
+          {formPurpose == "Edit" ? <DeleteButton /> : null}
         </div>
       </form>
     </>
