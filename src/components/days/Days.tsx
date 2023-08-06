@@ -6,9 +6,8 @@ import { handleVisibleDates } from "../../helpers/Days/handleVisibleDates";
 import { handleDayClasses } from "../../helpers/Days/handleClasses";
 import { AddEventModal } from "../Modal/AddEventModal";
 import { handleEventModal } from "../../helpers/handleEventModal";
-import { NotAllDayEvents } from "./NotAllDayEvents";
-import { AllDayEvents } from "./AllDayEvents";
 import { DayHeader } from "./DayHeader";
+import { Events } from "../Events/Events";
 
 export function Days(): ReactElement {
   const [today] = useAtom(todaysAtom);
@@ -50,8 +49,7 @@ export function Days(): ReactElement {
                 setIsEventModalOpened={setIsEventModalOpened}
               />
 
-              <NotAllDayEvents visibleDate={visibleDate} id={id} />
-              <AllDayEvents visibleDate={visibleDate} id={id} />
+              <Events visibleDate={visibleDate} />
             </div>
           </Fragment>
         );

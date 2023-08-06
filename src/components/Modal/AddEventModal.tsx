@@ -3,13 +3,9 @@ import { handleCloseBtn } from "../../helpers/Modal/handleCloseButton";
 import type { formState } from "../../types/Modal_FormGroupProps";
 import { EventModalReducer } from "../../reducers/EventModalReducer";
 import { useAtom } from "jotai";
-import {
-  allDayEventsArrayAtom,
-  notAllDayEventsArrayAtom,
-} from "../../contexts/events";
-import { addEventFormSubmit } from "../../helpers/Modal/addEventFormSubmit";
 import { formErrorAtom } from "../../contexts/Modal";
 import { Form } from "./Form/Form";
+import { eventsAtom } from "../../contexts/events";
 
 export function AddEventModal({
   handleEventModal,
@@ -24,24 +20,12 @@ export function AddEventModal({
     endTime: "",
     eventColor: "blue",
   } as formState);
-  const [allDayEventsArray, setAllDayEventsArray] = useAtom(
-    allDayEventsArrayAtom,
-  );
-  const [notAllDayEventsArray, setNotAllDayEventsArray] = useAtom(
-    notAllDayEventsArrayAtom,
-  );
+  const [, setEventsArray] = useAtom(eventsAtom);
 
   const onFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      addEventFormSubmit(
-        allDayEventsArray,
-        notAllDayEventsArray,
-        state,
-        setAllDayEventsArray,
-        setNotAllDayEventsArray,
-        date,
-      );
+      addEvent();
       handleCloseBtn(handleEventModal, modalRef);
     } catch (error) {
       const errorMessage = (error as Error)?.message;
@@ -51,6 +35,16 @@ export function AddEventModal({
       }, 2000);
     }
   };
+
+  function addEvent() {
+    const newEvent: event = {
+      id: crypto.randomUUID(),
+      eventDate: date.trim(),
+      ...state,
+    };
+
+    setEventsArray((prev) => [...prev, newEvent]);
+  }
 
   return (
     <>

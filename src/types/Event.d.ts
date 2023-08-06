@@ -8,3 +8,9 @@ type event = {
   startTime?: string;
   endTime?: string;
 };
+
+type EventButtonProps = {
+  handleClick: () => void;
+  eventColor: eventColor;
+  eventName: string;
+};
