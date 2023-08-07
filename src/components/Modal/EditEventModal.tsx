@@ -52,8 +52,12 @@ export function EditEventModal({
     updateEventsArray();
   }
   function handleDelete() {
-    setEventsArray((prev) => prev.filter((event) => event.id != id));
-    handleCloseBtn(handleEventModal, modalRef);
+    function handleClose() {
+      setIsModalOpened(false);
+      setEventsArray((prev) => prev.filter((event) => event.id != id));
+    }
+
+    handleCloseBtn(handleClose, modalRef);
   }
 
   return (
