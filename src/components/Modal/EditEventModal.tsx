@@ -6,7 +6,6 @@ import { EventModalReducer } from "../../reducers/EventModalReducer";
 import { useAtom } from "jotai";
 
 import { eventsAtom } from "../../contexts/events";
-import { useEventsLocalStorage } from "../../hooks/useEventsLocalStorage";
 
 export function EditEventModal({
   event: {
@@ -52,7 +51,10 @@ export function EditEventModal({
     handleCloseBtn(handleEventModal, modalRef);
     updateEventsArray();
   }
-  useEventsLocalStorage();
+  function handleDelete() {
+    setEventsArray((prev) => prev.filter((event) => event.id != id));
+    handleCloseBtn(handleEventModal, modalRef);
+  }
 
   return (
     <>
@@ -75,6 +77,7 @@ export function EditEventModal({
             onFormSubmit={onFormSubmit}
             dispatch={dispatch}
             state={state}
+            handleDelete={handleDelete}
           />
         </div>
       </div>

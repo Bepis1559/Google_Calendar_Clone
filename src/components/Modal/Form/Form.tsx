@@ -15,6 +15,7 @@ type propsType = {
   state: formState;
   formPurpose: "Add" | "Edit";
   eventId?: string;
+  handleDelete?: () => void;
 };
 
 export function Form(props: propsType): ReactElement {
@@ -23,7 +24,7 @@ export function Form(props: propsType): ReactElement {
     dispatch,
     state: { eventName, isAllDayChecked, startTime, endTime, eventColor },
     formPurpose,
-    eventId,
+    handleDelete,
   } = props;
 
   return (
@@ -90,7 +91,7 @@ export function Form(props: propsType): ReactElement {
         <div className="row">
           {formPurpose == "Edit" ? (
             <>
-              <SaveButton /> <DeleteButton eventId={eventId!} />
+              <SaveButton /> <DeleteButton handleDelete={handleDelete!} />
             </>
           ) : (
             <AddButton />

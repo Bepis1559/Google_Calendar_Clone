@@ -5,7 +5,6 @@ import { EventModalReducer } from "../../reducers/EventModalReducer";
 import { useAtom } from "jotai";
 import { Form } from "./Form/Form";
 import { eventsAtom } from "../../contexts/events";
-import { useEventsLocalStorage } from "../../hooks/useEventsLocalStorage";
 
 export function AddEventModal({
   handleEventModal,
@@ -36,7 +35,6 @@ export function AddEventModal({
 
     setEventsArray((prev) => [...prev, newEvent]);
   }
-  useEventsLocalStorage();
 
   return (
     <>
