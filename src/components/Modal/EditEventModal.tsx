@@ -68,6 +68,7 @@ export function EditEventModal({
             </button>
           </div>
           <Form
+            eventId={id}
             formPurpose="Edit"
             onFormSubmit={onFormSubmit}
             dispatch={dispatch}

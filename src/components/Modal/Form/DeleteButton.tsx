@@ -1,9 +1,21 @@
+import { useAtom } from "jotai";
 import { type ReactElement } from "react";
+import { eventsAtom } from "../../../contexts/events";
 
-export function DeleteButton(): ReactElement {
+type props = {
+  eventId: string;
+};
+
+export function DeleteButton({ eventId }: props): ReactElement {
+  const [, setEvents] = useAtom(eventsAtom);
+
+  function handleClick() {
+    setEvents((prev) => prev.filter(({ id }) => id != eventId));
+  }
+
   return (
     <>
-      <button className="btn btn-delete" type="submit">
+      <button onClick={handleClick} className="btn btn-delete" type="submit">
         Delete
       </button>
     </>

@@ -16,6 +16,7 @@ type propsType = {
   dispatch: Dispatch<reducerAction>;
   state: formState;
   formPurpose: "Add" | "Edit";
+  eventId: string;
 };
 
 export function Form(props: propsType): ReactElement {
@@ -25,6 +26,7 @@ export function Form(props: propsType): ReactElement {
     dispatch,
     state: { eventName, isAllDayChecked, startTime, endTime, eventColor },
     formPurpose,
+    eventId,
   } = props;
 
   return (
@@ -99,7 +101,7 @@ export function Form(props: propsType): ReactElement {
             <AddButton />
           )}
 
-          {formPurpose == "Edit" ? <DeleteButton /> : null}
+          {formPurpose == "Edit" ? <DeleteButton eventId={eventId} /> : null}
         </div>
       </form>
     </>
