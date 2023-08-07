@@ -1,16 +1,11 @@
-import {
-  useRef,
-  type ReactElement,
-  useReducer,
-  type FormEvent,
-  useEffect,
-} from "react";
+import { useRef, type ReactElement, useReducer, type FormEvent } from "react";
 import { handleCloseBtn } from "../../helpers/Modal/handleCloseButton";
 import type { formState } from "../../types/Modal_FormGroupProps";
 import { EventModalReducer } from "../../reducers/EventModalReducer";
 import { useAtom } from "jotai";
 import { Form } from "./Form/Form";
 import { eventsAtom } from "../../contexts/events";
+import { useEventsLocalStorage } from "../../hooks/useEventsLocalStorage";
 
 export function AddEventModal({
   handleEventModal,
@@ -24,7 +19,7 @@ export function AddEventModal({
     endTime: "",
     eventColor: "blue",
   } as formState);
-  const [eventsArray, setEventsArray] = useAtom(eventsAtom);
+  const [, setEventsArray] = useAtom(eventsAtom);
 
   const onFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -41,10 +36,7 @@ export function AddEventModal({
 
     setEventsArray((prev) => [...prev, newEvent]);
   }
-
-  useEffect(() => {
-    localStorage.setItem("events", JSON.stringify(eventsArray));
-  }, [eventsArray]);
+  useEventsLocalStorage();
 
   return (
     <>

@@ -6,6 +6,7 @@ import { Event } from "./Event";
 
 export function Events({ visibleDate }: eventArrayProps): ReactElement {
   const [eventsArray] = useAtom(eventsAtom);
+
   return (
     <>
       {eventsArray.map((event) => {
