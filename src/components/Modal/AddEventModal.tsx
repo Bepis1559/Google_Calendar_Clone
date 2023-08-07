@@ -3,7 +3,6 @@ import { handleCloseBtn } from "../../helpers/Modal/handleCloseButton";
 import type { formState } from "../../types/Modal_FormGroupProps";
 import { EventModalReducer } from "../../reducers/EventModalReducer";
 import { useAtom } from "jotai";
-import { formErrorAtom } from "../../contexts/Modal";
 import { Form } from "./Form/Form";
 import { eventsAtom } from "../../contexts/events";
 
@@ -12,7 +11,6 @@ export function AddEventModal({
   date,
 }: AddEventModalProps): ReactElement {
   const modalRef = useRef<HTMLDivElement>(null);
-  const [, setFormError] = useAtom(formErrorAtom);
   const [state, dispatch] = useReducer(EventModalReducer, {
     isAllDayChecked: false,
     eventName: "",
@@ -24,16 +22,8 @@ export function AddEventModal({
 
   const onFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      addEvent();
-      handleCloseBtn(handleEventModal, modalRef);
-    } catch (error) {
-      const errorMessage = (error as Error)?.message;
-      setFormError(errorMessage);
-      setTimeout(() => {
-        setFormError(null);
-      }, 2000);
-    }
+    addEvent();
+    handleCloseBtn(handleEventModal, modalRef);
   };
 
   function addEvent() {
