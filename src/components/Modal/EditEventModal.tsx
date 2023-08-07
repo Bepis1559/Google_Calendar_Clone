@@ -1,4 +1,10 @@
-import { useRef, type ReactElement, type FormEvent, useReducer } from "react";
+import {
+  useRef,
+  type ReactElement,
+  type FormEvent,
+  useReducer,
+  useEffect,
+} from "react";
 import { handleCloseBtn } from "../../helpers/Modal/handleCloseButton";
 import { Form } from "./Form/Form";
 import { formState } from "../../types/Modal_FormGroupProps";
@@ -22,7 +28,7 @@ export function EditEventModal({
   const modalRef = useRef(null);
   const handleEventModal = () => setIsModalOpened(false);
 
-  const [, setEventsArray] = useAtom(eventsAtom);
+  const [eventsArray, setEventsArray] = useAtom(eventsAtom);
 
   const [state, dispatch] = useReducer(EventModalReducer, {
     eventName: eventName,
@@ -51,6 +57,10 @@ export function EditEventModal({
     handleCloseBtn(handleEventModal, modalRef);
     updateEventsArray();
   }
+
+  useEffect(() => {
+    localStorage.setItem("events", JSON.stringify(eventsArray));
+  }, [eventsArray]);
 
   return (
     <>
