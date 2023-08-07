@@ -1,5 +1,5 @@
 type EditEventModalProps = {
-  event: allDayEvent;
+  event: event;
   setIsModalOpened: Dispatch<SetStateAction<boolean>>;
   // | notAllDayEvent;
 };

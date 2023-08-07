@@ -8,7 +8,15 @@ import { useAtom } from "jotai";
 import { eventsAtom } from "../../contexts/events";
 
 export function EditEventModal({
-  event: { eventColor, eventName, eventDate, isAllDayChecked, id },
+  event: {
+    eventColor,
+    eventName,
+    eventDate,
+    isAllDayChecked,
+    startTime,
+    endTime,
+    id,
+  },
   setIsModalOpened,
 }: EditEventModalProps): ReactElement {
   const modalRef = useRef(null);
@@ -20,8 +28,8 @@ export function EditEventModal({
     eventName: eventName,
     isAllDayChecked: isAllDayChecked,
     eventColor: eventColor,
-    startTime: "",
-    endTime: "",
+    startTime: startTime,
+    endTime: endTime,
   } as formState);
 
   function updateEventsArray() {
