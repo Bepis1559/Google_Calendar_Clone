@@ -1,5 +1,12 @@
 import { useAtom } from "jotai";
-import { type ReactElement, useId, useRef, Fragment, useState } from "react";
+import {
+  type ReactElement,
+  useId,
+  useRef,
+  Fragment,
+  useState,
+  createRef,
+} from "react";
 import { todaysAtom } from "../../contexts/calendar";
 import { format } from "date-fns";
 import { handleVisibleDates } from "../../helpers/Days/handleVisibleDates";
@@ -8,6 +15,7 @@ import { AddEventModal } from "../Modal/AddEventModal";
 import { handleEventModal } from "../../helpers/handleEventModal";
 import { DayHeader } from "./DayHeader";
 import { Events } from "../Events/Events";
+import { useResizeDays } from "../../hooks/useResizeDays";
 
 export function Days(): ReactElement {
   const [today] = useAtom(todaysAtom);
@@ -17,8 +25,11 @@ export function Days(): ReactElement {
   const [isEventModalOpened, setIsEventModalOpened] = useState(
     visibleDates.map(() => false),
   );
-  const id = useId();
 
+  const id = useId();
+  const dayRefs = useRef(visibleDates.map(() => createRef<HTMLDivElement>()));
+
+  useResizeDays(dayRefs);
   return (
     <div className="days">
       {visibleDates.map((visibleDate, index) => {
@@ -38,6 +49,7 @@ export function Days(): ReactElement {
               />
             ) : null}
             <div
+              ref={dayRefs.current[index]}
               className={handleDayClasses(
                 today,
                 visibleDate,
