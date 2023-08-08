@@ -7,12 +7,40 @@ export function useResizeDays(
 ) {
   const [events] = useAtom(eventsAtom);
   useEffect(() => {
-    const chosenDay = dayRefs.current[10];
-    const chosenDayChildren = chosenDay.current?.children;
+    if (dayRefs.current) {
+      const divElements_days = dayRefs.current.map((day) => day.current);
+      const days = divElements_days.map((el) => el?.children);
+      const daysLastChild = days.map((day) => {
+        if (day) {
+          return day[day?.length - 1];
+        }
+      });
+      const daysLastEvents = daysLastChild.filter(
+        (lastChild) => lastChild?.tagName == "BUTTON",
+      );
 
-    if (chosenDayChildren) {
-      const lastEvent = chosenDayChildren[chosenDayChildren.length - 1];
-      console.log(lastEvent);
+      //   const parentsWithAtLeastOneEvent = daysLastEvents.map(lastEvent => lastEvent?.parentElement)
+      const resizeObserver = new ResizeObserver((entries) => {
+        entries.forEach(({ target }) => {
+          const parent = target.parentElement;
+          if (parent) {
+            if (
+              (target as HTMLButtonElement).offsetTop +
+                (target as HTMLButtonElement).offsetHeight >
+              parent.offsetTop + parent.offsetHeight
+            ) {
+              console.log("Overflowed");
+            }
+          }
+        });
+      });
+      daysLastEvents.forEach((lastEvent) => {
+        if (lastEvent) {
+          resizeObserver.observe(lastEvent);
+        }
+      });
+
+      return () => resizeObserver.disconnect();
     }
   }, [events, dayRefs]);
 }
