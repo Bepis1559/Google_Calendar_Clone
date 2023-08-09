@@ -16,13 +16,23 @@ export function useResizeDays(
           Array.from(dayChild).filter((day) => day.tagName == "BUTTON"),
       );
 
-      // const removedEvents: HTMLButtonElement[] = [];
+      const removedEvents: HTMLButtonElement[][] = daysArray.map(() => []);
+      // console.log(removedEvents);
       const resizeObserver = new ResizeObserver((entries) => {
         entries.forEach(({ target }) => {
           const { parentElement } = target;
           if (parentElement) {
             if (isIntersecting(target as HTMLButtonElement, parentElement)) {
-              console.log(target, parentElement);
+              daysArray.forEach((day, dayIndex) => {
+                day?.forEach((event, eventIndex) => {
+                  if (event == target) {
+                    console.log(target);
+                    console.log(
+                      `dayIndex : ${dayIndex},eventIndex : ${eventIndex}`,
+                    );
+                  }
+                });
+              });
             }
           }
         });
