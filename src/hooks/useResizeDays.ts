@@ -24,7 +24,7 @@ export function useResizeDays(
           if (parentElement) {
             if (isIntersecting(target as HTMLButtonElement, parentElement)) {
               daysArray.forEach((day, dayIndex) => {
-                day?.forEach((event, eventIndex) => {
+                day?.forEach((event) => {
                   if (event == target) {
                     removedEvents[dayIndex].push(target as HTMLButtonElement);
                     target.remove();
@@ -32,6 +32,15 @@ export function useResizeDays(
                 });
               });
             }
+
+            const parentHeight = parentElement.getBoundingClientRect().height;
+            let childrenHeight = 0;
+            Array.from(parentElement.children).forEach((child) => {
+              console.log(child);
+              childrenHeight += child.getBoundingClientRect().height;
+            });
+            console.log("parentHeight : " + parentHeight);
+            console.log("childrenHeight : " + childrenHeight);
           }
         });
       });
