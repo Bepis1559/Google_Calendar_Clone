@@ -26,10 +26,8 @@ export function useResizeDays(
               daysArray.forEach((day, dayIndex) => {
                 day?.forEach((event, eventIndex) => {
                   if (event == target) {
-                    console.log(target);
-                    console.log(
-                      `dayIndex : ${dayIndex},eventIndex : ${eventIndex}`,
-                    );
+                    removedEvents[dayIndex].push(target as HTMLButtonElement);
+                    target.remove();
                   }
                 });
               });
