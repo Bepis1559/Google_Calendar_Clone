@@ -32,15 +32,7 @@ export function useResizeDays(
                 });
               });
             }
-
-            const parentHeight = parentElement.getBoundingClientRect().height;
-            let childrenHeight = 0;
-            Array.from(parentElement.children).forEach((child) => {
-              console.log(child);
-              childrenHeight += child.getBoundingClientRect().height;
-            });
-            console.log("parentHeight : " + parentHeight);
-            console.log("childrenHeight : " + childrenHeight);
+            console.log(isTherePlaceForEvent(parentElement));
           }
         });
       });
@@ -51,6 +43,24 @@ export function useResizeDays(
       return () => resizeObserver.disconnect();
     }
   }, [events, dayRefs]);
+}
+
+function isTherePlaceForEvent(parentElement: HTMLElement) {
+  const parentHeight = parentElement.getBoundingClientRect().height;
+  let childrenHeight = 0;
+  let eventHeight = 0;
+  // let eventMargin_Bottom = 0;
+  Array.from(parentElement.children).forEach((child) => {
+    childrenHeight += child.getBoundingClientRect().height;
+    if (child.tagName == "BUTTON") {
+      eventHeight = child.getBoundingClientRect().height;
+    }
+  });
+  // console.log("parentHeight : " + parentHeight);
+  // console.log("childrenHeight : " + childrenHeight);
+  // console.log("eventHeight : " + eventHeight);
+
+  return parentHeight - childrenHeight > eventHeight;
 }
 
 function isIntersecting(child: HTMLButtonElement, parent: HTMLElement) {
