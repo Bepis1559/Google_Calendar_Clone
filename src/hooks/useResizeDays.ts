@@ -9,38 +9,36 @@ export function useResizeDays(
   useEffect(() => {
     if (dayRefs.current) {
       const divElements_days = dayRefs.current.map((day) => day.current);
-      const days = divElements_days.map((el) => el?.children);
-      const daysLastChild = days.map((day) => {
-        if (day) {
-          return day[day?.length - 1];
-        }
-      });
-      const daysLastEvents = daysLastChild.filter(
-        (lastChild) => lastChild?.tagName == "BUTTON",
+      const daysChildren = divElements_days.map((el) => el?.children);
+      const daysArray = daysChildren.map(
+        (dayChild) =>
+          dayChild &&
+          Array.from(dayChild).filter((day) => day.tagName == "BUTTON"),
       );
 
-      //   const parentsWithAtLeastOneEvent = daysLastEvents.map(lastEvent => lastEvent?.parentElement)
+      // const removedEvents: HTMLButtonElement[] = [];
       const resizeObserver = new ResizeObserver((entries) => {
         entries.forEach(({ target }) => {
-          const parent = target.parentElement;
-          if (parent) {
-            if (
-              (target as HTMLButtonElement).offsetTop +
-                (target as HTMLButtonElement).offsetHeight >
-              parent.offsetTop + parent.offsetHeight
-            ) {
-              console.log("Overflowed");
+          const { parentElement } = target;
+          if (parentElement) {
+            if (isIntersecting(target as HTMLButtonElement, parentElement)) {
+              console.log(target, parentElement);
             }
           }
         });
       });
-      daysLastEvents.forEach((lastEvent) => {
-        if (lastEvent) {
-          resizeObserver.observe(lastEvent);
-        }
+      daysArray.forEach((day) => {
+        day?.forEach((event) => resizeObserver.observe(event));
       });
 
       return () => resizeObserver.disconnect();
     }
   }, [events, dayRefs]);
+}
+
+function isIntersecting(child: HTMLButtonElement, parent: HTMLElement) {
+  return (
+    child.offsetTop + child.offsetHeight >
+    parent.offsetTop + parent.offsetHeight
+  );
 }
