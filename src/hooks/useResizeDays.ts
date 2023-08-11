@@ -1,10 +1,5 @@
 import { useAtom } from "jotai";
-import {
-  type MutableRefObject,
-  type RefObject,
-  useEffect,
-  // useCallback,
-} from "react";
+import { type MutableRefObject, type RefObject, useEffect } from "react";
 import { eventsAtom } from "../contexts/events";
 import { handleRemove } from "../helpers/ResizeDays";
 
@@ -31,12 +26,16 @@ export function useResizeDays(
       const resizeObserver = new ResizeObserver((entries) => {
         entries.forEach(({ target }) => {
           const { parentElement } = target;
-          parentElement &&
+          if (parentElement) {
             handleRemove(
               target as HTMLButtonElement,
               parentElement,
               removedEvents,
             );
+            //
+            //
+            //
+          }
         });
       });
       daysArray.forEach((day) => {
