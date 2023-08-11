@@ -1,10 +1,29 @@
 import { useAtom } from "jotai";
-import { type MutableRefObject, type RefObject, useEffect } from "react";
+import {
+  type MutableRefObject,
+  type RefObject,
+  useEffect,
+  useCallback,
+} from "react";
 import { eventsAtom } from "../contexts/events";
+import {
+  appendEventBackIfPossible,
+  isIntersecting,
+} from "../helpers/ResizeDays";
+
+export type removedEventsType = {
+  event: HTMLButtonElement;
+  parent: HTMLElement;
+};
 
 export function useResizeDays(
   dayRefs: MutableRefObject<RefObject<HTMLDivElement>[]>,
 ) {
+  const appendEventBackIfPossible_withCallBack = useCallback(
+    appendEventBackIfPossible,
+    [],
+  );
+
   const [events] = useAtom(eventsAtom);
   useEffect(() => {
     if (dayRefs.current) {
@@ -16,8 +35,7 @@ export function useResizeDays(
           Array.from(dayChild).filter((day) => day.tagName == "BUTTON"),
       );
 
-      const removedEvents: HTMLButtonElement[][] = daysArray.map(() => []);
-      // console.log(removedEvents);
+      const removedEvents: removedEventsType[][] = daysArray.map(() => []);
       const resizeObserver = new ResizeObserver((entries) => {
         entries.forEach(({ target }) => {
           const { parentElement } = target;
@@ -26,13 +44,15 @@ export function useResizeDays(
               daysArray.forEach((day, dayIndex) => {
                 day?.forEach((event) => {
                   if (event == target) {
-                    removedEvents[dayIndex].push(target as HTMLButtonElement);
+                    removedEvents[dayIndex].push({
+                      event: target as HTMLButtonElement,
+                      parent: parentElement,
+                    });
                     target.remove();
                   }
                 });
               });
             }
-            console.log(isTherePlaceForEvent(parentElement));
           }
         });
       });
@@ -42,30 +62,5 @@ export function useResizeDays(
 
       return () => resizeObserver.disconnect();
     }
-  }, [events, dayRefs]);
-}
-
-function isTherePlaceForEvent(parentElement: HTMLElement) {
-  const parentHeight = parentElement.getBoundingClientRect().height;
-  let childrenHeight = 0;
-  let eventHeight = 0;
-  // let eventMargin_Bottom = 0;
-  Array.from(parentElement.children).forEach((child) => {
-    childrenHeight += child.getBoundingClientRect().height;
-    if (child.tagName == "BUTTON") {
-      eventHeight = child.getBoundingClientRect().height;
-    }
-  });
-  // console.log("parentHeight : " + parentHeight);
-  // console.log("childrenHeight : " + childrenHeight);
-  // console.log("eventHeight : " + eventHeight);
-
-  return parentHeight - childrenHeight > eventHeight;
-}
-
-function isIntersecting(child: HTMLButtonElement, parent: HTMLElement) {
-  return (
-    child.offsetTop + child.offsetHeight >
-    parent.offsetTop + parent.offsetHeight
-  );
+  }, [events, dayRefs, appendEventBackIfPossible_withCallBack]);
 }
