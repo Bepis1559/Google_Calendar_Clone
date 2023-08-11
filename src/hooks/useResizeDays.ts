@@ -3,15 +3,12 @@ import {
   type MutableRefObject,
   type RefObject,
   useEffect,
-  useCallback,
+  // useCallback,
 } from "react";
 import { eventsAtom } from "../contexts/events";
-import {
-  appendEventBackIfPossible,
-  isIntersecting,
-} from "../helpers/ResizeDays";
+import { handleRemove } from "../helpers/ResizeDays";
 
-export type removedEventsType = {
+export type removedEventType = {
   event: HTMLButtonElement;
   parent: HTMLElement;
 };
@@ -19,11 +16,6 @@ export type removedEventsType = {
 export function useResizeDays(
   dayRefs: MutableRefObject<RefObject<HTMLDivElement>[]>,
 ) {
-  const appendEventBackIfPossible_withCallBack = useCallback(
-    appendEventBackIfPossible,
-    [],
-  );
-
   const [events] = useAtom(eventsAtom);
   useEffect(() => {
     if (dayRefs.current) {
@@ -35,25 +27,15 @@ export function useResizeDays(
           Array.from(dayChild).filter((day) => day.tagName == "BUTTON"),
       );
 
-      const removedEvents: removedEventsType[][] = daysArray.map(() => []);
+      const removedEvents: removedEventType[] = [];
       const resizeObserver = new ResizeObserver((entries) => {
         entries.forEach(({ target }) => {
           const { parentElement } = target;
-          if (parentElement) {
-            if (isIntersecting(target as HTMLButtonElement, parentElement)) {
-              daysArray.forEach((day, dayIndex) => {
-                day?.forEach((event) => {
-                  if (event == target) {
-                    removedEvents[dayIndex].push({
-                      event: target as HTMLButtonElement,
-                      parent: parentElement,
-                    });
-                    target.remove();
-                  }
-                });
-              });
-            }
-          }
+          handleRemove(
+            target as HTMLButtonElement,
+            parentElement!,
+            removedEvents,
+          );
         });
       });
       daysArray.forEach((day) => {
@@ -62,5 +44,5 @@ export function useResizeDays(
 
       return () => resizeObserver.disconnect();
     }
-  }, [events, dayRefs, appendEventBackIfPossible_withCallBack]);
+  }, [events, dayRefs]);
 }

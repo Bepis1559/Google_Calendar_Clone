@@ -1,17 +1,33 @@
-import { type removedEventsType } from "../hooks/useResizeDays";
+import { type removedEventType } from "../hooks/useResizeDays";
 
-export function appendEventBackIfPossible(
-  removedEvents: removedEventsType[][],
+export function handleRemove(
+  target: HTMLButtonElement,
+  parentElement: HTMLElement,
+  removedEvents: removedEventType[],
 ) {
-  removedEvents.forEach((day) => {
-    day.forEach(({ event, parent }) => {
-      const dayLength = day.length;
-      if (dayLength && isTherePlaceForEvent(parent)) {
-        parent.appendChild(event);
-      }
-    });
-  });
+  if (isIntersecting(target as HTMLButtonElement, parentElement)) {
+    const eventToRemove: removedEventType = {
+      event: target as HTMLButtonElement,
+      parent: parentElement,
+    };
+    removedEvents.push(eventToRemove);
+    target.remove();
+    console.log(removedEvents);
+  }
 }
+
+// export function appendEventBackIfPossible(
+//   removedEvents: removedEventsType[][],
+// ) {
+//   removedEvents.forEach((day) => {
+//     day.forEach(({ event, parent }) => {
+//       const dayLength = day.length;
+//       if (dayLength && isTherePlaceForEvent(parent)) {
+//         parent.appendChild(event);
+//       }
+//     });
+//   });
+// }
 
 export function isTherePlaceForEvent(parentElement: HTMLElement) {
   const parentHeight = parentElement.getBoundingClientRect().height;
@@ -28,7 +44,7 @@ export function isTherePlaceForEvent(parentElement: HTMLElement) {
   return parentHeight - childrenHeight > eventHeight;
 }
 
-export function isIntersecting(child: HTMLButtonElement, parent: HTMLElement) {
+function isIntersecting(child: HTMLButtonElement, parent: HTMLElement) {
   return (
     child.offsetTop + child.offsetHeight >
     parent.offsetTop + parent.offsetHeight
