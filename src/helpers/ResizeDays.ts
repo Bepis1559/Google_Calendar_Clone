@@ -28,14 +28,17 @@ export function addEventBack(
   removedEventsObserver: ResizeObserver,
 ) {
   removedEvents.forEach((removedEvent) => {
+    const { parentElement } = target;
+    const { parent, target: removedEventTarget } = removedEvent;
     if (
-      removedEvent.parent.isEqualNode(removedEvent.parent) &&
-      isTherePlaceForEvent(target as HTMLButtonElement, removedEvent.parent)
+      parentElement &&
+      parent.id == parentElement.id &&
+      isTherePlaceForEvent(target as HTMLButtonElement, parent)
     ) {
       console.log("trying to add event back");
-      removedEvent.parent.appendChild(removedEvent.target);
+      parent.appendChild(removedEventTarget);
       removedEventsObserver.unobserve(target);
-      currentEventsObserver.observe(removedEvent.target);
+      currentEventsObserver.observe(removedEventTarget);
     }
   });
 }

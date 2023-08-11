@@ -56,10 +56,6 @@ export function useResizeDays(
         day?.forEach((event) => currentEventsObserver.observe(event));
       });
 
-      // removedEvents.forEach((removedEvent) =>
-      //   removedEventsObserver.observe(removedEvent.target),
-      // );
-
       return () => {
         currentEventsObserver.disconnect();
         removedEventsObserver.disconnect();
