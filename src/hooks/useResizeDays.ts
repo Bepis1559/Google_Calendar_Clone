@@ -1,7 +1,7 @@
 import { useAtom } from "jotai";
 import { type MutableRefObject, type RefObject, useEffect } from "react";
 import { eventsAtom } from "../contexts/events";
-import { handleRemove, isTherePlaceForEvent } from "../helpers/ResizeDays";
+import { handleAddEventBack, handleRemove } from "../helpers/ResizeDays";
 
 export type removedEventType = {
   target: HTMLButtonElement;
@@ -35,14 +35,11 @@ export function useResizeDays(
             //
             //
             //
-            removedEvents.forEach((event) => {
-              if (
-                event.parent.isEqualNode(parentElement) &&
-                isTherePlaceForEvent(target as HTMLButtonElement, parentElement)
-              ) {
-                parentElement.appendChild(event.target);
-              }
-            });
+            handleAddEventBack(
+              removedEvents,
+              target as HTMLButtonElement,
+              parentElement,
+            );
           }
         });
       });

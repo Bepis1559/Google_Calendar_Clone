@@ -15,6 +15,21 @@ export function handleRemove(
   }
 }
 
+export function handleAddEventBack(
+  removedEvents: removedEventType[],
+  target: HTMLButtonElement,
+  parentElement: HTMLElement,
+) {
+  removedEvents.forEach((removedEvent) => {
+    if (
+      removedEvent.parent.isEqualNode(parentElement) &&
+      isTherePlaceForEvent(target as HTMLButtonElement, parentElement)
+    ) {
+      parentElement.appendChild(removedEvent.target);
+    }
+  });
+}
+
 export function isTherePlaceForEvent(
   target: HTMLButtonElement,
   parentElement: HTMLElement,
