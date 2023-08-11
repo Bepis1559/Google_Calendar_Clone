@@ -7,7 +7,7 @@ export function handleRemove(
 ) {
   if (isIntersecting(target as HTMLButtonElement, parentElement)) {
     const eventToRemove: removedEventType = {
-      event: target as HTMLButtonElement,
+      target: target as HTMLButtonElement,
       parent: parentElement,
     };
     removedEvents.push(eventToRemove);
