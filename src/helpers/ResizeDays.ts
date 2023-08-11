@@ -21,12 +21,7 @@ export function isTherePlaceForEvent(
 ) {
   const parentHeight = parentElement.getBoundingClientRect().height;
   const eventHeight = target.getBoundingClientRect().height;
-
-  let childrenHeight = 0;
-  // let eventMargin_Bottom = 0;
-  Array.from(parentElement.children).forEach((child) => {
-    childrenHeight += child.getBoundingClientRect().height;
-  });
+  const childrenHeight = getChildrenHeight(parentElement);
 
   return parentHeight - childrenHeight > eventHeight;
 }
@@ -36,4 +31,13 @@ function isIntersecting(child: HTMLButtonElement, parent: HTMLElement) {
     child.offsetTop + child.offsetHeight >
     parent.offsetTop + parent.offsetHeight
   );
+}
+
+function getChildrenHeight(parentElement: HTMLElement) {
+  let childrenHeight = 0;
+  Array.from(parentElement.children).forEach((child) => {
+    childrenHeight += child.getBoundingClientRect().height;
+  });
+
+  return childrenHeight;
 }
