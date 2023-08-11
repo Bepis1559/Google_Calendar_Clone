@@ -28,6 +28,7 @@ export function Days(): ReactElement {
 
   const id = useId();
   const dayRefs = useRef(visibleDates.map(() => createRef<HTMLDivElement>()));
+  const daysIds = useRef(visibleDates.map(() => crypto.randomUUID()));
 
   useResizeDays(dayRefs);
   return (
@@ -45,7 +46,7 @@ export function Days(): ReactElement {
               />
             ) : null}
             <div
-              id={crypto.randomUUID()}
+              id={daysIds.current[index]}
               ref={dayRefs.current[index]}
               className={handleDayClasses(
                 today,
