@@ -19,8 +19,8 @@ export function isTherePlaceForEvent(
   target: HTMLButtonElement,
   parentElement: HTMLElement,
 ) {
-  const parentHeight = parentElement.getBoundingClientRect().height;
-  const eventHeight = target.getBoundingClientRect().height;
+  const parentHeight = elementHeight(parentElement);
+  const eventHeight = elementHeight(target);
   const childrenHeight = getChildrenHeight(parentElement);
 
   return parentHeight - childrenHeight > eventHeight;
@@ -36,8 +36,12 @@ function isIntersecting(child: HTMLButtonElement, parent: HTMLElement) {
 function getChildrenHeight(parentElement: HTMLElement) {
   let childrenHeight = 0;
   Array.from(parentElement.children).forEach((child) => {
-    childrenHeight += child.getBoundingClientRect().height;
+    childrenHeight += elementHeight(child as HTMLElement);
   });
 
   return childrenHeight;
+}
+
+function elementHeight(element: HTMLElement) {
+  return element.getBoundingClientRect().height;
 }
