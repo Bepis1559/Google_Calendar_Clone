@@ -1,7 +1,7 @@
 import { useAtom } from "jotai";
 import { type MutableRefObject, type RefObject, useEffect } from "react";
 import { eventsAtom } from "../contexts/events";
-import { handleAddEventBack, handleRemove } from "../helpers/ResizeDays";
+import { addEventBack, handleRemove } from "../helpers/ResizeDays";
 
 export type removedEventType = {
   target: HTMLButtonElement;
@@ -35,7 +35,7 @@ export function useResizeDays(
             //
             //
             //
-            handleAddEventBack(
+            addEventBack(
               removedEvents,
               target as HTMLButtonElement,
               parentElement,

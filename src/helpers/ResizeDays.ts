@@ -15,7 +15,7 @@ export function handleRemove(
   }
 }
 
-export function handleAddEventBack(
+export function addEventBack(
   removedEvents: removedEventType[],
   target: HTMLButtonElement,
   parentElement: HTMLElement,
