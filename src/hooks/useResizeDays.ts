@@ -1,7 +1,15 @@
 import { useAtom } from "jotai";
-import { type MutableRefObject, type RefObject, useEffect } from "react";
+import {
+  type MutableRefObject,
+  type RefObject,
+  useEffect,
+  useMemo,
+} from "react";
 import { eventsAtom } from "../contexts/events";
-import { addEventBack, handleRemove } from "../helpers/ResizeDays";
+import {
+  addEventBack,
+  currentEventsObserverCallBack,
+} from "../helpers/ResizeDays";
 
 export type removedEventType = {
   target: HTMLButtonElement;
@@ -12,6 +20,7 @@ export function useResizeDays(
   dayRefs: MutableRefObject<RefObject<HTMLDivElement>[]>,
 ) {
   const [events] = useAtom(eventsAtom);
+  const removedEvents: removedEventType[] = useMemo(() => [], []);
   useEffect(() => {
     if (dayRefs.current) {
       const divElements_days = dayRefs.current.map((day) => day.current);
@@ -22,32 +31,39 @@ export function useResizeDays(
           Array.from(dayChild).filter((day) => day.tagName == "BUTTON"),
       );
 
-      const removedEvents: removedEventType[] = [];
-      const resizeObserver = new ResizeObserver((entries) => {
-        entries.forEach(({ target }) => {
-          const { parentElement } = target;
-          if (parentElement) {
-            handleRemove(
-              target as HTMLButtonElement,
-              parentElement,
-              removedEvents,
-            );
-            //
-            //
-            //
+      const currentEventsObserver: ResizeObserver = new ResizeObserver(
+        (entries) =>
+          currentEventsObserverCallBack(
+            entries,
+            removedEvents,
+            currentEventsObserver,
+            removedEventsObserver,
+          ),
+      );
+      const removedEventsObserver: ResizeObserver = new ResizeObserver(
+        (entries) =>
+          entries.forEach(({ target }) => {
             addEventBack(
               removedEvents,
               target as HTMLButtonElement,
-              parentElement,
+              currentEventsObserver,
+              removedEventsObserver,
             );
-          }
-        });
-      });
+          }),
+      );
+
       daysArray.forEach((day) => {
-        day?.forEach((event) => resizeObserver.observe(event));
+        day?.forEach((event) => currentEventsObserver.observe(event));
       });
 
-      return () => resizeObserver.disconnect();
+      // removedEvents.forEach((removedEvent) =>
+      //   removedEventsObserver.observe(removedEvent.target),
+      // );
+
+      return () => {
+        currentEventsObserver.disconnect();
+        removedEventsObserver.disconnect();
+      };
     }
-  }, [events, dayRefs]);
+  }, [events, dayRefs, removedEvents]);
 }
