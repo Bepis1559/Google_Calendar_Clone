@@ -12,20 +12,20 @@ export function handleRemove(
     };
     removedEvents.push(eventToRemove);
     target.remove();
-    console.log(removedEvents);
   }
 }
 
-export function isTherePlaceForEvent(parentElement: HTMLElement) {
+export function isTherePlaceForEvent(
+  target: HTMLButtonElement,
+  parentElement: HTMLElement,
+) {
   const parentHeight = parentElement.getBoundingClientRect().height;
+  const eventHeight = target.getBoundingClientRect().height;
+
   let childrenHeight = 0;
-  let eventHeight = 0;
   // let eventMargin_Bottom = 0;
   Array.from(parentElement.children).forEach((child) => {
     childrenHeight += child.getBoundingClientRect().height;
-    if (child.tagName == "BUTTON") {
-      eventHeight = child.getBoundingClientRect().height;
-    }
   });
 
   return parentHeight - childrenHeight > eventHeight;
