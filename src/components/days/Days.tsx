@@ -45,6 +45,7 @@ export function Days(): ReactElement {
               />
             ) : null}
             <div
+              id={crypto.randomUUID()}
               ref={dayRefs.current[index]}
               className={handleDayClasses(
                 today,

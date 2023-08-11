@@ -16,19 +16,6 @@ export function handleRemove(
   }
 }
 
-// export function appendEventBackIfPossible(
-//   removedEvents: removedEventsType[][],
-// ) {
-//   removedEvents.forEach((day) => {
-//     day.forEach(({ event, parent }) => {
-//       const dayLength = day.length;
-//       if (dayLength && isTherePlaceForEvent(parent)) {
-//         parent.appendChild(event);
-//       }
-//     });
-//   });
-// }
-
 export function isTherePlaceForEvent(parentElement: HTMLElement) {
   const parentHeight = parentElement.getBoundingClientRect().height;
   let childrenHeight = 0;

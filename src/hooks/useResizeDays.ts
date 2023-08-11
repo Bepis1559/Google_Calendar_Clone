@@ -31,11 +31,12 @@ export function useResizeDays(
       const resizeObserver = new ResizeObserver((entries) => {
         entries.forEach(({ target }) => {
           const { parentElement } = target;
-          handleRemove(
-            target as HTMLButtonElement,
-            parentElement!,
-            removedEvents,
-          );
+          parentElement &&
+            handleRemove(
+              target as HTMLButtonElement,
+              parentElement,
+              removedEvents,
+            );
         });
       });
       daysArray.forEach((day) => {
