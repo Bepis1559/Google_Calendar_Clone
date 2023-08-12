@@ -1,5 +1,6 @@
 import { type removedEventType } from "../hooks/useResizeDays";
 
+// removing event related
 export function handleRemove(
   day: HTMLDivElement,
   removedEvents: removedEventType[],
@@ -15,24 +16,21 @@ export function handleRemove(
     removedEvents.push(removedEventToPush);
   }
 }
+function isIntersecting(child: HTMLButtonElement, parent: HTMLElement) {
+  return (
+    child.offsetTop + child.offsetHeight >
+    parent.offsetTop + parent.offsetHeight
+  );
+}
 
-// export function addEventBack(
-//   removedEvents: removedEventType[],
-//   target: HTMLButtonElement,
-//   currentEventsObserver: ResizeObserver,
-//   removedEventsObserver: ResizeObserver,
-// ) {
-//   console.log("addEventBack called");
-//   const hasEventBeenRemoved = doesArrayContainById(removedEvents, target.id);
-//   removedEvents.forEach((event) => {
-//     if (isTherePlaceForEvent(event.parent!) && hasEventBeenRemoved) {
-//       event.parent?.appendChild(target);
-//       removedEventsObserver.unobserve(target);
-//       currentEventsObserver.observe(target);
-//     }
-//   });
-// }
-
+//
+//
+//
+//
+//
+//
+//
+// adding event back related
 function isTherePlaceForEvent(parentElement: HTMLElement) {
   const parentHeight = getElementHeight(parentElement);
   let eventHeight = 0;
@@ -47,13 +45,6 @@ function isTherePlaceForEvent(parentElement: HTMLElement) {
   const result = parentHeight - childrenHeight > eventHeight;
 
   return result;
-}
-
-function isIntersecting(child: HTMLButtonElement, parent: HTMLElement) {
-  return (
-    child.offsetTop + child.offsetHeight >
-    parent.offsetTop + parent.offsetHeight
-  );
 }
 
 function getChildrenHeight(parentElement: HTMLElement) {
