@@ -1,5 +1,18 @@
 import { type removedEventType } from "../hooks/useResizeDays";
 
+export function hadleObserving(
+  divElements_days: HTMLDivElement[],
+  daysDivsObserver: ResizeObserver,
+) {
+  divElements_days.forEach((div) => {
+    Array.from(div?.children).forEach((child) => {
+      if (child.tagName == "BUTTON") {
+        daysDivsObserver.observe(div);
+      }
+    });
+  });
+}
+
 // removing event related
 export function handleRemove(
   day: HTMLDivElement,
@@ -31,18 +44,23 @@ function isIntersecting(child: HTMLButtonElement, parent: HTMLElement) {
 //
 //
 // adding event back related
-function isTherePlaceForEvent(parentElement: HTMLElement) {
-  const parentHeight = getElementHeight(parentElement);
+
+function handleAddEventBack() {}
+
+export function isTherePlaceForEvent(day: HTMLElement) {
+  const parentHeight = getElementHeight(day);
   let eventHeight = 0;
-  Array.from(parentElement.children).forEach((child) => {
+  Array.from(day.children).forEach((child) => {
     if (child.tagName == "BUTTON") {
       eventHeight = getElementHeight(child);
+      // marginBlockEnd = parseFloat(getComputedStyle(child).marginBlockEnd);
       return;
     }
   });
-  const childrenHeight = getChildrenHeight(parentElement);
 
-  const result = parentHeight - childrenHeight > eventHeight;
+  const childrenHeight = getChildrenHeight(day);
+
+  const result = parentHeight - childrenHeight > 2 * eventHeight;
 
   return result;
 }
@@ -58,17 +76,4 @@ function getChildrenHeight(parentElement: HTMLElement) {
 
 function getElementHeight(element: HTMLElement | Element) {
   return element.getBoundingClientRect().height;
-}
-
-export function hadleObserving(
-  divElements_days: HTMLDivElement[],
-  daysDivsObserver: ResizeObserver,
-) {
-  divElements_days.forEach((div) => {
-    Array.from((div as Element)?.children).forEach((child) => {
-      if (child.tagName == "BUTTON") {
-        daysDivsObserver.observe(div as Element);
-      }
-    });
-  });
 }
