@@ -6,14 +6,12 @@ import {
   useMemo,
 } from "react";
 import { eventsAtom } from "../contexts/events";
-import {
-  addEventBack,
-  currentEventsObserverCallBack,
-} from "../helpers/ResizeDays";
+import { hadleObserving, handleRemove } from "../helpers/ResizeDays";
 
 export type removedEventType = {
   target: HTMLButtonElement;
-  parent: HTMLElement;
+  parent?: HTMLElement;
+  parentId: string;
 };
 
 export function useResizeDays(
@@ -23,42 +21,20 @@ export function useResizeDays(
   const removedEvents: removedEventType[] = useMemo(() => [], []);
   useEffect(() => {
     if (dayRefs.current) {
-      const divElements_days = dayRefs.current.map((day) => day.current);
-      const daysChildren = divElements_days.map((el) => el?.children);
-      const daysArray = daysChildren.map(
-        (dayChild) =>
-          dayChild &&
-          Array.from(dayChild).filter((day) => day.tagName == "BUTTON"),
-      );
+      const divElements_days = dayRefs.current.map(
+        (day) => day.current,
+      ) as HTMLDivElement[];
 
-      const currentEventsObserver: ResizeObserver = new ResizeObserver(
-        (entries) =>
-          currentEventsObserverCallBack(
-            entries,
-            removedEvents,
-            currentEventsObserver,
-            removedEventsObserver,
-          ),
-      );
-      const removedEventsObserver: ResizeObserver = new ResizeObserver(
-        (entries) =>
-          entries.forEach(({ target }) => {
-            addEventBack(
-              removedEvents,
-              target as HTMLButtonElement,
-              currentEventsObserver,
-              removedEventsObserver,
-            );
-          }),
-      );
-
-      daysArray.forEach((day) => {
-        day?.forEach((event) => currentEventsObserver.observe(event));
+      const daysDivsObserver = new ResizeObserver((entries) => {
+        entries.forEach(({ target }) => {
+          handleRemove(target as HTMLDivElement);
+        });
       });
 
+      hadleObserving(divElements_days, daysDivsObserver);
+
       return () => {
-        currentEventsObserver.disconnect();
-        removedEventsObserver.disconnect();
+        daysDivsObserver.disconnect();
       };
     }
   }, [events, dayRefs, removedEvents]);

@@ -11,6 +11,7 @@ type event = {
 
 type EventButtonProps = {
   handleClick: () => void;
+  eventId: string;
   eventColor: eventColor;
   eventName: string;
 };

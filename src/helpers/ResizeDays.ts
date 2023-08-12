@@ -1,55 +1,53 @@
 import { type removedEventType } from "../hooks/useResizeDays";
 
-export function handleRemove(
-  target: HTMLButtonElement,
-  parentElement: HTMLElement,
-  removedEvents: removedEventType[],
-  currentEventsObserver: ResizeObserver,
-  removedEventsObserver: ResizeObserver,
-) {
-  if (isIntersecting(target as HTMLButtonElement, parentElement)) {
-    const eventToRemove: removedEventType = {
-      target: target as HTMLButtonElement,
-      parent: parentElement,
-    };
-
-    removedEvents.push(eventToRemove);
-    target.remove();
-    currentEventsObserver.unobserve(target);
-    removedEventsObserver.observe(target);
+export function handleRemove(day: HTMLDivElement) {
+  // const childrenHeight = getChildrenHeight(day);
+  const lastEvent = day.children[day.children.length - 1] as HTMLButtonElement;
+  const shouldEventBeRemoved = isIntersecting(lastEvent, day);
+  if (shouldEventBeRemoved) {
+    lastEvent.remove();
   }
 }
 
 export function addEventBack(
   removedEvents: removedEventType[],
   target: HTMLButtonElement,
-
   currentEventsObserver: ResizeObserver,
   removedEventsObserver: ResizeObserver,
 ) {
-  removedEvents.forEach((removedEvent) => {
-    const { parentElement } = target;
-    const { parent, target: removedEventTarget } = removedEvent;
-    if (
-      parentElement &&
-      parent.id == parentElement.id &&
-      isTherePlaceForEvent(target as HTMLButtonElement, parent)
-    ) {
-      console.log("trying to add event back");
-      parent.appendChild(removedEventTarget);
+  console.log("addEventBack called");
+  const hasEventBeenRemoved = doesArrayContainById(removedEvents, target.id);
+  removedEvents.forEach((event) => {
+    if (isTherePlaceForEvent(event.parent!) && hasEventBeenRemoved) {
+      event.parent?.appendChild(target);
       removedEventsObserver.unobserve(target);
-      currentEventsObserver.observe(removedEventTarget);
+      currentEventsObserver.observe(target);
     }
   });
 }
 
-function isTherePlaceForEvent(
-  target: HTMLButtonElement,
-  parentElement: HTMLElement,
+function doesArrayContainById(
+  removedEvents: removedEventType[],
+  targetId: string,
 ) {
-  const parentHeight = elementHeight(parentElement);
-  const eventHeight = elementHeight(target);
+  const removedEventsIds = removedEvents.map(
+    (removedEvent) => removedEvent.target.id,
+  );
+
+  return removedEventsIds.includes(targetId);
+}
+
+function isTherePlaceForEvent(parentElement: HTMLElement) {
+  const parentHeight = getElementHeight(parentElement);
+  let eventHeight = 0;
+  Array.from(parentElement.children).forEach((child) => {
+    if (child.tagName == "BUTTON") {
+      eventHeight = getElementHeight(child);
+      return;
+    }
+  });
   const childrenHeight = getChildrenHeight(parentElement);
+
   const result = parentHeight - childrenHeight > eventHeight;
 
   return result;
@@ -65,32 +63,25 @@ function isIntersecting(child: HTMLButtonElement, parent: HTMLElement) {
 function getChildrenHeight(parentElement: HTMLElement) {
   let childrenHeight = 0;
   Array.from(parentElement.children).forEach((child) => {
-    childrenHeight += elementHeight(child as HTMLElement);
+    childrenHeight += getElementHeight(child as HTMLElement);
   });
 
   return childrenHeight;
 }
 
-function elementHeight(element: HTMLElement) {
+function getElementHeight(element: HTMLElement | Element) {
   return element.getBoundingClientRect().height;
 }
 
-export function currentEventsObserverCallBack(
-  entries: ResizeObserverEntry[],
-  removedEvents: removedEventType[],
-  currentEventsObserver: ResizeObserver,
-  removedEventsObserver: ResizeObserver,
+export function hadleObserving(
+  divElements_days: HTMLDivElement[],
+  daysDivsObserver: ResizeObserver,
 ) {
-  entries.forEach(({ target }) => {
-    const { parentElement } = target;
-    if (parentElement) {
-      handleRemove(
-        target as HTMLButtonElement,
-        parentElement,
-        removedEvents,
-        currentEventsObserver,
-        removedEventsObserver,
-      );
-    }
+  divElements_days.forEach((div) => {
+    Array.from((div as Element)?.children).forEach((child) => {
+      if (child.tagName == "BUTTON") {
+        daysDivsObserver.observe(div as Element);
+      }
+    });
   });
 }

@@ -4,10 +4,12 @@ export function AllDayEventButton({
   handleClick,
   eventColor,
   eventName,
+  eventId,
 }: EventButtonProps): ReactElement {
   return (
     <>
       <button
+        id={eventId}
         onClick={handleClick}
         type="button"
         className={`all-day-event ${eventColor} event`}>

@@ -29,12 +29,14 @@ export function Event(props: event): ReactElement {
       ) : null}
       {isAllDayChecked ? (
         <AllDayEventButton
+          eventId={id}
           handleClick={handleClick}
           eventColor={eventColor}
           eventName={eventName}
         />
       ) : (
         <NotAllDayEventButton
+          eventId={id}
           handleClick={handleClick}
           eventColor={eventColor}
           eventName={eventName}
