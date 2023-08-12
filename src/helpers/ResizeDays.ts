@@ -26,7 +26,7 @@ export function handleRemove(
       event: lastEvent,
       parent: day,
     };
-    removedEvents.push(removedEventToPush);
+    removedEvents.unshift(removedEventToPush);
   }
 }
 function isIntersecting(child: HTMLButtonElement, parent: HTMLElement) {
