@@ -1,6 +1,6 @@
 import { useAtom } from "jotai";
 import { type MutableRefObject, type RefObject, useEffect } from "react";
-import { eventsAtom } from "../contexts/events";
+import { eventsAtom, removedEventsAtom } from "../contexts/events";
 import {
   addEventBack,
   areThereAnyRemovedEventsFromThatDay,
@@ -11,20 +11,14 @@ import {
 } from "../helpers/ResizeDays";
 import { todaysAtom } from "../contexts/calendar";
 
-export type removedEventType = {
-  event: HTMLButtonElement;
-  parent: HTMLElement;
-};
-
 export function useResizeDays(
   dayRefs: MutableRefObject<RefObject<HTMLDivElement>[]>,
 ) {
   const [events] = useAtom(eventsAtom);
   const [today] = useAtom(todaysAtom);
+  const [removedEvents] = useAtom(removedEventsAtom);
 
   useEffect(() => {
-    const removedEvents: removedEventType[] = [];
-
     const { current } = dayRefs;
     if (current) {
       const divElements_days = current.map(
@@ -51,5 +45,5 @@ export function useResizeDays(
         daysDivsObserver.disconnect();
       };
     }
-  }, [events, dayRefs, today]);
+  }, [events, dayRefs, today, removedEvents]);
 }

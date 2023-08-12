@@ -1,5 +1,3 @@
-import { type removedEventType } from "../hooks/useResizeDays";
-
 export function hadleObserving(
   divElements_days: HTMLDivElement[],
   daysDivsObserver: ResizeObserver,
