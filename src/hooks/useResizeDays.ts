@@ -2,6 +2,8 @@ import { useAtom } from "jotai";
 import { type MutableRefObject, type RefObject, useEffect } from "react";
 import { eventsAtom } from "../contexts/events";
 import {
+  addEventBack,
+  areThereAnyRemovedEventsFromThatDay,
   hadleObserving,
   handleRemove,
   isTherePlaceForEvent,
@@ -25,10 +27,13 @@ export function useResizeDays(
 
       const daysDivsObserver = new ResizeObserver((entries) => {
         entries.forEach(({ target }) => {
-          const divTarget = target as HTMLDivElement;
-          handleRemove(divTarget, removedEvents);
-          if (isTherePlaceForEvent(divTarget)) {
-            console.log("there is place for an event to be added back");
+          const day = target as HTMLDivElement;
+          handleRemove(day, removedEvents);
+          if (
+            isTherePlaceForEvent(day) &&
+            areThereAnyRemovedEventsFromThatDay(day, removedEvents)
+          ) {
+            addEventBack(day, removedEvents);
           }
         });
       });

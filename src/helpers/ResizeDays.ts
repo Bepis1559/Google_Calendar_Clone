@@ -45,7 +45,27 @@ function isIntersecting(child: HTMLButtonElement, parent: HTMLElement) {
 //
 // adding event back related
 
-function handleAddEventBack() {}
+export function addEventBack(
+  day: HTMLDivElement,
+  removedEvents: removedEventType[],
+) {
+  removedEvents.forEach(({ event, parent }) => {
+    if (day.id == parent.id) {
+      day.append(event);
+      removedEvents = removedEvents.filter((el) => el.event.id != event.id);
+    }
+  });
+}
+
+export function areThereAnyRemovedEventsFromThatDay(
+  day: HTMLDivElement,
+  removedEvents: removedEventType[],
+) {
+  const daysIdsContainingRemovedEvents = removedEvents.map(
+    (removedEvent) => removedEvent.parent.id,
+  );
+  return daysIdsContainingRemovedEvents.includes(day.id);
+}
 
 export function isTherePlaceForEvent(day: HTMLElement) {
   const parentHeight = getElementHeight(day);
