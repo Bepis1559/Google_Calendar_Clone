@@ -84,6 +84,30 @@ export function isTherePlaceForEvent(day: HTMLElement) {
   return result;
 }
 
+export function syncEventsStateAndRemovedEventsArr(
+  removedEvents: removedEventType[],
+  events: event[],
+) {
+  // if an eventId isn't present in the events array , but
+  // it is in the removedEvents , remove it also from the
+  // removedEvents array, since it has been removed from
+  // storage and state
+  const removedEventsIds = removedEvents.map(({ event: { id } }) => id);
+  const eventsIds = events.map(({ id }) => id);
+  removedEventsIds.forEach((id) => {
+    if (!eventsIds.includes(id)) {
+      const index = removedEvents.findIndex(
+        ({ event: { id: eventId } }) => eventId === id,
+      );
+      if (index !== -1) {
+        removedEvents.splice(index, 1);
+      }
+    }
+  });
+}
+
+// non-exported functions
+
 function getChildrenHeight(parentElement: HTMLElement) {
   let childrenHeight = 0;
   Array.from(parentElement.children).forEach((child) => {

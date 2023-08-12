@@ -7,6 +7,7 @@ import {
   hadleObserving,
   handleRemove,
   isTherePlaceForEvent,
+  syncEventsStateAndRemovedEventsArr,
 } from "../helpers/ResizeDays";
 import { todaysAtom } from "../contexts/calendar";
 
@@ -36,6 +37,7 @@ export function useResizeDays(
             isTherePlaceForEvent(day) &&
             areThereAnyRemovedEventsFromThatDay(day, removedEvents)
           ) {
+            syncEventsStateAndRemovedEventsArr(removedEvents, events);
             addEventBack(day, removedEvents);
           }
         });
