@@ -24,8 +24,9 @@ export function useResizeDays(
 
   useEffect(() => {
     const removedEvents: removedEventType[] = [];
-    if (dayRefs.current) {
-      const divElements_days = dayRefs.current.map(
+    const { current } = dayRefs;
+    if (current) {
+      const divElements_days = current.map(
         (day) => day.current,
       ) as HTMLDivElement[];
 

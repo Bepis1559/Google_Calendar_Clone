@@ -16,7 +16,6 @@ import { handleEventModal } from "../../helpers/handleEventModal";
 import { DayHeader } from "./DayHeader";
 import { Events } from "../Events/Events";
 import { useResizeDays } from "../../hooks/useResizeDays";
-import { useSortEvents } from "../../hooks/useSortEvents";
 
 export function Days(): ReactElement {
   const [today] = useAtom(todaysAtom);
@@ -32,7 +31,7 @@ export function Days(): ReactElement {
   const daysIds = useRef(visibleDates.map(() => crypto.randomUUID()));
 
   useResizeDays(dayRefs);
-  useSortEvents();
+
   return (
     <div className="days">
       {visibleDates.map((visibleDate, index) => {

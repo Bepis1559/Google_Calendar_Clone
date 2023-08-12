@@ -5,6 +5,7 @@ import { EventModalReducer } from "../../reducers/EventModalReducer";
 import { useAtom } from "jotai";
 import { Form } from "./Form/Form";
 import { eventsAtom } from "../../contexts/events";
+import { sortEvents } from "../../helpers/Modal/sortEvents";
 
 export function AddEventModal({
   handleEventModal,
@@ -34,6 +35,7 @@ export function AddEventModal({
     };
 
     setEventsArray((prev) => [...prev, newEvent]);
+    sortEvents(setEventsArray);
   }
 
   return (
