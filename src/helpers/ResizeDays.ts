@@ -73,7 +73,6 @@ export function isTherePlaceForEvent(day: HTMLElement) {
   Array.from(day.children).forEach((child) => {
     if (child.tagName == "BUTTON") {
       eventHeight = getElementHeight(child);
-      // marginBlockEnd = parseFloat(getComputedStyle(child).marginBlockEnd);
       return;
     }
   });
