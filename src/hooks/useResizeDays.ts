@@ -1,25 +1,19 @@
 import { useAtom } from "jotai";
-import {
-  type MutableRefObject,
-  type RefObject,
-  useEffect,
-  useMemo,
-} from "react";
+import { type MutableRefObject, type RefObject, useEffect } from "react";
 import { eventsAtom } from "../contexts/events";
 import { hadleObserving, handleRemove } from "../helpers/ResizeDays";
 
 export type removedEventType = {
-  target: HTMLButtonElement;
-  parent?: HTMLElement;
-  parentId: string;
+  event: HTMLButtonElement;
+  parent: HTMLElement;
 };
 
 export function useResizeDays(
   dayRefs: MutableRefObject<RefObject<HTMLDivElement>[]>,
 ) {
   const [events] = useAtom(eventsAtom);
-  const removedEvents: removedEventType[] = useMemo(() => [], []);
   useEffect(() => {
+    const removedEvents: removedEventType[] = [];
     if (dayRefs.current) {
       const divElements_days = dayRefs.current.map(
         (day) => day.current,
@@ -27,7 +21,7 @@ export function useResizeDays(
 
       const daysDivsObserver = new ResizeObserver((entries) => {
         entries.forEach(({ target }) => {
-          handleRemove(target as HTMLDivElement);
+          handleRemove(target as HTMLDivElement, removedEvents);
         });
       });
 
@@ -37,5 +31,5 @@ export function useResizeDays(
         daysDivsObserver.disconnect();
       };
     }
-  }, [events, dayRefs, removedEvents]);
+  }, [events, dayRefs]);
 }
