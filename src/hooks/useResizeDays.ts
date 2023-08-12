@@ -8,6 +8,7 @@ import {
   handleRemove,
   isTherePlaceForEvent,
 } from "../helpers/ResizeDays";
+import { todaysAtom } from "../contexts/calendar";
 
 export type removedEventType = {
   event: HTMLButtonElement;
@@ -18,6 +19,8 @@ export function useResizeDays(
   dayRefs: MutableRefObject<RefObject<HTMLDivElement>[]>,
 ) {
   const [events] = useAtom(eventsAtom);
+  const [today] = useAtom(todaysAtom);
+
   useEffect(() => {
     const removedEvents: removedEventType[] = [];
     if (dayRefs.current) {
@@ -44,5 +47,5 @@ export function useResizeDays(
         daysDivsObserver.disconnect();
       };
     }
-  }, [events, dayRefs]);
+  }, [events, dayRefs, today]);
 }
