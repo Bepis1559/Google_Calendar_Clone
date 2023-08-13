@@ -17,24 +17,20 @@ export function hadleObserving(
 // removing event related
 export function handleRemove(
   day: HTMLDivElement,
+  lastEvent: HTMLButtonElement,
   setRemovedEvents: Dispatch<SetStateAction<removedEventType[]>>,
 ) {
-  const lastEvent = day.children[day.children.length - 1] as HTMLButtonElement;
-  const shouldEventBeRemoved = isIntersecting(lastEvent, day);
-  if (shouldEventBeRemoved) {
-    lastEvent.remove();
-    const removedEventToPush: removedEventType = {
+  setRemovedEvents((prev) => {
+    const event: removedEventType = {
       event: lastEvent,
       parent: day,
     };
-
-    setRemovedEvents((prev) => {
-      prev.unshift(removedEventToPush);
-      return prev;
-    });
-  }
+    prev.unshift(event);
+    return prev;
+  });
+  lastEvent.remove();
 }
-function isIntersecting(child: HTMLButtonElement, parent: HTMLElement) {
+export function isIntersecting(child: HTMLButtonElement, parent: HTMLElement) {
   return (
     child.offsetTop + child.offsetHeight >
     parent.offsetTop + parent.offsetHeight
@@ -55,16 +51,13 @@ export function addEventBack(
   removedEvents: removedEventType[],
   setRemovedEvents: Dispatch<SetStateAction<removedEventType[]>>,
 ) {
-  let eventToAddBack: HTMLButtonElement;
-  removedEvents.forEach(({ event, parent }) => {
-    if (day.id == parent.id) {
-      day.append(event);
-      eventToAddBack = event;
-    }
-  });
-  setRemovedEvents((prev) =>
-    prev.filter(({ event: { id } }) => id != eventToAddBack.id),
+  const eventToAddBack = removedEvents.find(
+    ({ parent }) => day.id == parent.id,
   );
+  setRemovedEvents((prev) =>
+    prev.filter(({ event: { id } }) => id != eventToAddBack?.event.id),
+  );
+  day.append(eventToAddBack?.event as HTMLButtonElement);
 }
 
 export function areThereAnyRemovedEventsFromThatDay(
@@ -89,7 +82,7 @@ export function isTherePlaceForEvent(day: HTMLElement) {
 
   const childrenHeight = getChildrenHeight(day);
 
-  const result = parentHeight - childrenHeight > 2 * eventHeight;
+  const result = parentHeight - childrenHeight > 2.3 * eventHeight;
 
   return result;
 }

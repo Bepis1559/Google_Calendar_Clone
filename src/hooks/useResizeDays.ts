@@ -6,6 +6,7 @@ import {
   areThereAnyRemovedEventsFromThatDay,
   hadleObserving,
   handleRemove,
+  isIntersecting,
   isTherePlaceForEvent,
   syncEventsStateAndRemovedEventsArr,
 } from "../helpers/ResizeDays";
@@ -32,23 +33,29 @@ export function useResizeDays(
             events,
             setRemovedEvents,
           );
+
         entries.forEach(({ target }) => {
           const day = target as HTMLDivElement;
-          sync();
-          handleRemove(day, setRemovedEvents);
-          sync();
-          if (
+          const { children } = day;
+          const lastEvent = children[children.length - 1] as HTMLButtonElement;
+          const shouldRemove = isIntersecting(lastEvent, day);
+          const shouldAdd =
             isTherePlaceForEvent(day) &&
-            areThereAnyRemovedEventsFromThatDay(day, removedEvents)
-          ) {
+            areThereAnyRemovedEventsFromThatDay(day, removedEvents);
+          if (shouldRemove) {
+            handleRemove(day, lastEvent, setRemovedEvents);
+            sync();
+          } else if (shouldAdd) {
+            console.log("shouldAdd ");
             addEventBack(day, removedEvents, setRemovedEvents);
             sync();
           }
         });
+        console.log(removedEvents);
+        // removedEvents.forEach(({ parent: { id } }) => console.log(id));
       });
 
       hadleObserving(divElements_days, daysDivsObserver);
-      // console.log(removedEvents);
       return () => {
         daysDivsObserver.disconnect();
       };
