@@ -26,14 +26,14 @@ export function useResizeDays(
       ) as HTMLDivElement[];
 
       const daysDivsObserver = new ResizeObserver((entries) => {
+        const sync = () =>
+          syncEventsStateAndRemovedEventsArr(
+            removedEvents,
+            events,
+            setRemovedEvents,
+          );
         entries.forEach(({ target }) => {
           const day = target as HTMLDivElement;
-          const sync = () =>
-            syncEventsStateAndRemovedEventsArr(
-              removedEvents,
-              events,
-              setRemovedEvents,
-            );
           sync();
           handleRemove(day, setRemovedEvents);
           sync();
@@ -48,7 +48,7 @@ export function useResizeDays(
       });
 
       hadleObserving(divElements_days, daysDivsObserver);
-
+      console.log(removedEvents);
       return () => {
         daysDivsObserver.disconnect();
       };
