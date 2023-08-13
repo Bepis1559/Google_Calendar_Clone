@@ -1,3 +1,6 @@
+import { SetStateAction } from "jotai";
+import { Dispatch } from "react";
+
 export function hadleObserving(
   divElements_days: HTMLDivElement[],
   daysDivsObserver: ResizeObserver,
@@ -14,7 +17,7 @@ export function hadleObserving(
 // removing event related
 export function handleRemove(
   day: HTMLDivElement,
-  removedEvents: removedEventType[],
+  setRemovedEvents: Dispatch<SetStateAction<removedEventType[]>>,
 ) {
   const lastEvent = day.children[day.children.length - 1] as HTMLButtonElement;
   const shouldEventBeRemoved = isIntersecting(lastEvent, day);
@@ -24,7 +27,11 @@ export function handleRemove(
       event: lastEvent,
       parent: day,
     };
-    removedEvents.unshift(removedEventToPush);
+
+    setRemovedEvents((prev) => {
+      prev.unshift(removedEventToPush);
+      return prev;
+    });
   }
 }
 function isIntersecting(child: HTMLButtonElement, parent: HTMLElement) {
@@ -46,13 +53,18 @@ function isIntersecting(child: HTMLButtonElement, parent: HTMLElement) {
 export function addEventBack(
   day: HTMLDivElement,
   removedEvents: removedEventType[],
+  setRemovedEvents: Dispatch<SetStateAction<removedEventType[]>>,
 ) {
+  let eventToAddBack: HTMLButtonElement;
   removedEvents.forEach(({ event, parent }) => {
     if (day.id == parent.id) {
       day.append(event);
-      removedEvents = removedEvents.filter((el) => el.event.id != event.id);
+      eventToAddBack = event;
     }
   });
+  setRemovedEvents((prev) =>
+    prev.filter(({ event: { id } }) => id != eventToAddBack.id),
+  );
 }
 
 export function areThereAnyRemovedEventsFromThatDay(
@@ -85,6 +97,7 @@ export function isTherePlaceForEvent(day: HTMLElement) {
 export function syncEventsStateAndRemovedEventsArr(
   removedEvents: removedEventType[],
   events: event[],
+  setRemovedEvents: Dispatch<SetStateAction<removedEventType[]>>,
 ) {
   // if an eventId isn't present in the events array , but
   // it is in the removedEvents , remove it also from the
@@ -98,7 +111,10 @@ export function syncEventsStateAndRemovedEventsArr(
         ({ event: { id: eventId } }) => eventId === id,
       );
       if (index !== -1) {
-        removedEvents.splice(index, 1);
+        setRemovedEvents((prev) => {
+          prev.splice(index, 1);
+          return prev;
+        });
       }
     }
   });

@@ -1,6 +1,9 @@
+import { useAtom } from "jotai";
 import { type ReactElement } from "react";
+import { removedEventsAtom } from "../../contexts/events";
 
 export function MoreEventsModal(): ReactElement {
+  const [removedEvents] = useAtom(removedEventsAtom);
   return (
     <>
       <div className="modal">
@@ -13,29 +16,9 @@ export function MoreEventsModal(): ReactElement {
             </button>
           </div>
           <div className="events">
-            <button type="button" className="all-day-event green event">
-              <div className="event-name">Short</div>
-            </button>
-            <button type="button" className="event">
-              <div className="color-dot blue"></div>
-              <div className="event-time">7am</div>
-              <div className="event-name">Event Name</div>
-            </button>
-            <button type="button" className="event">
-              <div className="color-dot green"></div>
-              <div className="event-time">8am</div>
-              <div className="event-name">Event Name</div>
-            </button>
-            <button type="button" className="event">
-              <div className="color-dot blue"></div>
-              <div className="event-time">9am</div>
-              <div className="event-name">Event Name</div>
-            </button>
-            <button type="button" className="event">
-              <div className="color-dot blue"></div>
-              <div className="event-time">10am</div>
-              <div className="event-name">Event Name</div>
-            </button>
+            {removedEvents.map(({ event }) => (
+              <>{event}</>
+            ))}
           </div>
         </div>
       </div>

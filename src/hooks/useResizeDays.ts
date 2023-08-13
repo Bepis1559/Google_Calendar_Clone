@@ -16,7 +16,7 @@ export function useResizeDays(
 ) {
   const [events] = useAtom(eventsAtom);
   const [today] = useAtom(todaysAtom);
-  const [removedEvents] = useAtom(removedEventsAtom);
+  const [removedEvents, setRemovedEvents] = useAtom(removedEventsAtom);
 
   useEffect(() => {
     const { current } = dayRefs;
@@ -28,13 +28,21 @@ export function useResizeDays(
       const daysDivsObserver = new ResizeObserver((entries) => {
         entries.forEach(({ target }) => {
           const day = target as HTMLDivElement;
-          handleRemove(day, removedEvents);
+          const sync = () =>
+            syncEventsStateAndRemovedEventsArr(
+              removedEvents,
+              events,
+              setRemovedEvents,
+            );
+          sync();
+          handleRemove(day, setRemovedEvents);
+          sync();
           if (
             isTherePlaceForEvent(day) &&
             areThereAnyRemovedEventsFromThatDay(day, removedEvents)
           ) {
-            syncEventsStateAndRemovedEventsArr(removedEvents, events);
-            addEventBack(day, removedEvents);
+            addEventBack(day, removedEvents, setRemovedEvents);
+            sync();
           }
         });
       });
@@ -45,5 +53,5 @@ export function useResizeDays(
         daysDivsObserver.disconnect();
       };
     }
-  }, [events, dayRefs, today, removedEvents]);
+  }, [events, dayRefs, today, removedEvents, setRemovedEvents]);
 }
