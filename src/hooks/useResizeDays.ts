@@ -48,7 +48,7 @@ export function useResizeDays(
       });
 
       hadleObserving(divElements_days, daysDivsObserver);
-      console.log(removedEvents);
+      // console.log(removedEvents);
       return () => {
         daysDivsObserver.disconnect();
       };
