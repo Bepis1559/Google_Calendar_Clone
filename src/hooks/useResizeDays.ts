@@ -51,7 +51,7 @@ export function useResizeDays(
             sync();
           }
         });
-        console.log(removedEvents);
+        // console.log(removedEvents);
         // removedEvents.forEach(({ parent: { id } }) => console.log(id));
       });
 
