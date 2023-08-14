@@ -58,6 +58,7 @@ export function useResizeDays(
               areThereAnyRemovedEventsFromThatDay(day, removedEvents);
             if (shouldRemove) {
               handleRemove(day, lastEvent, setRemovedEvents);
+
               sync();
             } else if (shouldAdd) {
               addEventBack(day, removedEvents, setRemovedEvents);

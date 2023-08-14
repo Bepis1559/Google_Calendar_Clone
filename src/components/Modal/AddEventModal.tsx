@@ -4,8 +4,8 @@ import type { formState } from "../../types/Modal_FormGroupProps";
 import { EventModalReducer } from "../../reducers/EventModalReducer";
 import { useAtom } from "jotai";
 import { Form } from "./Form/Form";
-import { eventsAtom } from "../../contexts/events";
-import { sortEvents } from "../../helpers/Modal/sortEvents";
+import { eventsAtom, removedEventsAtom } from "../../contexts/events";
+import { sortVisibleEvents } from "../../helpers/Modal/sortVisibleEvents";
 
 export function AddEventModal({
   handleEventModal,
@@ -20,6 +20,7 @@ export function AddEventModal({
     eventColor: "blue",
   } as formState);
   const [, setEventsArray] = useAtom(eventsAtom);
+  const [removedEvents] = useAtom(removedEventsAtom);
 
   const onFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -35,7 +36,7 @@ export function AddEventModal({
     };
 
     setEventsArray((prev) => [...prev, newEvent]);
-    sortEvents(setEventsArray);
+    sortVisibleEvents(setEventsArray, removedEvents);
   }
 
   return (

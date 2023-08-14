@@ -57,19 +57,24 @@ export function addEventBack(
   const eventToAddBack = removedEvents.find(
     ({ parent }) => day.id == parent.id,
   );
+
   setRemovedEvents((prev) =>
     prev.filter(({ event: { id } }) => id != eventToAddBack?.event.id),
   );
   const lastEvent = getLastButtonEvent(day);
+  // console.log("day : ", day);
+  // console.log("lastEvent : ", lastEvent);
   lastEvent.insertAdjacentElement(
     "afterend",
     eventToAddBack?.event as HTMLButtonElement,
   );
+
   // day.append(eventToAddBack?.event as HTMLButtonElement);
 }
 
 export function getLastButtonEvent(day: HTMLDivElement) {
   const events_buttons = day.querySelectorAll("button.event");
+  // console.log(events_buttons);
   const lastEvent = events_buttons[events_buttons.length - 1];
   return lastEvent as HTMLButtonElement;
 }

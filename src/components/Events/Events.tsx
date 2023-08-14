@@ -6,15 +6,16 @@ import { Event } from "./Event";
 
 export function Events({ visibleDate }: eventArrayProps): ReactElement {
   const [eventsArray] = useAtom(eventsAtom);
+  const dateToCompareAgainst = format(visibleDate, "M/d/yy");
+  const eventsToRender = eventsArray.filter(
+    ({ eventDate }) => eventDate == dateToCompareAgainst,
+  );
 
   return (
     <>
-      {eventsArray.map((event) => {
-        const dateToCompareAgainst = format(visibleDate, "M/d/yy");
-        return event.eventDate == dateToCompareAgainst ? (
-          <Event {...event} key={event.id} />
-        ) : null;
-      })}
+      {eventsToRender.map((event) => (
+        <Event {...event} key={event.id} />
+      ))}
     </>
   );
 }
