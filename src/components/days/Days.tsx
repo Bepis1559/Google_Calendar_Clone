@@ -6,6 +6,7 @@ import {
   Fragment,
   useState,
   createRef,
+  useEffect,
 } from "react";
 import { todaysAtom } from "../../contexts/calendar";
 import { format } from "date-fns";
@@ -36,6 +37,7 @@ export function Days(): ReactElement {
   const dayRefs = useRef(visibleDates.map(() => createRef<HTMLDivElement>()));
   const daysIds = useRef(visibleDates.map(() => crypto.randomUUID()));
 
+  useEffect(() => console.log(removedEvents), [removedEvents]);
   useResizeDays(dayRefs);
 
   return (

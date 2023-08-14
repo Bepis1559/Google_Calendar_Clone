@@ -29,8 +29,7 @@ export function handleRemove(
       event: lastEvent,
       parent: day,
     };
-    prev.unshift(event);
-    return prev;
+    return [event, ...prev];
   });
   lastEvent.remove();
 }
@@ -97,7 +96,7 @@ export function isTherePlaceForEvent(day: HTMLElement) {
 
   const childrenHeight = getChildrenHeight(day);
 
-  const result = parentHeight - childrenHeight > 2 * eventHeight;
+  const result = parentHeight - childrenHeight > 2.2 * eventHeight;
 
   return result;
 }
