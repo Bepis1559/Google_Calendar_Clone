@@ -17,7 +17,10 @@ import { handleEventModal } from "../../helpers/handleEventModal";
 import { DayHeader } from "./DayHeader";
 import { Events } from "../Events/Events";
 import { useResizeDays } from "../../hooks/useResizeDays";
-import { idsOfDaysWithEventsRemovedAtom } from "../../contexts/events";
+import {
+  idsOfDaysWithEventsRemovedAtom,
+  removedEventsAtom,
+} from "../../contexts/events";
 import { ShowMoreEventsButton } from "../hiddenEventsRelated/ShowMoreEventsButton";
 import { CountOccurrencesInArray } from "../../helpers/Days/CountOccurrencesInArray";
 
@@ -29,7 +32,7 @@ export function Days(): ReactElement {
   const [isEventModalOpened, setIsEventModalOpened] = useState(
     visibleDates.map(() => false),
   );
-
+  const [removedEvents] = useAtom(removedEventsAtom);
   const id = useId();
   const dayRefs = useRef(visibleDates.map(() => createRef<HTMLDivElement>()));
   const daysIds = useRef(visibleDates.map(() => crypto.randomUUID()));
@@ -76,7 +79,8 @@ export function Days(): ReactElement {
 
               <Events visibleDate={visibleDate} />
               {idsOfDaysWithEventsRemoved.includes(dayId) &&
-              numOfHiddenEvents > 0 ? (
+              numOfHiddenEvents > 0 &&
+              removedEvents.length > 0 ? (
                 <ShowMoreEventsButton numOfHiddenEvents={numOfHiddenEvents} />
               ) : null}
             </div>

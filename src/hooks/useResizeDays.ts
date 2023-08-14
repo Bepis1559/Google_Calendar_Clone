@@ -48,6 +48,10 @@ export function useResizeDays(
           const lastEvent = getLastButtonEvent(day);
 
           if (lastEvent) {
+            handleIdsOfRemovedEvents(
+              setIdsOfDaysWithEventsRemoved,
+              removedEvents,
+            );
             const shouldRemove = isIntersecting(lastEvent, day);
             const shouldAdd =
               isTherePlaceForEvent(day) &&
@@ -61,9 +65,7 @@ export function useResizeDays(
             }
           }
         });
-        handleIdsOfRemovedEvents(setIdsOfDaysWithEventsRemoved, removedEvents);
       });
-
       hadleObserving(divElements_days, daysDivsObserver);
       return () => {
         daysDivsObserver.disconnect();
