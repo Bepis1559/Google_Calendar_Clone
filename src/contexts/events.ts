@@ -6,4 +6,9 @@ if (localStorage.getItem("events") !== null) {
 }
 export const eventsAtom = atom<event[]>(eventsFromLocalStorage);
 
-export const removedEventsAtom = atom<removedEventType[]>([]);
+const removedEvents: removedEventType[] = [];
+export const removedEventsAtom = atom(removedEvents);
+
+export const idsOfDaysWithEventsRemovedAtom = atom<string[]>(
+  removedEvents.map(({ parent: { id } }) => id),
+);

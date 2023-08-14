@@ -6,6 +6,7 @@ import {
   Fragment,
   useState,
   createRef,
+  useEffect,
 } from "react";
 import { todaysAtom } from "../../contexts/calendar";
 import { format } from "date-fns";
@@ -16,10 +17,13 @@ import { handleEventModal } from "../../helpers/handleEventModal";
 import { DayHeader } from "./DayHeader";
 import { Events } from "../Events/Events";
 import { useResizeDays } from "../../hooks/useResizeDays";
+import { idsOfDaysWithEventsRemovedAtom } from "../../contexts/events";
+import { ShowMoreEventsButton } from "../hiddenEventsRelated/ShowMoreEventsButton";
+import { CountOccurrencesInArray } from "../../helpers/Days/CountOccurrencesInArray";
 
 export function Days(): ReactElement {
   const [today] = useAtom(todaysAtom);
-
+  const [idsOfDaysWithEventsRemoved] = useAtom(idsOfDaysWithEventsRemovedAtom);
   const unMutableToday = useRef(new Date());
   const visibleDates = handleVisibleDates(today);
   const [isEventModalOpened, setIsEventModalOpened] = useState(
@@ -32,9 +36,19 @@ export function Days(): ReactElement {
 
   useResizeDays(dayRefs);
 
+  useEffect(
+    () => console.log(idsOfDaysWithEventsRemoved),
+    [idsOfDaysWithEventsRemoved],
+  );
+
   return (
     <div className="days">
       {visibleDates.map((visibleDate, index) => {
+        const dayId = daysIds.current[index];
+        const numOfHiddenEvents = CountOccurrencesInArray(
+          idsOfDaysWithEventsRemoved,
+          dayId,
+        );
         return (
           // the whole day card
           <Fragment key={`${id}--${format(visibleDate, "yyyy-MM-dd")}`}>
@@ -47,7 +61,7 @@ export function Days(): ReactElement {
               />
             ) : null}
             <div
-              id={daysIds.current[index]}
+              id={dayId}
               ref={dayRefs.current[index]}
               className={handleDayClasses(
                 today,
@@ -61,6 +75,10 @@ export function Days(): ReactElement {
               />
 
               <Events visibleDate={visibleDate} />
+              {idsOfDaysWithEventsRemoved.includes(dayId) &&
+              numOfHiddenEvents > 0 ? (
+                <ShowMoreEventsButton numOfHiddenEvents={numOfHiddenEvents} />
+              ) : null}
             </div>
           </Fragment>
         );

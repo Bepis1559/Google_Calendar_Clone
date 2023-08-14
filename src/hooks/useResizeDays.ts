@@ -1,10 +1,16 @@
 import { useAtom } from "jotai";
 import { type MutableRefObject, type RefObject, useEffect } from "react";
-import { eventsAtom, removedEventsAtom } from "../contexts/events";
+import {
+  eventsAtom,
+  idsOfDaysWithEventsRemovedAtom,
+  removedEventsAtom,
+} from "../contexts/events";
 import {
   addEventBack,
   areThereAnyRemovedEventsFromThatDay,
+  getLastButtonEvent,
   hadleObserving,
+  handleIdsOfRemovedEvents,
   handleRemove,
   isIntersecting,
   isTherePlaceForEvent,
@@ -16,6 +22,9 @@ export function useResizeDays(
   dayRefs: MutableRefObject<RefObject<HTMLDivElement>[]>,
 ) {
   const [events] = useAtom(eventsAtom);
+  const [, setIdsOfDaysWithEventsRemoved] = useAtom(
+    idsOfDaysWithEventsRemovedAtom,
+  );
   const [today] = useAtom(todaysAtom);
   const [removedEvents, setRemovedEvents] = useAtom(removedEventsAtom);
 
@@ -36,23 +45,23 @@ export function useResizeDays(
 
         entries.forEach(({ target }) => {
           const day = target as HTMLDivElement;
-          const { children } = day;
-          const lastEvent = children[children.length - 1] as HTMLButtonElement;
-          const shouldRemove = isIntersecting(lastEvent, day);
-          const shouldAdd =
-            isTherePlaceForEvent(day) &&
-            areThereAnyRemovedEventsFromThatDay(day, removedEvents);
-          if (shouldRemove) {
-            handleRemove(day, lastEvent, setRemovedEvents);
-            sync();
-          } else if (shouldAdd) {
-            // console.log("shouldAdd ");
-            addEventBack(day, removedEvents, setRemovedEvents);
-            sync();
+          const lastEvent = getLastButtonEvent(day);
+
+          if (lastEvent) {
+            const shouldRemove = isIntersecting(lastEvent, day);
+            const shouldAdd =
+              isTherePlaceForEvent(day) &&
+              areThereAnyRemovedEventsFromThatDay(day, removedEvents);
+            if (shouldRemove) {
+              handleRemove(day, lastEvent, setRemovedEvents);
+              sync();
+            } else if (shouldAdd) {
+              addEventBack(day, removedEvents, setRemovedEvents);
+              sync();
+            }
           }
         });
-        // console.log(removedEvents);
-        // removedEvents.forEach(({ parent: { id } }) => console.log(id));
+        handleIdsOfRemovedEvents(setIdsOfDaysWithEventsRemoved, removedEvents);
       });
 
       hadleObserving(divElements_days, daysDivsObserver);
@@ -60,5 +69,12 @@ export function useResizeDays(
         daysDivsObserver.disconnect();
       };
     }
-  }, [events, dayRefs, today, removedEvents, setRemovedEvents]);
+  }, [
+    events,
+    dayRefs,
+    today,
+    removedEvents,
+    setRemovedEvents,
+    setIdsOfDaysWithEventsRemoved,
+  ]);
 }

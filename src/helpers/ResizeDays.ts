@@ -1,5 +1,5 @@
-import { SetStateAction } from "jotai";
-import { Dispatch } from "react";
+import { type SetStateAction } from "react";
+import { type Dispatch } from "react";
 
 export function hadleObserving(
   divElements_days: HTMLDivElement[],
@@ -13,7 +13,11 @@ export function hadleObserving(
     });
   });
 }
-
+export const handleIdsOfRemovedEvents = (
+  setIdsOfDaysWithEventsRemoved: Dispatch<SetStateAction<string[]>>,
+  removedEvents: removedEventType[],
+) =>
+  setIdsOfDaysWithEventsRemoved(removedEvents.map(({ parent: { id } }) => id));
 // removing event related
 export function handleRemove(
   day: HTMLDivElement,
@@ -57,7 +61,18 @@ export function addEventBack(
   setRemovedEvents((prev) =>
     prev.filter(({ event: { id } }) => id != eventToAddBack?.event.id),
   );
-  day.append(eventToAddBack?.event as HTMLButtonElement);
+  const lastEvent = getLastButtonEvent(day);
+  lastEvent.insertAdjacentElement(
+    "afterend",
+    eventToAddBack?.event as HTMLButtonElement,
+  );
+  // day.append(eventToAddBack?.event as HTMLButtonElement);
+}
+
+export function getLastButtonEvent(day: HTMLDivElement) {
+  const events_buttons = day.querySelectorAll("button.event");
+  const lastEvent = events_buttons[events_buttons.length - 1];
+  return lastEvent as HTMLButtonElement;
 }
 
 export function areThereAnyRemovedEventsFromThatDay(
@@ -82,7 +97,7 @@ export function isTherePlaceForEvent(day: HTMLElement) {
 
   const childrenHeight = getChildrenHeight(day);
 
-  const result = parentHeight - childrenHeight > 2.3 * eventHeight;
+  const result = parentHeight - childrenHeight > 2.5 * eventHeight;
 
   return result;
 }
@@ -112,8 +127,6 @@ export function syncEventsStateAndRemovedEventsArr(
     }
   });
 }
-
-// non-exported functions
 
 function getChildrenHeight(parentElement: HTMLElement) {
   let childrenHeight = 0;
