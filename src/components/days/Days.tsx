@@ -22,7 +22,6 @@ import {
 } from "../../contexts/events";
 import { ShowMoreEventsButton } from "../hiddenEventsRelated/ShowMoreEventsButton";
 import { CountOccurrencesInArray } from "../../helpers/Days/CountOccurrencesInArray";
-import { useSortButtons } from "../../hooks/useSortButtons";
 
 export function Days(): ReactElement {
   const [today] = useAtom(todaysAtom);
@@ -38,7 +37,7 @@ export function Days(): ReactElement {
   const daysIds = useRef(visibleDates.map(() => crypto.randomUUID()));
 
   useResizeDays(dayRefs);
-  useSortButtons(dayRefs);
+
   return (
     <div className="days">
       {visibleDates.map((visibleDate, index) => {
@@ -47,6 +46,7 @@ export function Days(): ReactElement {
           idsOfDaysWithEventsRemoved,
           dayId,
         );
+        const currentDayRef = dayRefs.current[index];
         return (
           // the whole day card
           <Fragment key={`${id}--${format(visibleDate, "yyyy-MM-dd")}`}>
@@ -60,7 +60,7 @@ export function Days(): ReactElement {
             ) : null}
             <div
               id={dayId}
-              ref={dayRefs.current[index]}
+              ref={currentDayRef}
               className={handleDayClasses(
                 today,
                 visibleDate,
@@ -72,7 +72,7 @@ export function Days(): ReactElement {
                 setIsEventModalOpened={setIsEventModalOpened}
               />
 
-              <Events visibleDate={visibleDate} />
+              <Events ref={currentDayRef} visibleDate={visibleDate} />
               {idsOfDaysWithEventsRemoved.includes(dayId) &&
               numOfHiddenEvents > 0 &&
               removedEvents.length > 0 ? (
