@@ -40,7 +40,7 @@ export function Event(props: event): ReactElement {
           handleClick={handleClick}
           eventColor={eventColor}
           eventName={eventName}
-          startTime={startTime!}
+          startTime={startTime ?? ""}
         />
       )}
     </>
