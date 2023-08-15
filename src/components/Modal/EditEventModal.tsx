@@ -45,7 +45,6 @@ export function EditEventModal({
       );
       return [...withoutOldEvent, updatedEvent];
     });
-    // sortEvents(setEventsArray);
   }
 
   function onFormSubmit(e: FormEvent<HTMLFormElement>) {
@@ -57,7 +56,6 @@ export function EditEventModal({
     function handleClose() {
       setIsModalOpened(false);
       setEventsArray((prev) => prev.filter((event) => event.id != id));
-      // sortEvents(setEventsArray);
     }
 
     handleCloseBtn(handleClose, modalRef);

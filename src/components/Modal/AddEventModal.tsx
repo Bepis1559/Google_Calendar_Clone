@@ -35,7 +35,6 @@ export function AddEventModal({
     };
 
     setEventsArray((prev) => [...prev, newEvent]);
-    // sortEvents(setEventsArray);
   }
 
   return (

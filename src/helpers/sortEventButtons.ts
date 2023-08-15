@@ -39,6 +39,17 @@ export function sortEventButtons(container: HTMLDivElement) {
 
   // Update the DOM by reordering the buttons within the container
   for (let i = 0; i < buttonsArray.length; i++) {
+    if (buttonsArray[i].classList.contains("events-view-more-btn")) {
+      continue;
+    }
     container.appendChild(buttonsArray[i]);
+  }
+
+  // Ensure that any button with the class 'events-view-more-btn' is always the last child of the container
+  const moreButton = container.getElementsByClassName(
+    "events-view-more-btn",
+  )[0];
+  if (moreButton) {
+    container.appendChild(moreButton);
   }
 }

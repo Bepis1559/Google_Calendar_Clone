@@ -1,5 +1,11 @@
 import { useAtom } from "jotai";
-import { forwardRef, type ReactElement, type ForwardedRef } from "react";
+import {
+  forwardRef,
+  type ReactElement,
+  type ForwardedRef,
+  // useEffect,
+  //type RefObject,
+} from "react";
 import { eventsAtom } from "../../contexts/events";
 import { format } from "date-fns";
 import { Event } from "./Event";
@@ -14,6 +20,17 @@ function Inner(
   const eventsToRender = events.filter(
     ({ eventDate }) => eventDate == dateToCompareAgainst,
   );
+  // useEffect(() => {
+  //   if (eventsToRender.length) {
+  //     console.log(eventsToRender);
+  //   }
+
+  //   const refAsObject = ref as unknown as RefObject<HTMLDivElement>;
+
+  //   if (refAsObject.current && refAsObject.current.children.length > 1) {
+  //     console.log(refAsObject.current.children);
+  //   }
+  // }, []);
   useSortButtons(ref);
   return (
     <>
