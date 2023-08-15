@@ -1,4 +1,4 @@
-export function sortButtons(container: HTMLDivElement) {
+export function sortEventButtons(container: HTMLDivElement) {
   // Get all buttons within the container
   const buttons = container.getElementsByClassName("event");
 
