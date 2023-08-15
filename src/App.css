@@ -144,7 +144,7 @@ body {
 .day {
   background-color: white;
   padding: var(--day-padding);
-  overflow: hidden;
+  overflow-x: auto;
   display: flex;
   flex-direction: column;
 }
