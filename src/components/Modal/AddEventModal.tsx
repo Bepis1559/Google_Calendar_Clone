@@ -19,7 +19,7 @@ export function AddEventModal({
     endTime: "",
     eventColor: "blue",
   } as formState);
-  const [events, setEventsArray] = useAtom(eventsAtom);
+  const [, setEventsArray] = useAtom(eventsAtom);
 
   const onFormSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -35,7 +35,6 @@ export function AddEventModal({
     };
 
     setEventsArray((prev) => [...prev, newEvent]);
-    console.log(events);
     // sortEvents(setEventsArray);
   }
 

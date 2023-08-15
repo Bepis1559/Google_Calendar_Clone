@@ -5,9 +5,9 @@ import { format } from "date-fns";
 import { Event } from "./Event";
 
 export function Events({ visibleDate }: eventArrayProps): ReactElement {
-  const [eventsArray] = useAtom(eventsAtom);
+  const [events] = useAtom(eventsAtom);
   const dateToCompareAgainst = format(visibleDate, "M/d/yy");
-  const eventsToRender = eventsArray.filter(
+  const eventsToRender = events.filter(
     ({ eventDate }) => eventDate == dateToCompareAgainst,
   );
 

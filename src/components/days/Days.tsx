@@ -6,6 +6,7 @@ import {
   Fragment,
   useState,
   createRef,
+  useEffect,
   // useEffect,
 } from "react";
 import { todaysAtom } from "../../contexts/calendar";
@@ -37,8 +38,11 @@ export function Days(): ReactElement {
   const dayRefs = useRef(visibleDates.map(() => createRef<HTMLDivElement>()));
   const daysIds = useRef(visibleDates.map(() => crypto.randomUUID()));
 
-  // useEffect(() => console.log(removedEvents), [removedEvents]);
   useResizeDays(dayRefs);
+  useEffect(() => {
+    const visibleEvents = document.querySelectorAll("button.event");
+    console.log(visibleEvents);
+  });
 
   return (
     <div className="days">
