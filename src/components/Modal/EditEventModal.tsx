@@ -5,8 +5,8 @@ import { formState } from "../../types/Modal_FormGroupProps";
 import { EventModalReducer } from "../../reducers/EventModalReducer";
 import { useAtom } from "jotai";
 
-import { eventsAtom, removedEventsAtom } from "../../contexts/events";
-import { sortVisibleEvents } from "../../helpers/Modal/sortVisibleEvents";
+import { eventsAtom } from "../../contexts/events";
+// import { sortEvents } from "../../helpers/Modal/sortEvents";
 
 export function EditEventModal({
   event: {
@@ -24,7 +24,6 @@ export function EditEventModal({
   const handleEventModal = () => setIsModalOpened(false);
 
   const [, setEventsArray] = useAtom(eventsAtom);
-  const [removedEvents] = useAtom(removedEventsAtom);
 
   const [state, dispatch] = useReducer(EventModalReducer, {
     eventName: eventName,
@@ -46,7 +45,7 @@ export function EditEventModal({
       );
       return [...withoutOldEvent, updatedEvent];
     });
-    sortVisibleEvents(setEventsArray, removedEvents);
+    // sortEvents(setEventsArray);
   }
 
   function onFormSubmit(e: FormEvent<HTMLFormElement>) {
@@ -58,7 +57,7 @@ export function EditEventModal({
     function handleClose() {
       setIsModalOpened(false);
       setEventsArray((prev) => prev.filter((event) => event.id != id));
-      sortVisibleEvents(setEventsArray, removedEvents);
+      // sortEvents(setEventsArray);
     }
 
     handleCloseBtn(handleClose, modalRef);
