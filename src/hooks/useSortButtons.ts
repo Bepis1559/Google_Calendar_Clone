@@ -5,7 +5,7 @@ import { eventsAtom } from "../contexts/events";
 
 export function useSortButtons(dayRef: ForwardedRef<HTMLDivElement>) {
   const [events] = useAtom(eventsAtom);
-  const headerElementsInADiv = 1;
+  const headerElementsInADiv = 1; // so it is not call for an empty day
   useLayoutEffect(() => {
     if (
       dayRef &&
