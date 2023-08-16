@@ -45,6 +45,7 @@ export function useResizeDays(
 
         entries.forEach(({ target }) => {
           const day = target as HTMLDivElement;
+
           const lastEvent = getLastButtonEvent(day);
 
           if (lastEvent) {

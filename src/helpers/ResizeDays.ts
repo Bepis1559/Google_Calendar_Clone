@@ -13,6 +13,7 @@ export function hadleObserving(
     });
   });
 }
+
 export const handleIdsOfRemovedEvents = (
   setIdsOfDaysWithEventsRemoved: Dispatch<SetStateAction<string[]>>,
   removedEvents: removedEventType[],

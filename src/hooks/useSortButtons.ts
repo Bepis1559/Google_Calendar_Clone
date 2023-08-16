@@ -4,7 +4,6 @@ import { useAtom } from "jotai";
 import { eventsAtom } from "../contexts/events";
 
 export function useSortButtons(dayRef: ForwardedRef<HTMLDivElement>) {
-  console.log("useSortButtons hook called");
   const [events] = useAtom(eventsAtom);
   const headerElementsInADiv = 1; // so it is not call for an empty day
   useLayoutEffect(() => {
