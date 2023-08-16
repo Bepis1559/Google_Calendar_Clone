@@ -1,23 +1,26 @@
-import { useState, type ReactElement } from "react";
+import { useState, type ReactElement, forwardRef, ForwardedRef } from "react";
 import { eventsAtom } from "../../contexts/events";
 import { useAtom } from "jotai";
 import { EditEventModal } from "../Modal/EditEventModal";
 import { AllDayEventButton } from "./AllDayEventButton";
 import { NotAllDayEventButton } from "./NotAllDayEventButton";
+import { useSortButtons } from "../../hooks/useSortButtons";
 
-export function Event(props: event): ReactElement {
+function Inner(props: event, ref: ForwardedRef<HTMLDivElement>): ReactElement {
   const { eventColor, eventName, id, startTime, isAllDayChecked } = props;
-  const [eventsArray] = useAtom(eventsAtom);
+  const [events] = useAtom(eventsAtom);
   const [isModalOpened, setIsModalOpened] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState<event | null>(null);
 
   function handleClick() {
-    const clickedEvent = eventsArray.find((event) => event.id === id);
+    const clickedEvent = events.find((event) => event.id === id);
     if (clickedEvent) {
       setSelectedEvent(clickedEvent);
     }
     setIsModalOpened(true);
   }
+
+  useSortButtons(ref);
 
   return (
     <>
@@ -46,3 +49,5 @@ export function Event(props: event): ReactElement {
     </>
   );
 }
+
+export const Event = forwardRef(Inner);
