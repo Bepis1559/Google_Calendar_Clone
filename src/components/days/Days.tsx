@@ -22,6 +22,7 @@ import {
 } from "../../contexts/events";
 import { ShowMoreEventsButton } from "../hiddenEventsRelated/ShowMoreEventsButton";
 import { CountOccurrencesInArray } from "../../helpers/Days/CountOccurrencesInArray";
+import { MoreEventsModal } from "../hiddenEventsRelated/MoreEventsModal";
 
 export function Days(): ReactElement {
   const [today] = useAtom(todaysAtom);
@@ -38,6 +39,8 @@ export function Days(): ReactElement {
   const id = useId();
   const dayRefs = useRef(visibleDates.map(() => createRef<HTMLDivElement>()));
   const daysIds = useRef(visibleDates.map(() => crypto.randomUUID()));
+  const removedEventsOfThatDay = (dayId: string) =>
+    removedEvents.filter(({ parent: { id } }) => id == dayId);
 
   useResizeDays(dayRefs);
 
@@ -54,6 +57,15 @@ export function Days(): ReactElement {
         return (
           // the whole day card
           <Fragment key={`${id}--${format(visibleDate, "yyyy-MM-dd")}`}>
+            {isMoreEventsModalOpened[index] ? (
+              <MoreEventsModal
+                setIsMoreEventsModalOpened={setIsMoreEventsModalOpened}
+                removedEventsOfThatDay={removedEventsOfThatDay(dayId)}
+                currentDate={currentDate}
+                dayIndex={index}
+              />
+            ) : null}
+
             {isEventModalOpened[index] ? (
               <AddEventModal
                 date={currentDate}

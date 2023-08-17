@@ -6,7 +6,6 @@ import { EventModalReducer } from "../../reducers/EventModalReducer";
 import { useAtom } from "jotai";
 
 import { eventsAtom } from "../../contexts/events";
-// import { sortEvents } from "../../helpers/Modal/sortEvents";
 
 export function EditEventModal({
   event: {
@@ -67,7 +66,7 @@ export function EditEventModal({
         <div className="overlay"></div>
         <div className="modal-body">
           <div className="modal-title">
-            <div>Add Event</div>
+            <div>Edit event</div>
             <small>{eventDate}</small>
             <button
               onClick={() => handleCloseBtn(handleEventModal, modalRef)}
