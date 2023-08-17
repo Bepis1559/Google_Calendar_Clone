@@ -102,7 +102,7 @@ export function isTherePlaceForEvent(day: HTMLElement) {
 
   const childrenHeight = getChildrenHeight(day);
 
-  const result = parentHeight - childrenHeight > 2.2 * eventHeight;
+  const result = parentHeight - childrenHeight > 2 * eventHeight;
 
   return result;
 }

@@ -57,6 +57,7 @@ export function useResizeDays(
             const shouldAdd =
               isTherePlaceForEvent(day) &&
               areThereAnyRemovedEventsFromThatDay(day, removedEvents);
+
             if (shouldRemove) {
               handleRemove(day, lastEvent, setRemovedEvents);
 

@@ -53,8 +53,8 @@ export function EditEventModal({
   }
   function handleDelete() {
     function handleClose() {
-      setIsModalOpened(false);
       setEventsArray((prev) => prev.filter((event) => event.id != id));
+      setIsModalOpened(false);
     }
 
     handleCloseBtn(handleClose, modalRef);
