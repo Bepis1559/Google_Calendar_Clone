@@ -23,10 +23,14 @@ export function ShowMoreEventsButton({
   const removedEventsOfThatDay = removedEvents.filter(
     ({ parent: { id } }) => id == dayId,
   );
+
+  function handleClick() {
+    setIsMoreEventsModalOpened(true);
+  }
   return (
     <>
       <button
-        onClick={() => setIsMoreEventsModalOpened(true)}
+        onClick={handleClick}
         type="button"
         className="events-view-more-btn">
         +{numOfHiddenEvents} More
