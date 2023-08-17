@@ -8,6 +8,7 @@ type props = {
   numOfHiddenEvents: number;
   dayId: string;
   dayIndex: number;
+  currentDate: string;
   isMoreEventsModalOpened: boolean;
   setIsMoreEventsModalOpened: Dispatch<SetStateAction<boolean[]>>;
 };
@@ -16,6 +17,7 @@ export function ShowMoreEventsButton({
   numOfHiddenEvents,
   dayId,
   dayIndex,
+  currentDate,
   isMoreEventsModalOpened,
   setIsMoreEventsModalOpened,
 }: props): ReactElement {
@@ -39,6 +41,7 @@ export function ShowMoreEventsButton({
         <MoreEventsModal
           setIsMoreEventsModalOpened={setIsMoreEventsModalOpened}
           removedEventsOfThatDay={removedEventsOfThatDay}
+          currentDate={currentDate}
           dayIndex={dayIndex}
         />
       ) : null}

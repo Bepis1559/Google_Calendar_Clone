@@ -50,12 +50,13 @@ export function Days(): ReactElement {
           dayId,
         );
         const currentDayRef = dayRefs.current[index];
+        const currentDate = format(visibleDate, "M/d/yy");
         return (
           // the whole day card
           <Fragment key={`${id}--${format(visibleDate, "yyyy-MM-dd")}`}>
             {isEventModalOpened[index] ? (
               <AddEventModal
-                date={format(visibleDate, "M/d/yy")}
+                date={currentDate}
                 handleEventModal={() =>
                   handleEventModal(index, "close", setIsEventModalOpened)
                 }
@@ -83,6 +84,7 @@ export function Days(): ReactElement {
                   dayId={dayId}
                   numOfHiddenEvents={numOfHiddenEvents}
                   dayIndex={index}
+                  currentDate={currentDate}
                   isMoreEventsModalOpened={isMoreEventsModalOpened[index]}
                   setIsMoreEventsModalOpened={setIsMoreEventsModalOpened}
                 />

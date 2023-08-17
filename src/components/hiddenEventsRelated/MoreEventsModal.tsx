@@ -5,12 +5,14 @@ import { handleEventModal } from "../../helpers/handleEventModal";
 type props = {
   removedEventsOfThatDay: removedEventType[];
   setIsMoreEventsModalOpened: Dispatch<SetStateAction<boolean[]>>;
+  currentDate: string;
   dayIndex: number;
 };
 
 export function MoreEventsModal({
   removedEventsOfThatDay,
   setIsMoreEventsModalOpened,
+  currentDate,
   dayIndex,
 }: props): ReactElement {
   return (
@@ -19,7 +21,7 @@ export function MoreEventsModal({
         <div className="overlay"></div>
         <div className="modal-body">
           <div className="modal-title">
-            6/8/23 (Change that with dynamic one)
+            {currentDate}
             <button
               onClick={() =>
                 handleEventModal(dayIndex, "close", setIsMoreEventsModalOpened)
