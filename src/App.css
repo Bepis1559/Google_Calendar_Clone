@@ -223,11 +223,12 @@ body {
   cursor: pointer;
   flex-shrink: 0;
   background: none;
-  width: 100%;
+  width: min(100%, 12em);
   border: none;
   font-size: 1rem;
   padding: var(--eventPadding);
   margin-block-end: 3%;
+  margin-inline: auto;
 }
 
 .all-day-event {
