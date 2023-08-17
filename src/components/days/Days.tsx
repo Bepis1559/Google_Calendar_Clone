@@ -31,6 +31,9 @@ export function Days(): ReactElement {
   const [isEventModalOpened, setIsEventModalOpened] = useState(
     visibleDates.map(() => false),
   );
+  const [isMoreEventsModalOpened, setIsMoreEventsModalOpened] = useState(
+    visibleDates.map(() => false),
+  );
   const [removedEvents] = useAtom(removedEventsAtom);
   const id = useId();
   const dayRefs = useRef(visibleDates.map(() => createRef<HTMLDivElement>()));
@@ -79,6 +82,9 @@ export function Days(): ReactElement {
                 <ShowMoreEventsButton
                   dayId={dayId}
                   numOfHiddenEvents={numOfHiddenEvents}
+                  dayIndex={index}
+                  isMoreEventsModalOpened={isMoreEventsModalOpened[index]}
+                  setIsMoreEventsModalOpened={setIsMoreEventsModalOpened}
                 />
               ) : null}
             </div>

@@ -1,17 +1,18 @@
-import { useAtom } from "jotai";
-import { type ReactElement } from "react";
-import { isMoreEventsModalOpenedAtom } from "../../contexts/events";
+import type { Dispatch, SetStateAction, ReactElement } from "react";
 import { Event } from "../Events/Event";
+import { handleEventModal } from "../../helpers/handleEventModal";
 
 type props = {
   removedEventsOfThatDay: removedEventType[];
+  setIsMoreEventsModalOpened: Dispatch<SetStateAction<boolean[]>>;
+  dayIndex: number;
 };
 
 export function MoreEventsModal({
   removedEventsOfThatDay,
+  setIsMoreEventsModalOpened,
+  dayIndex,
 }: props): ReactElement {
-  const [, setIsMoreEventsModalOpened] = useAtom(isMoreEventsModalOpenedAtom);
-
   return (
     <>
       <div className="modal">
@@ -20,7 +21,9 @@ export function MoreEventsModal({
           <div className="modal-title">
             6/8/23 (Change that with dynamic one)
             <button
-              onClick={() => setIsMoreEventsModalOpened(false)}
+              onClick={() =>
+                handleEventModal(dayIndex, "close", setIsMoreEventsModalOpened)
+              }
               type="button"
               className="close-btn">
               &times;
