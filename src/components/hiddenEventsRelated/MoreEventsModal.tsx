@@ -1,29 +1,21 @@
-import {
-  type Dispatch,
-  type SetStateAction,
-  type ReactElement,
-  useRef,
-} from "react";
+import { type ReactElement, useRef } from "react";
 import { Event } from "../Events/Event";
-import { handleEventModal } from "../../helpers/handleEventModal";
 import { handleCloseBtn } from "../../helpers/Modal/handleCloseButton";
 
 type props = {
   removedEventsOfThatDay: removedEventType[];
-  setIsMoreEventsModalOpened: Dispatch<SetStateAction<boolean[]>>;
+
+  handleEventModal: () => void;
   currentDate: string;
-  dayIndex: number;
 };
 
 export function MoreEventsModal({
   removedEventsOfThatDay,
-  setIsMoreEventsModalOpened,
+
+  handleEventModal,
   currentDate,
-  dayIndex,
 }: props): ReactElement {
   const modalRef = useRef<HTMLDivElement>(null);
-  const handleModal = () =>
-    handleEventModal(dayIndex, "close", setIsMoreEventsModalOpened);
 
   return (
     <>
@@ -33,7 +25,7 @@ export function MoreEventsModal({
           <div className="modal-title">
             {currentDate}
             <button
-              onClick={() => handleCloseBtn(handleModal, modalRef)}
+              onClick={() => handleCloseBtn(handleEventModal, modalRef)}
               type="button"
               className="close-btn">
               &times;
