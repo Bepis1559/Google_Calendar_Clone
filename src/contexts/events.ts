@@ -12,3 +12,5 @@ export const removedEventsAtom = atom(removedEvents);
 export const idsOfDaysWithEventsRemovedAtom = atom<string[]>(
   removedEvents.map(({ parent: { id } }) => id),
 );
+
+export const isMoreEventsModalOpenedAtom = atom(false);

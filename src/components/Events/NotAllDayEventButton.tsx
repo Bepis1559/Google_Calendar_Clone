@@ -1,20 +1,27 @@
 import type { ReactElement } from "react";
 
-type bonusProp = {
-  startTime: string;
-};
-
-export function NotAllDayEventButton(
-  props: EventButtonProps & bonusProp,
-): ReactElement {
-  const { eventColor, startTime, eventName, handleClick, eventId } = props;
+export function NotAllDayEventButton(props: EventButtonProps): ReactElement {
+  const {
+    eventColor,
+    startTime,
+    eventName,
+    handleClick,
+    id,
+    isAllDayChecked,
+    eventDate,
+    endTime,
+  } = props;
   return (
     <button
-      data-start_time={startTime}
-      data-is_all_day="false"
-      id={eventId}
       onClick={handleClick}
       type="button"
+      id={id}
+      data-is_all_day_checked={isAllDayChecked}
+      data-event_color={eventColor}
+      data-event_name={eventName}
+      data-event_date={eventDate}
+      data-start_time={startTime}
+      data-end_time={endTime}
       className="event">
       <div className={`color-dot ${eventColor}`}></div>
       <div className="event-time">{startTime}</div>

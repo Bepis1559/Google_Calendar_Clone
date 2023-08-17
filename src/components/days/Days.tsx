@@ -76,7 +76,10 @@ export function Days(): ReactElement {
               {idsOfDaysWithEventsRemoved.includes(dayId) &&
               numOfHiddenEvents > 0 &&
               removedEvents.length > 0 ? (
-                <ShowMoreEventsButton numOfHiddenEvents={numOfHiddenEvents} />
+                <ShowMoreEventsButton
+                  dayId={dayId}
+                  numOfHiddenEvents={numOfHiddenEvents}
+                />
               ) : null}
             </div>
           </Fragment>

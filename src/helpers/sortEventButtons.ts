@@ -6,10 +6,10 @@ export function sortEventButtons(container: HTMLDivElement) {
   const buttonsArray = Array.prototype.slice.call(buttons);
 
   // Define a custom compare function
-  function compare(a: HTMLButtonElement, b: HTMLButtonElement) {
+  function compare(a: EventButtonElement, b: EventButtonElement) {
     // Check if data-is_all_day is true for either button
-    const aIsAllDay = a.getAttribute("data-is_all_day") === "true";
-    const bIsAllDay = b.getAttribute("data-is_all_day") === "true";
+    const aIsAllDay = a.getAttribute(a["data-is_all_day_checked"]) === "true";
+    const bIsAllDay = b.getAttribute(b["data-is_all_day_checked"]) === "true";
 
     if (aIsAllDay && !bIsAllDay) {
       return -1;
@@ -17,8 +17,8 @@ export function sortEventButtons(container: HTMLDivElement) {
       return 1;
     } else {
       // If both buttons have the same value for data-is_all_day, compare data-start_time
-      const aStartTime = a.getAttribute("data-start_time");
-      const bStartTime = b.getAttribute("data-start_time");
+      const aStartTime = a.getAttribute(a["data-start_time"]);
+      const bStartTime = b.getAttribute(b["data-start_time"]);
 
       // Convert the start times to Date objects for comparison
       const aDate = new Date(`1/1/1970 ${aStartTime}`);

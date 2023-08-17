@@ -4,14 +4,11 @@ type event = {
   eventColor: eventColor;
   isAllDayChecked: boolean;
   eventName: string;
-  eventDate?: string;
-  startTime?: string;
-  endTime?: string;
+  eventDate: string;
+  startTime: string;
+  endTime: string;
 };
 
-type EventButtonProps = {
+type EventButtonProps = event & {
   handleClick: () => void;
-  eventId: string;
-  eventColor: eventColor;
-  eventName: string;
 };

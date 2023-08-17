@@ -7,7 +7,7 @@ import { NotAllDayEventButton } from "./NotAllDayEventButton";
 import { useSortButtons } from "../../hooks/useSortButtons";
 
 function Inner(props: event, ref: ForwardedRef<HTMLDivElement>): ReactElement {
-  const { eventColor, eventName, id, startTime, isAllDayChecked } = props;
+  const { id, isAllDayChecked } = props;
   const [events] = useAtom(eventsAtom);
   const [isModalOpened, setIsModalOpened] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState<event | null>(null);
@@ -31,20 +31,9 @@ function Inner(props: event, ref: ForwardedRef<HTMLDivElement>): ReactElement {
         />
       ) : null}
       {isAllDayChecked ? (
-        <AllDayEventButton
-          eventId={id}
-          handleClick={handleClick}
-          eventColor={eventColor}
-          eventName={eventName}
-        />
+        <AllDayEventButton {...props} handleClick={handleClick} />
       ) : (
-        <NotAllDayEventButton
-          eventId={id}
-          handleClick={handleClick}
-          eventColor={eventColor}
-          eventName={eventName}
-          startTime={startTime ?? ""}
-        />
+        <NotAllDayEventButton {...props} handleClick={handleClick} />
       )}
     </>
   );
