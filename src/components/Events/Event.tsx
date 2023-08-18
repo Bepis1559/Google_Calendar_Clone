@@ -11,13 +11,14 @@ function Inner(props: event, ref: ForwardedRef<HTMLDivElement>): ReactElement {
   const [events] = useAtom(eventsAtom);
   const [isModalOpened, setIsModalOpened] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState<event | null>(null);
+  const openModal = () => setIsModalOpened(true);
 
   function handleClick() {
     const clickedEvent = events.find((event) => event.id === id);
     if (clickedEvent) {
       setSelectedEvent(clickedEvent);
     }
-    setIsModalOpened(true);
+    openModal();
   }
 
   useSortButtons(ref);

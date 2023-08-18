@@ -6,6 +6,7 @@ import { EventModalReducer } from "../../reducers/EventModalReducer";
 import { useAtom } from "jotai";
 
 import { eventsAtom } from "../../contexts/events";
+import { updateEvents } from "../../helpers/Modal/updateEvents";
 
 export function EditEventModal({
   event: {
@@ -20,9 +21,8 @@ export function EditEventModal({
   setIsModalOpened,
 }: EditEventModalProps): ReactElement {
   const modalRef = useRef(null);
-  const handleEventModal = () => setIsModalOpened(false);
 
-  const [, setEventsArray] = useAtom(eventsAtom);
+  const [, setEvents] = useAtom(eventsAtom);
 
   const [state, dispatch] = useReducer(EventModalReducer, {
     eventName: eventName,
@@ -31,34 +31,23 @@ export function EditEventModal({
     startTime: startTime,
     endTime: endTime,
   } as formState);
-
-  function updateEventsArray() {
-    const updatedEvent: event = {
-      ...state,
-      id,
-      eventDate,
-    };
-    setEventsArray((prev) => {
-      const withoutOldEvent = prev.filter(
-        (event) => event.id != updatedEvent.id,
-      );
-      return [...withoutOldEvent, updatedEvent];
-    });
-  }
+  const closeModal = () => setIsModalOpened(false);
 
   function onFormSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    handleCloseBtn(handleEventModal, modalRef);
-    updateEventsArray();
+    handleCloseBtn(closeModal, modalRef);
+    updateEvents(state, id, eventDate, setEvents);
   }
   function handleDelete() {
     function handleClose() {
-      setEventsArray((prev) => prev.filter((event) => event.id != id));
-      setIsModalOpened(false);
+      setEvents((prev) => prev.filter((event) => event.id != id));
+      closeModal();
     }
 
     handleCloseBtn(handleClose, modalRef);
   }
+
+  const handleClose = () => handleCloseBtn(closeModal, modalRef);
 
   return (
     <>
@@ -68,10 +57,7 @@ export function EditEventModal({
           <div className="modal-title">
             <div>Edit event</div>
             <small>{eventDate}</small>
-            <button
-              onClick={() => handleCloseBtn(handleEventModal, modalRef)}
-              type="button"
-              className="close-btn">
+            <button onClick={handleClose} type="button" className="close-btn">
               &times;
             </button>
           </div>
