@@ -27,7 +27,7 @@ import { MoreEventsModal } from "../hiddenEventsRelated/MoreEventsModal";
 export function Days(): ReactElement {
   const [today] = useAtom(todaysAtom);
   const [idsOfDaysWithEventsRemoved] = useAtom(idsOfDaysWithEventsRemovedAtom);
-  const unMutableToday = useRef(new Date());
+  const unMutableToday = useRef(new Date()); // changed for testing
   const visibleDates = handleVisibleDates(today);
   const [isEventModalOpened, setIsEventModalOpened] = useState(
     visibleDates.map(() => false),
@@ -57,6 +57,15 @@ export function Days(): ReactElement {
         return (
           // the whole day card
           <Fragment key={`${id}--${format(visibleDate, "yyyy-MM-dd")}`}>
+            {isEventModalOpened[index] ? (
+              <AddEventModal
+                date={currentDate}
+                handleEventModal={() =>
+                  handleEventModal(index, "close", setIsEventModalOpened)
+                }
+              />
+            ) : null}
+
             {isMoreEventsModalOpened[index] ? (
               <MoreEventsModal
                 ref={currentDayRef}
@@ -68,14 +77,6 @@ export function Days(): ReactElement {
               />
             ) : null}
 
-            {isEventModalOpened[index] ? (
-              <AddEventModal
-                date={currentDate}
-                handleEventModal={() =>
-                  handleEventModal(index, "close", setIsEventModalOpened)
-                }
-              />
-            ) : null}
             <div
               id={dayId}
               ref={currentDayRef}

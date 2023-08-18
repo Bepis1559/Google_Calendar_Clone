@@ -15,9 +15,7 @@ function Inner(props: event, ref: ForwardedRef<HTMLDivElement>): ReactElement {
 
   function handleClick() {
     const clickedEvent = events.find((event) => event.id === id);
-    if (clickedEvent) {
-      setSelectedEvent(clickedEvent);
-    }
+    clickedEvent && setSelectedEvent(clickedEvent);
     openModal();
   }
 
