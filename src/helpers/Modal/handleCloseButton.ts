@@ -1,8 +1,14 @@
 import { type RefObject } from "react";
-const root = document.documentElement;
-const animationDuration = getComputedStyle(root)
-  .getPropertyValue("--modalAnimationDuration")
-  .trim();
+
+function getModalAnimationDuration() {
+  const root = document.documentElement;
+  const animationDuration = getComputedStyle(root)
+    .getPropertyValue("--modalAnimationDuration")
+    .trim();
+
+  return animationDuration;
+}
+
 export function handleCloseBtn(
   handleEventModal: () => void,
   modalRef: RefObject<HTMLDivElement>,
@@ -11,8 +17,12 @@ export function handleCloseBtn(
     modalRef.current?.classList.remove("opening");
     modalRef.current?.classList.add("closing");
   }
+  const animationDuration = getModalAnimationDuration();
 
-  setTimeout(() => {
-    handleEventModal();
-  }, parseInt(animationDuration));
+  return new Promise<void>((resolve) => {
+    setTimeout(() => {
+      handleEventModal();
+      resolve();
+    }, parseInt(animationDuration));
+  });
 }

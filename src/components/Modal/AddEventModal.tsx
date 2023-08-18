@@ -21,11 +21,11 @@ export function AddEventModal({
   } as formState);
   const [, setEventsArray] = useAtom(eventsAtom);
 
-  const onFormSubmit = (e: FormEvent<HTMLFormElement>) => {
+  function onFormSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     addEvent();
     handleCloseBtn(handleEventModal, modalRef);
-  };
+  }
 
   function addEvent() {
     const newEvent: event = {

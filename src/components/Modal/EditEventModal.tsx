@@ -32,22 +32,20 @@ export function EditEventModal({
     endTime: endTime,
   } as formState);
   const closeModal = () => setIsModalOpened(false);
+  const deleteEvent = () =>
+    setEvents((prev) => prev.filter((event) => event.id != id));
 
-  function onFormSubmit(e: FormEvent<HTMLFormElement>) {
+  const handleCloseAnimation = () => handleCloseBtn(closeModal, modalRef);
+
+  async function onFormSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    handleCloseBtn(closeModal, modalRef);
+    await handleCloseAnimation();
     updateEvents(state, id, eventDate, setEvents);
   }
-  function handleDelete() {
-    function handleClose() {
-      setEvents((prev) => prev.filter((event) => event.id != id));
-      closeModal();
-    }
-
-    handleCloseBtn(handleClose, modalRef);
+  async function handleDelete() {
+    await handleCloseAnimation();
+    deleteEvent();
   }
-
-  const handleClose = () => handleCloseBtn(closeModal, modalRef);
 
   return (
     <>
@@ -57,7 +55,10 @@ export function EditEventModal({
           <div className="modal-title">
             <div>Edit event</div>
             <small>{eventDate}</small>
-            <button onClick={handleClose} type="button" className="close-btn">
+            <button
+              onClick={handleCloseAnimation}
+              type="button"
+              className="close-btn">
               &times;
             </button>
           </div>
