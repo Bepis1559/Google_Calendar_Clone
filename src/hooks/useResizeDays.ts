@@ -29,6 +29,7 @@ export function useResizeDays(
   const [removedEvents, setRemovedEvents] = useAtom(removedEventsAtom);
 
   useEffect(() => {
+    // console.log("useResizeDays called");
     const { current } = dayRefs;
     if (current) {
       const divElements_days = current.map(

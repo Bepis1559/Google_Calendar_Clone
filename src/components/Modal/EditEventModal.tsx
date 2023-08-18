@@ -20,7 +20,7 @@ export function EditEventModal({
   },
   setIsModalOpened,
 }: EditEventModalProps): ReactElement {
-  const modalRef = useRef(null);
+  const modalRef = useRef<HTMLDivElement>(null);
 
   const [, setEvents] = useAtom(eventsAtom);
 
@@ -32,8 +32,12 @@ export function EditEventModal({
     endTime: endTime,
   } as formState);
   const closeModal = () => setIsModalOpened(false);
-  const deleteEvent = () =>
-    setEvents((prev) => prev.filter((event) => event.id != id));
+  const deleteEvent = () => {
+    setEvents((prev) => {
+      const newState = prev.filter((event) => event.id != id);
+      return newState;
+    });
+  };
 
   const animateClose = () => handleCloseBtn(closeModal, modalRef);
 
