@@ -10,7 +10,7 @@ function getModalAnimationDuration() {
 }
 
 export function handleCloseBtn(
-  handleEventModal: () => void,
+  modalAction: () => void,
   modalRef: RefObject<HTMLDivElement>,
 ) {
   if (modalRef) {
@@ -21,7 +21,7 @@ export function handleCloseBtn(
 
   return new Promise<void>((resolve) => {
     setTimeout(() => {
-      handleEventModal();
+      modalAction();
       resolve();
     }, parseInt(animationDuration));
   });

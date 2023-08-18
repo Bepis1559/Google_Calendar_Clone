@@ -35,15 +35,15 @@ export function EditEventModal({
   const deleteEvent = () =>
     setEvents((prev) => prev.filter((event) => event.id != id));
 
-  const handleCloseAnimation = () => handleCloseBtn(closeModal, modalRef);
+  const animateClose = () => handleCloseBtn(closeModal, modalRef);
 
   async function onFormSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    await handleCloseAnimation();
+    await animateClose();
     updateEvents(state, id, eventDate, setEvents);
   }
   async function handleDelete() {
-    await handleCloseAnimation();
+    await animateClose();
     deleteEvent();
   }
 
@@ -55,10 +55,7 @@ export function EditEventModal({
           <div className="modal-title">
             <div>Edit event</div>
             <small>{eventDate}</small>
-            <button
-              onClick={handleCloseAnimation}
-              type="button"
-              className="close-btn">
+            <button onClick={animateClose} type="button" className="close-btn">
               &times;
             </button>
           </div>
