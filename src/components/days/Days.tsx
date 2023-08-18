@@ -59,6 +59,7 @@ export function Days(): ReactElement {
           <Fragment key={`${id}--${format(visibleDate, "yyyy-MM-dd")}`}>
             {isMoreEventsModalOpened[index] ? (
               <MoreEventsModal
+                ref={currentDayRef}
                 removedEventsOfThatDay={removedEventsOfThatDay(dayId)}
                 handleEventModal={() =>
                   handleEventModal(index, "close", setIsMoreEventsModalOpened)

@@ -1,22 +1,16 @@
-import { type ReactElement, useRef } from "react";
+import { type ReactElement, useRef, forwardRef, ForwardedRef } from "react";
 import { Event } from "../Events/Event";
 import { handleCloseBtn } from "../../helpers/Modal/handleCloseButton";
 
 type props = {
   removedEventsOfThatDay: removedEventType[];
-
   handleEventModal: () => void;
   currentDate: string;
 };
 
-export function MoreEventsModal({
-  removedEventsOfThatDay,
-
-  handleEventModal,
-  currentDate,
-}: props): ReactElement {
+function Inner(props: props, ref: ForwardedRef<HTMLDivElement>): ReactElement {
   const modalRef = useRef<HTMLDivElement>(null);
-
+  const { removedEventsOfThatDay, handleEventModal, currentDate } = props;
   return (
     <>
       <div ref={modalRef} className="modal opening">
@@ -44,6 +38,7 @@ export function MoreEventsModal({
               const endTime = event.getAttribute("data-end_time");
               return (
                 <Event
+                  ref={ref}
                   key={id}
                   id={id}
                   eventColor={eventColor as eventColor}
@@ -61,3 +56,5 @@ export function MoreEventsModal({
     </>
   );
 }
+
+export const MoreEventsModal = forwardRef(Inner);
