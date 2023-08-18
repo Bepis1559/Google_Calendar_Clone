@@ -14,7 +14,6 @@ type props = {
 
 function Inner(props: props, ref: ForwardedRef<HTMLDivElement>): ReactElement {
   const modalRef = useRef<HTMLDivElement>(null);
-  const modalBodyRef = useRef<HTMLDivElement>(null);
   const { removedEventsOfThatDay, handleEventModal, currentDate, visibleDate } =
     props;
   const [events] = useAtom(eventsAtom);
@@ -31,7 +30,7 @@ function Inner(props: props, ref: ForwardedRef<HTMLDivElement>): ReactElement {
     <>
       <div ref={modalRef} className="modal opening">
         <div className="overlay"></div>
-        <div ref={modalBodyRef} className="modal-body">
+        <div className="modal-body">
           <div className="modal-title">
             {currentDate}
             <button

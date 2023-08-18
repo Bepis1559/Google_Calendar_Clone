@@ -33,10 +33,7 @@ export function EditEventModal({
   } as formState);
   const closeModal = () => setIsModalOpened(false);
   const deleteEvent = () => {
-    setEvents((prev) => {
-      const newState = prev.filter((event) => event.id != id);
-      return newState;
-    });
+    setEvents((prev) => prev.filter((event) => event.id != id));
   };
 
   const animateClose = () => handleCloseBtn(closeModal, modalRef);
