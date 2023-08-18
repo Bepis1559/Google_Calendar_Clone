@@ -6,7 +6,10 @@ import { AllDayEventButton } from "./AllDayEventButton";
 import { NotAllDayEventButton } from "./NotAllDayEventButton";
 import { useSortButtons } from "../../hooks/useSortButtons";
 
-function Inner(props: event, ref: ForwardedRef<HTMLDivElement>): ReactElement {
+export function Inner(
+  props: event,
+  ref: ForwardedRef<HTMLDivElement>,
+): ReactElement {
   const { id, isAllDayChecked } = props;
   const [events] = useAtom(eventsAtom);
   const [isModalOpened, setIsModalOpened] = useState(false);

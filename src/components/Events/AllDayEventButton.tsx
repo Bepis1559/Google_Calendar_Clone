@@ -1,4 +1,4 @@
-import { type ReactElement } from "react";
+import { useRef, type ReactElement } from "react";
 
 export function AllDayEventButton(props: EventButtonProps): ReactElement {
   const {
@@ -11,9 +11,12 @@ export function AllDayEventButton(props: EventButtonProps): ReactElement {
     endTime,
     handleClick,
   } = props;
+  const btnRef = useRef<HTMLButtonElement>(null);
+
   return (
     <>
       <button
+        ref={btnRef}
         onClick={handleClick}
         type="button"
         id={id}
