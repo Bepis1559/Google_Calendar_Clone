@@ -1,3 +1,0 @@
-type eventArrayProps = {
-  visibleDate: Date;
-};

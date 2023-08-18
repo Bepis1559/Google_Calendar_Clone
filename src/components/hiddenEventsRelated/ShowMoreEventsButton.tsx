@@ -3,9 +3,7 @@ import { handleEventModal } from "../../helpers/handleEventModal";
 
 type props = {
   numOfHiddenEvents: number;
-  dayId: string;
   dayIndex: number;
-  currentDate: string;
   isMoreEventsModalOpened: boolean;
   setIsMoreEventsModalOpened: Dispatch<SetStateAction<boolean[]>>;
 };

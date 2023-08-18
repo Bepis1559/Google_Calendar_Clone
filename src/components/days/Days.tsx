@@ -68,6 +68,7 @@ export function Days(): ReactElement {
 
             {isMoreEventsModalOpened[index] ? (
               <MoreEventsModal
+                visibleDate={visibleDate}
                 ref={currentDayRef}
                 removedEventsOfThatDay={removedEventsOfThatDay(dayId)}
                 handleEventModal={() =>
@@ -96,10 +97,8 @@ export function Days(): ReactElement {
               numOfHiddenEvents > 0 &&
               removedEvents.length > 0 ? (
                 <ShowMoreEventsButton
-                  dayId={dayId}
                   numOfHiddenEvents={numOfHiddenEvents}
                   dayIndex={index}
-                  currentDate={currentDate}
                   isMoreEventsModalOpened={isMoreEventsModalOpened[index]}
                   setIsMoreEventsModalOpened={setIsMoreEventsModalOpened}
                 />

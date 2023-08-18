@@ -4,8 +4,12 @@ import { eventsAtom } from "../../contexts/events";
 import { format } from "date-fns";
 import { Event } from "./Event";
 
+type props = {
+  visibleDate: Date;
+};
+
 function Inner(
-  { visibleDate }: eventArrayProps,
+  { visibleDate }: props,
   ref: ForwardedRef<HTMLDivElement>,
 ): ReactElement {
   const [events] = useAtom(eventsAtom);
