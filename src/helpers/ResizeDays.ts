@@ -14,7 +14,7 @@ export function hadleObserving(
   });
 }
 
-export const handleIdsOfRemovedEvents = (
+export const syncRemovedEventsIds_With_RemovedEventsState = (
   setIdsOfDaysWithEventsRemoved: Dispatch<SetStateAction<string[]>>,
   removedEvents: removedEventType[],
 ) =>
@@ -32,7 +32,6 @@ export function handleRemove(
     };
     return [event, ...prev];
   });
-  lastEvent.remove();
 }
 export function isIntersecting(child: HTMLButtonElement, parent: HTMLElement) {
   return (
@@ -62,15 +61,6 @@ export function addEventBack(
   setRemovedEvents((prev) =>
     prev.filter(({ event: { id } }) => id != eventToAddBack?.event.id),
   );
-  const lastEvent = getLastButtonEvent(day);
-  // console.log("day : ", day);
-  // console.log("lastEvent : ", lastEvent);
-  lastEvent.insertAdjacentElement(
-    "afterend",
-    eventToAddBack?.event as HTMLButtonElement,
-  );
-
-  // day.append(eventToAddBack?.event as HTMLButtonElement);
 }
 
 export function getLastButtonEvent(day: HTMLDivElement) {
@@ -107,7 +97,7 @@ export function isTherePlaceForEvent(day: HTMLElement) {
   return result;
 }
 
-export function syncEventsStateAndRemovedEventsArr(
+export function syncEventsStateAndRemovedEventsState(
   removedEvents: removedEventType[],
   events: event[],
   setRemovedEvents: Dispatch<SetStateAction<removedEventType[]>>,

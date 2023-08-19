@@ -10,11 +10,11 @@ import {
   areThereAnyRemovedEventsFromThatDay,
   getLastButtonEvent,
   hadleObserving,
-  handleIdsOfRemovedEvents,
   handleRemove,
   isIntersecting,
   isTherePlaceForEvent,
-  syncEventsStateAndRemovedEventsArr,
+  syncEventsStateAndRemovedEventsState,
+  syncRemovedEventsIds_With_RemovedEventsState,
 } from "../helpers/ResizeDays";
 import { todaysAtom } from "../contexts/calendar";
 
@@ -29,7 +29,6 @@ export function useResizeDays(
   const [removedEvents, setRemovedEvents] = useAtom(removedEventsAtom);
 
   useEffect(() => {
-    // console.log("useResizeDays called");
     const { current } = dayRefs;
     if (current) {
       const divElements_days = current.map(
@@ -38,7 +37,7 @@ export function useResizeDays(
 
       const daysDivsObserver = new ResizeObserver((entries) => {
         const sync = () =>
-          syncEventsStateAndRemovedEventsArr(
+          syncEventsStateAndRemovedEventsState(
             removedEvents,
             events,
             setRemovedEvents,
@@ -50,7 +49,7 @@ export function useResizeDays(
           const lastEvent = getLastButtonEvent(day);
 
           if (lastEvent) {
-            handleIdsOfRemovedEvents(
+            syncRemovedEventsIds_With_RemovedEventsState(
               setIdsOfDaysWithEventsRemoved,
               removedEvents,
             );

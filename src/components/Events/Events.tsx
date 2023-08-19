@@ -1,22 +1,32 @@
 import { useAtom } from "jotai";
 import { forwardRef, type ReactElement, type ForwardedRef } from "react";
-import { eventsAtom } from "../../contexts/events";
+import { eventsAtom, removedEventsAtom } from "../../contexts/events";
 import { format } from "date-fns";
 import { Event } from "./Event";
 
 type props = {
+  isForRemovedEvents: boolean;
   visibleDate: Date;
 };
 
 function Inner(
-  { visibleDate }: props,
+  { visibleDate, isForRemovedEvents }: props,
   ref: ForwardedRef<HTMLDivElement>,
 ): ReactElement {
   const [events] = useAtom(eventsAtom);
+  const [removedEvents] = useAtom(removedEventsAtom);
+  const removedEventsIds = removedEvents.map(({ event: { id } }) => id);
   const dateToCompareAgainst = format(visibleDate, "M/d/yy");
   const eventsToRender = events.filter(
-    ({ eventDate }) => eventDate == dateToCompareAgainst,
+    ({ id, eventDate }) =>
+      eventDate == dateToCompareAgainst &&
+      (isForRemovedEvents
+        ? removedEventsIds.includes(id)
+        : !removedEventsIds.includes(id)),
   );
+  // useEffect(() => {
+  //   eventsToRender.length > 1 && console.log(eventsToRender, removedEvents);
+  // }, [removedEvents]);
   return (
     <>
       {eventsToRender.map((event) => (

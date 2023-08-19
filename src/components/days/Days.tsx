@@ -39,8 +39,6 @@ export function Days(): ReactElement {
   const id = useId();
   const dayRefs = useRef(visibleDates.map(() => createRef<HTMLDivElement>()));
   const daysIds = useRef(visibleDates.map(() => crypto.randomUUID()));
-  const removedEventsOfThatDay = (dayId: string) =>
-    removedEvents.filter(({ parent: { id } }) => id == dayId);
 
   useResizeDays(dayRefs);
 
@@ -60,12 +58,11 @@ export function Days(): ReactElement {
             {isMoreEventsModalOpened[index] ? (
               <MoreEventsModal
                 visibleDate={visibleDate}
-                ref={currentDayRef}
-                removedEventsOfThatDay={removedEventsOfThatDay(dayId)}
                 handleEventModal={() =>
                   handleEventModal(index, "close", setIsMoreEventsModalOpened)
                 }
                 currentDate={currentDate}
+                ref={currentDayRef}
               />
             ) : null}
             {isEventModalOpened[index] ? (
@@ -91,7 +88,11 @@ export function Days(): ReactElement {
                 setIsEventModalOpened={setIsEventModalOpened}
               />
 
-              <Events ref={currentDayRef} visibleDate={visibleDate} />
+              <Events
+                isForRemovedEvents={false}
+                ref={currentDayRef}
+                visibleDate={visibleDate}
+              />
               {idsOfDaysWithEventsRemoved.includes(dayId) &&
               numOfHiddenEvents > 0 &&
               removedEvents.length > 0 ? (

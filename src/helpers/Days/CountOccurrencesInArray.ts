@@ -1,3 +1,2 @@
-export function CountOccurrencesInArray(array: string[], el: string) {
-  return array.filter((x) => x === el).length;
-}
+export const CountOccurrencesInArray = (array: string[], el: string) =>
+  array.filter((x) => x === el).length;
