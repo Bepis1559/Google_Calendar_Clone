@@ -1,13 +1,13 @@
 import { type RefObject } from "react";
 
-function getModalAnimationDuration() {
-  const root = document.documentElement;
-  const animationDuration = getComputedStyle(root)
-    .getPropertyValue("--modalAnimationDuration")
-    .trim();
+// function getModalAnimationDuration() {
+//   const root = document.documentElement;
+//   const animationDuration = getComputedStyle(root)
+//     .getPropertyValue("--modalAnimationDuration")
+//     .trim();
 
-  return animationDuration;
-}
+//   return animationDuration;
+// }
 
 export function handleCloseBtn(
   modalAction: () => void,
@@ -17,7 +17,7 @@ export function handleCloseBtn(
     modalRef.current?.classList.remove("opening");
     modalRef.current?.classList.add("closing");
   }
-  const animationDuration = getModalAnimationDuration();
+  // const animationDuration = getModalAnimationDuration();
 
   return new Promise<void>((resolve) => {
     setTimeout(() => {
