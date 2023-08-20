@@ -13,6 +13,7 @@ export function handleCloseBtn(
   modalAction: () => void,
   modalRef: RefObject<HTMLDivElement>,
 ) {
+  const animationDuration = 250;
   if (modalRef) {
     modalRef.current?.classList.remove("opening");
     modalRef.current?.classList.add("closing");
@@ -23,6 +24,6 @@ export function handleCloseBtn(
     setTimeout(() => {
       modalAction();
       resolve();
-    }, 250);
+    }, animationDuration);
   });
 }
