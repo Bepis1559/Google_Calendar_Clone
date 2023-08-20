@@ -23,6 +23,6 @@ export function handleCloseBtn(
     setTimeout(() => {
       modalAction();
       resolve();
-    }, parseInt(animationDuration));
+    }, 250);
   });
 }
