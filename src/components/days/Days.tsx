@@ -21,7 +21,6 @@ import {
   removedEventsAtom,
 } from "../../contexts/events";
 import { ShowMoreEventsButton } from "../hiddenEventsRelated/ShowMoreEventsButton";
-import { CountOccurrencesInArray } from "../../helpers/Days/CountOccurrencesInArray";
 import { MoreEventsModal } from "../hiddenEventsRelated/MoreEventsModal";
 
 export function Days(): ReactElement {
@@ -46,10 +45,7 @@ export function Days(): ReactElement {
     <div className="days">
       {visibleDates.map((visibleDate, index) => {
         const dayId = daysIds.current[index];
-        const numOfHiddenEvents = CountOccurrencesInArray(
-          idsOfDaysWithEventsRemoved,
-          dayId,
-        );
+
         const currentDayRef = dayRefs.current[index];
         const currentDate = format(visibleDate, "M/d/yy");
         return (
@@ -94,13 +90,12 @@ export function Days(): ReactElement {
                 visibleDate={visibleDate}
               />
               {idsOfDaysWithEventsRemoved.includes(dayId) &&
-              numOfHiddenEvents > 0 &&
+              // numOfHiddenEvents > 0 &&
               removedEvents.length > 0 ? (
                 <ShowMoreEventsButton
-                  numOfHiddenEvents={numOfHiddenEvents}
                   dayIndex={index}
-                  isMoreEventsModalOpened={isMoreEventsModalOpened[index]}
                   setIsMoreEventsModalOpened={setIsMoreEventsModalOpened}
+                  dayId={dayId}
                 />
               ) : null}
             </div>

@@ -36,35 +36,35 @@ export function useResizeDays(
       ) as HTMLDivElement[];
 
       const daysDivsObserver = new ResizeObserver((entries) => {
-        const sync = () =>
+        const syncEventsAndRemovedEvents = () =>
           syncEventsStateAndRemovedEventsState(
             removedEvents,
             events,
             setRemovedEvents,
+          );
+        const syncRemovedEventsAndTheirIds = () =>
+          syncRemovedEventsIds_With_RemovedEventsState(
+            setIdsOfDaysWithEventsRemoved,
+            removedEvents,
           );
 
         entries.forEach(({ target }) => {
           const day = target as HTMLDivElement;
 
           const lastEvent = getLastButtonEvent(day);
-
+          const shouldRemove = isIntersecting(lastEvent, day);
+          const shouldAdd =
+            isTherePlaceForEvent(day) &&
+            areThereAnyRemovedEventsFromThatDay(day, removedEvents);
           if (lastEvent) {
-            syncRemovedEventsIds_With_RemovedEventsState(
-              setIdsOfDaysWithEventsRemoved,
-              removedEvents,
-            );
-            const shouldRemove = isIntersecting(lastEvent, day);
-            const shouldAdd =
-              isTherePlaceForEvent(day) &&
-              areThereAnyRemovedEventsFromThatDay(day, removedEvents);
+            syncRemovedEventsAndTheirIds();
 
             if (shouldRemove) {
               handleRemove(day, lastEvent, setRemovedEvents);
-
-              sync();
+              syncEventsAndRemovedEvents();
             } else if (shouldAdd) {
               addEventBack(day, removedEvents, setRemovedEvents);
-              sync();
+              syncEventsAndRemovedEvents();
             }
           }
         });
