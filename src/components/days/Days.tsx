@@ -26,7 +26,7 @@ import { MoreEventsModal } from "../hiddenEventsRelated/MoreEventsModal";
 export function Days(): ReactElement {
   const [today] = useAtom(todaysAtom);
   const [idsOfDaysWithEventsRemoved] = useAtom(idsOfDaysWithEventsRemovedAtom);
-  const unMutableToday = useRef(new Date()); // changed for testing
+  const unMutableToday = useRef(new Date());
   const visibleDates = handleVisibleDates(today);
 
   const [isEventModalOpened, setIsEventModalOpened] = useState(
