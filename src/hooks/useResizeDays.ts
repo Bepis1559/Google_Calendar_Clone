@@ -1,5 +1,5 @@
 import { useAtom } from "jotai";
-import { type RefObject, useEffect } from "react";
+import { type RefObject, useLayoutEffect } from "react";
 import {
   eventsAtom,
   idsOfDaysWithEventsRemovedAtom,
@@ -26,7 +26,7 @@ export function useResizeDays(dayRefs_current: RefObject<HTMLDivElement>[]) {
   const [today] = useAtom(todaysAtom);
   const [removedEvents, setRemovedEvents] = useAtom(removedEventsAtom);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     // const { current } = dayRefs;
     // if (current) {
     const divElements_days = dayRefs_current.map((day) => day.current);
