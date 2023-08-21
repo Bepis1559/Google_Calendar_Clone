@@ -6,10 +6,11 @@ import {
   Fragment,
   useState,
   createRef,
+  useEffect,
+  useMemo,
 } from "react";
 import { todaysAtom } from "../../contexts/calendar";
 import { format } from "date-fns";
-import { handleVisibleDates } from "../../helpers/Days/handleVisibleDates";
 import { handleDayClasses } from "../../helpers/Days/handleClasses";
 import { AddEventModal } from "../Modal/AddEventModal";
 import { handleEventModal } from "../../helpers/handleEventModal";
@@ -22,12 +23,18 @@ import {
 } from "../../contexts/events";
 import { ShowMoreEventsButton } from "../hiddenEventsRelated/ShowMoreEventsButton";
 import { MoreEventsModal } from "../hiddenEventsRelated/MoreEventsModal";
+import { handleVisibleDates } from "../../helpers/Days/handleVisibleDates";
+import { useDaysIds } from "../../hooks/useDaysIds";
 
 export function Days(): ReactElement {
   const [today] = useAtom(todaysAtom);
   const [idsOfDaysWithEventsRemoved] = useAtom(idsOfDaysWithEventsRemovedAtom);
   const unMutableToday = useRef(new Date());
-  const visibleDates = handleVisibleDates(today);
+  const visibleDates = useMemo(() => handleVisibleDates(today), [today]);
+  const monthObj = useDaysIds(today, visibleDates);
+  // const [daysIds, setDaysIds] = useState(
+  //   visibleDates.map(() => crypto.randomUUID()),
+  // );
 
   const [isEventModalOpened, setIsEventModalOpened] = useState(
     visibleDates.map(() => false),
@@ -37,17 +44,26 @@ export function Days(): ReactElement {
   );
   const [removedEvents] = useAtom(removedEventsAtom);
   const id = useId();
-  const dayRefs = useRef(visibleDates.map(() => createRef<HTMLDivElement>()));
-  const daysIds = useRef(visibleDates.map(() => crypto.randomUUID()));
+  const [dayRefs, setDayRefs] = useState(
+    visibleDates.map(() => createRef<HTMLDivElement>()),
+  );
+
+  // useEffect(
+  //   () => setDaysIds(visibleDates.map(() => crypto.randomUUID())),
+  //   [visibleDates],
+  // );
+  useEffect(() => {
+    setDayRefs(visibleDates.map(() => createRef<HTMLDivElement>()));
+  }, [visibleDates]);
 
   useResizeDays(dayRefs);
 
   return (
     <div className="days">
       {visibleDates.map((visibleDate, index) => {
-        const dayId = daysIds.current[index];
+        const dayId = monthObj?.ids[index];
 
-        const currentDayRef = dayRefs.current[index];
+        const currentDayRef = dayRefs[index];
         const currentDate = format(visibleDate, "M/d/yy");
         return (
           // the whole day card
@@ -90,13 +106,12 @@ export function Days(): ReactElement {
                 ref={currentDayRef}
                 visibleDate={visibleDate}
               />
-              {idsOfDaysWithEventsRemoved.includes(dayId) &&
-              // numOfHiddenEvents > 0 &&
+              {idsOfDaysWithEventsRemoved.includes(dayId!) &&
               removedEvents.length > 0 ? (
                 <ShowMoreEventsButton
                   dayIndex={index}
                   setIsMoreEventsModalOpened={setIsMoreEventsModalOpened}
-                  dayId={dayId}
+                  dayId={dayId!}
                 />
               ) : null}
             </div>

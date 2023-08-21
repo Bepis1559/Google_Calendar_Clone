@@ -1,5 +1,5 @@
 import { useAtom } from "jotai";
-import { type MutableRefObject, type RefObject, useEffect } from "react";
+import { type RefObject, useEffect } from "react";
 import {
   eventsAtom,
   idsOfDaysWithEventsRemovedAtom,
@@ -18,9 +18,7 @@ import {
 } from "../helpers/ResizeDays";
 import { todaysAtom } from "../contexts/calendar";
 
-export function useResizeDays(
-  dayRefs: MutableRefObject<RefObject<HTMLDivElement>[]>,
-) {
+export function useResizeDays(dayRefs_current: RefObject<HTMLDivElement>[]) {
   const [events] = useAtom(eventsAtom);
   const [, setIdsOfDaysWithEventsRemoved] = useAtom(
     idsOfDaysWithEventsRemovedAtom,
@@ -29,52 +27,50 @@ export function useResizeDays(
   const [removedEvents, setRemovedEvents] = useAtom(removedEventsAtom);
 
   useEffect(() => {
-    const { current } = dayRefs;
-    if (current) {
-      const divElements_days = current.map(
-        (day) => day.current,
-      ) as HTMLDivElement[];
+    // const { current } = dayRefs;
+    // if (current) {
+    const divElements_days = dayRefs_current.map((day) => day.current);
 
-      const daysDivsObserver = new ResizeObserver((entries) => {
-        const syncEventsAndRemovedEvents = () =>
-          syncEventsStateAndRemovedEventsState(
-            removedEvents,
-            events,
-            setRemovedEvents,
-          );
-        const syncRemovedEventsAndTheirIds = () =>
-          syncRemovedEventsIds_With_RemovedEventsState(
-            setIdsOfDaysWithEventsRemoved,
-            removedEvents,
-          );
+    const daysDivsObserver = new ResizeObserver((entries) => {
+      const syncEventsAndRemovedEvents = () =>
+        syncEventsStateAndRemovedEventsState(
+          removedEvents,
+          events,
+          setRemovedEvents,
+        );
+      const syncRemovedEventsAndTheirIds = () =>
+        syncRemovedEventsIds_With_RemovedEventsState(
+          setIdsOfDaysWithEventsRemoved,
+          removedEvents,
+        );
 
-        entries.forEach(({ target }) => {
-          const day = target as HTMLDivElement;
+      entries.forEach(({ target }) => {
+        const day = target as HTMLDivElement;
 
-          const lastEvent = getLastButtonEvent(day);
-          const shouldRemove = isIntersecting(lastEvent, day);
-          const shouldAdd =
-            isTherePlaceForEvent(day) &&
-            areThereAnyRemovedEventsFromThatDay(day, removedEvents);
-          if (lastEvent) {
-            if (shouldRemove) {
-              handleRemove(day, lastEvent, setRemovedEvents);
-            } else if (shouldAdd) {
-              addEventBack(day, removedEvents, setRemovedEvents);
-            }
-            syncEventsAndRemovedEvents();
-            syncRemovedEventsAndTheirIds();
+        const lastEvent = getLastButtonEvent(day);
+        const shouldRemove = isIntersecting(lastEvent, day);
+        const shouldAdd =
+          isTherePlaceForEvent(day) &&
+          areThereAnyRemovedEventsFromThatDay(day, removedEvents);
+        if (lastEvent) {
+          if (shouldRemove) {
+            handleRemove(day, lastEvent, setRemovedEvents);
+          } else if (shouldAdd) {
+            addEventBack(day, removedEvents, setRemovedEvents);
           }
-        });
+          syncEventsAndRemovedEvents();
+          syncRemovedEventsAndTheirIds();
+        }
       });
-      hadleObserving(divElements_days, daysDivsObserver);
-      return () => {
-        daysDivsObserver.disconnect();
-      };
-    }
+    });
+    hadleObserving(divElements_days, daysDivsObserver);
+    return () => {
+      daysDivsObserver.disconnect();
+      // };
+    };
   }, [
     events,
-    dayRefs,
+    dayRefs_current,
     today,
     removedEvents,
     setRemovedEvents,

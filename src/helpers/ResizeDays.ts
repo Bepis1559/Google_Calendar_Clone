@@ -2,15 +2,16 @@ import { type SetStateAction } from "react";
 import { type Dispatch } from "react";
 
 export function hadleObserving(
-  divElements_days: HTMLDivElement[],
+  divElements_days: (HTMLDivElement | null)[],
   daysDivsObserver: ResizeObserver,
 ) {
   divElements_days.forEach((div) => {
-    Array.from(div?.children).forEach((child) => {
-      if (child.tagName == "BUTTON") {
-        daysDivsObserver.observe(div);
-      }
-    });
+    div &&
+      Array.from(div?.children).forEach((child) => {
+        if (child.tagName == "BUTTON") {
+          daysDivsObserver.observe(div);
+        }
+      });
   });
 }
 
@@ -34,10 +35,12 @@ export function handleRemove(
   });
 }
 export function isIntersecting(child: HTMLButtonElement, parent: HTMLElement) {
-  return (
-    child.offsetTop + child.offsetHeight >
-    parent.offsetTop + parent.offsetHeight
-  );
+  if (child) {
+    return (
+      child.offsetTop + child.offsetHeight >
+      parent.offsetTop + parent.offsetHeight
+    );
+  }
 }
 
 //

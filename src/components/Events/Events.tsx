@@ -24,9 +24,6 @@ function Inner(
         ? removedEventsIds.includes(id)
         : !removedEventsIds.includes(id)),
   );
-  // useEffect(() => {
-  //   eventsToRender.length > 1 && console.log(eventsToRender, removedEvents);
-  // }, [removedEvents]);
   return (
     <>
       {eventsToRender.map((event) => (
