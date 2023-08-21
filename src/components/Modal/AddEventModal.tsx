@@ -44,7 +44,10 @@ export function AddEventModal({
         <div className="modal-body">
           <div className="modal-title">
             <div>Add Event</div>
-            <small>{date}</small>
+            {/* <small>{date}</small> */}
+            <small>
+              {Intl.DateTimeFormat(undefined).format(new Date(date))}
+            </small>
             <button
               onClick={() => handleCloseBtn(handleEventModal, modalRef)}
               type="button"
