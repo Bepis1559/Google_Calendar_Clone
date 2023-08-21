@@ -55,7 +55,10 @@ export function EditEventModal({
         <div className="modal-body">
           <div className="modal-title">
             <div>Edit event</div>
-            <small>{eventDate}</small>
+            {/* <small>{eventDate}</small> */}
+            <small>
+              {Intl.DateTimeFormat(undefined).format(new Date(eventDate))}
+            </small>
             <button onClick={animateClose} type="button" className="close-btn">
               &times;
             </button>
