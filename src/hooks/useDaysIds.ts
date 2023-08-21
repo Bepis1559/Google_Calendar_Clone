@@ -14,7 +14,7 @@ export function useDaysIds(today: Date, visibleDates: Date[]) {
       const newMonth: MonthObject = createMonthObject(today, visibleDates);
       months.current.push(newMonth);
     }
-    console.log(months.current);
+    // console.log(months.current);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [todaysMonth, todaysYear]);
 
