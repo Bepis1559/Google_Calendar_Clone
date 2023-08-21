@@ -32,9 +32,6 @@ export function Days(): ReactElement {
   const unMutableToday = useRef(new Date());
   const visibleDates = useMemo(() => handleVisibleDates(today), [today]);
   const monthObj = useDaysIds(today, visibleDates);
-  // const [daysIds, setDaysIds] = useState(
-  //   visibleDates.map(() => crypto.randomUUID()),
-  // );
 
   const [isEventModalOpened, setIsEventModalOpened] = useState(
     visibleDates.map(() => false),
@@ -48,10 +45,6 @@ export function Days(): ReactElement {
     visibleDates.map(() => createRef<HTMLDivElement>()),
   );
 
-  // useEffect(
-  //   () => setDaysIds(visibleDates.map(() => crypto.randomUUID())),
-  //   [visibleDates],
-  // );
   useEffect(() => {
     setDayRefs(visibleDates.map(() => createRef<HTMLDivElement>()));
   }, [visibleDates]);
