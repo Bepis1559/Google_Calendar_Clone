@@ -469,3 +469,7 @@ body {
 .color-radio[value="green"] + label::before {
   background-color: var(--green-background);
 }
+
+div.day {
+  padding-block-end: 0.2em;
+}
